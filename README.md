@@ -13,11 +13,49 @@ iBeacon is the Apple provided framework to capture the beacon signal in iOS plat
 
 ### Define a Beacon: 
 
+    import CoreLocation
+    
+    class Item: NSObject, NSCoding {
+    
     let name: String
+    let icon: Int
     let uuid: UUID // 128 bit Int
-    let majorValue: CLBeaconMajorValue // UInt32
-    let minorValue: CLBeaconMinorValue // UInt32
-    CLBeaconRegion(proximityUUID: uuid, major: majorValue, minor: minorValue, identifier: name)
+    let majorValue: CLBeaconMajorValue
+    let minorValue: CLBeaconMinorValue
+    var beacon: CLBeacon?
+    
+    init(name: String, icon: Int, uuid: UUID, majorValue: Int, minorValue: Int) {
+        self.name = name
+        self.icon = icon
+        self.uuid = uuid
+        self.majorValue = CLBeaconMajorValue(majorValue) // UInt32
+        self.minorValue = CLBeaconMinorValue(minorValue) // UInt32
+    }
+    
+    func asBeaconRegion() -> CLBeaconRegion {
+        return CLBeaconRegion(proximityUUID: uuid, major: majorValue, minor: minorValue, identifier: name)
+    }
+    
+    func nameForProximity(_ proximity: CLProximity) -> String {
+        switch proximity {
+        case .far: return "far"
+        case .immediate: return "immediate"
+        case .near: return "near"
+        case .unknown: return "unknown"
+        }
+    }
+    
+    func locationString() -> String {
+        guard let beacon = beacon else { return "Location Unknown" }
+        let proximity = nameForProximity(beacon.proximity)
+        let accurancy = String(format: "%0.2f", beacon.accuracy)
+        var location = "location \(proximity)"
+        if beacon.proximity != .unknown {
+            location += "approx. \(accurancy) m "
+        }
+        return location
+    }
+    }
     
 A beacon has identifier, UUID, majorValue and minorValue. It emits signal. App will receive those signal through <b>CLLocationManagerDelegate</b>.
 
