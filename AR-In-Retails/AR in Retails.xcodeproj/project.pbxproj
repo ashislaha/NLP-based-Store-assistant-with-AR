@@ -11,6 +11,7 @@
 		612BA20220C7AB7200E240DE /* BFS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612BA20120C7AB7200E240DE /* BFS.swift */; };
 		6186A81B20D0EC6D00C523FA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6186A81A20D0EC6D00C523FA /* ChatViewController.swift */; };
 		6186A81D20D0F07900C523FA /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6186A81C20D0F07900C523FA /* SpeechManager.swift */; };
+		61B37EB820D3999F0075399F /* PathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B37EB720D3999F0075399F /* PathView.swift */; };
 		61E894A520C3BA7800F2B0CE /* DialogflowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E894A420C3BA7800F2B0CE /* DialogflowViewController.swift */; };
 		61E894C620C6632700F2B0CE /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E894C520C6632700F2B0CE /* DemoView.swift */; };
 		AD2A9F7320BF99B900CDC189 /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A9F7220BF99B900CDC189 /* ARModel.swift */; };
@@ -32,6 +33,7 @@
 		6186A81A20D0EC6D00C523FA /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		6186A81C20D0F07900C523FA /* SpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechManager.swift; sourceTree = "<group>"; };
 		61A09ACA2DBAD241B4820F65 /* Pods_AR_in_Retails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_in_Retails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61B37EB720D3999F0075399F /* PathView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PathView.swift; path = ../../../../../../Downloads/BeaconApp/BeaconApp/PathView.swift; sourceTree = "<group>"; };
 		61E894A420C3BA7800F2B0CE /* DialogflowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogflowViewController.swift; sourceTree = "<group>"; };
 		61E894C520C6632700F2B0CE /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		AD2A9F7220BF99B900CDC189 /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		ADB9093820787ABE0052C417 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				61B37EB720D3999F0075399F /* PathView.swift */,
 				ADB9093620787AB50052C417 /* ARView.swift */,
 				AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */,
 				61E894C520C6632700F2B0CE /* DemoView.swift */,
@@ -375,7 +378,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-AR in Retails/Pods-AR in Retails-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/ApiAI/ApiAI.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
@@ -383,7 +385,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ApiAI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
@@ -404,6 +405,7 @@
 				61E894A520C3BA7800F2B0CE /* DialogflowViewController.swift in Sources */,
 				6186A81D20D0F07900C523FA /* SpeechManager.swift in Sources */,
 				612BA20220C7AB7200E240DE /* BFS.swift in Sources */,
+				61B37EB820D3999F0075399F /* PathView.swift in Sources */,
 				6186A81B20D0EC6D00C523FA /* ChatViewController.swift in Sources */,
 				AD2A9F7320BF99B900CDC189 /* ARModel.swift in Sources */,
 				AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */,

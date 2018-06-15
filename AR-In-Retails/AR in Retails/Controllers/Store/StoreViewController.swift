@@ -88,8 +88,8 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
     }
     
     private func openARView() {
-        guard let dfVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DialogflowViewController") as? DialogflowViewController else { return }
-        navigationController?.pushViewController(dfVC, animated: true)
+        guard let arVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ARViewController") as? ARViewController else { return }
+        navigationController?.pushViewController(arVC, animated: true)
     }
     
     private func initialiseChatViewController() {

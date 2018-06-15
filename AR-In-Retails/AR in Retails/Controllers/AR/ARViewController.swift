@@ -22,7 +22,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.delegate = self
         navigationItem.title = productData
         
-        guard let scene = SCNScene(named: "./model.scn") else { return }
+        guard let scene = SCNScene(named: "./art.scnassets/model.scn") else { return }
         let sceneNode = scene.rootNode
         sceneNode.position = SCNVector3(x: 0, y: 0, z: -1)
         sceneNode.runAction(SCNAction.rotateBy(x: 0, y: CGFloat(Float.pi/2), z: 0, duration: 0.5))
@@ -40,12 +40,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     @objc func tappedDialogflowView() {
-        pushDFVC()
+        pushChatVC()
     }
     
-    public func pushDFVC() {
-        guard let dfVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "DialogflowViewController") as? DialogflowViewController else { return }
-        navigationController?.pushViewController(dfVC, animated: true)
+    public func pushChatVC() {
+        guard let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else { return }
+        navigationController?.pushViewController(chatVC, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

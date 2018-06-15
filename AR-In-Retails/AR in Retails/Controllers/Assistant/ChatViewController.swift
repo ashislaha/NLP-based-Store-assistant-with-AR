@@ -158,10 +158,18 @@ class ChatViewController: JSQMessagesViewController {
             */
             
             //response.result.fulfillment.
+            
+            
             if let textResponse = response.result.fulfillment.speech {
+                if response.result.action == "input.navigation"{
+                    SpeechManager.shared.speak(text: "Navigating to " + textResponse)
+                    
+                }
+                else{
                 SpeechManager.shared.speak(text: textResponse)
                 self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
                 self.finishReceivingMessage()
+                }
             }
         }, failure: { (request, error) in
             print(error)
