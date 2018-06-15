@@ -1,6 +1,0 @@
-framework module Pods_AR_in_Retails {
-  umbrella header "Pods-AR in Retails-umbrella.h"
-
-  export *
-  module * { export * }
-}
