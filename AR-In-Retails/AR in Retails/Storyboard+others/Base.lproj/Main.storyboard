@@ -95,7 +95,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UuS-G9-3Ef" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1662" y="132"/>
+            <point key="canvasLocation" x="1446" y="132"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="AQ5-sW-hA1">
@@ -110,69 +110,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Py-UX-urV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="828" y="132"/>
-        </scene>
-        <!--Dialogflow View Controller-->
-        <scene sceneID="f2X-a6-wCH">
-            <objects>
-                <viewController storyboardIdentifier="DialogflowViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ohN-Sb-H7C" customClass="DialogflowViewController" customModule="AR_in_Retails" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="IKu-2J-Xfx">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ofa-en-Pq5">
-                                <rect key="frame" x="97.999999999999986" y="578" width="115" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Message Assistant" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sml-2u-Fon">
-                                <rect key="frame" x="16" y="482" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZT-pT-Huo">
-                                <rect key="frame" x="39" y="550" width="296" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <state key="normal" title="Ask Assistant">
-                                    <color key="titleColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="askPressed:" destination="ohN-Sb-H7C" eventType="touchUpInside" id="IyJ-nR-0bL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SSb-Sa-gNP">
-                                <rect key="frame" x="317" y="484" width="32" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" backgroundImage="microphone (2)"/>
-                                <connections>
-                                    <action selector="microphoneTapped:" destination="ohN-Sb-H7C" eventType="touchUpInside" id="J7I-9Q-thu"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Say something !" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ru9-DH-wxE">
-                                <rect key="frame" x="16" y="110" width="343" height="342"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="Wm9-fW-d9h"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="KG0-oP-Qd4"/>
-                    <connections>
-                        <outlet property="microphoneButton" destination="SSb-Sa-gNP" id="BCo-91-F0P"/>
-                        <outlet property="textViewResponse" destination="Ru9-DH-wxE" id="czf-5d-Yf9"/>
-                        <outlet property="txtField" destination="sml-2u-Fon" id="tEw-if-YyO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ldB-Ir-DPd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-76" y="132"/>
+            <point key="canvasLocation" x="423" y="132"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="oDH-Ef-TGy">
@@ -233,24 +171,6 @@
             <point key="canvasLocation" x="519" y="-641"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="vtZ-Jx-qRT">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8bW-rS-oGq" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1zo-Gp-g5d">
-                        <rect key="frame" x="0.0" y="44" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="ohN-Sb-H7C" kind="relationship" relationship="rootViewController" id="1em-fN-Naj"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GPv-Is-9ck" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-938" y="132"/>
-        </scene>
-        <!--Navigation Controller-->
         <scene sceneID="1as-HV-Ess">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JDn-ml-713" sceneMemberID="viewController">
@@ -271,6 +191,5 @@
     </scenes>
     <resources>
         <image name="finalMap2" width="323" height="243"/>
-        <image name="microphone (2)" width="32" height="32"/>
     </resources>
 </document>

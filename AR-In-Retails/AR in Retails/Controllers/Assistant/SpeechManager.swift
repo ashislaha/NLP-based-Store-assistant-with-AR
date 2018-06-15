@@ -9,14 +9,12 @@
 import Foundation
 import Speech
 
-protocol SpeechManagerDelegate
-{
+protocol SpeechManagerDelegate {
     func didReceiveText(text:String)
     func didStartedListening(status:Bool)
 }
 
-class SpeechManager
-{
+class SpeechManager {
     lazy var speechSynthesizer = AVSpeechSynthesizer()
     
     let audioEngine = AVAudioEngine()
@@ -90,13 +88,10 @@ class SpeechManager
         }
         
         delegate?.didStartedListening(status: true)
-        
     }
     
-    func stopRecording()
-    {
-        if audioEngine.isRunning
-        {
+    func stopRecording() {
+        if audioEngine.isRunning {
             audioEngine.stop()
             request.endAudio()
             audioEngine.inputNode.removeTap(onBus: 0)

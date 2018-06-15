@@ -19,20 +19,23 @@ protocol ChatDelegate: class {
 class ChatViewController: JSQMessagesViewController {
     
     public var isUserInsideStore: Bool = false // this flag is caputured to restrict few queries to the users
+    private let senderIdentifier = "walmart chat bot"
+    private let displayName = "Wal-E"
+    private let userId = "userId"
+    private let userName = "user_name"
+    
     var messages = [JSQMessage]()
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
-    
     lazy var speechSynthesizer = AVSpeechSynthesizer()
     
     weak var delegate: ChatDelegate?
     
     //MARK: Lifecycle Methods
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        self.senderId = "some userId"
-        self.senderDisplayName = "some userName"
+        self.senderId = senderIdentifier
+        self.senderDisplayName = displayName
         
         SpeechManager.shared.delegate = self
         self.addMicButton()
@@ -41,39 +44,31 @@ class ChatViewController: JSQMessagesViewController {
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
-        let deadlineTime = DispatchTime.now() + .seconds(2)
+        let deadlineTime = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
             self.populateWithWelcomeMessage()
         })
     }
     
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    //MARK: Helper Methods
     func addMicButton() {
         let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
         let micButton = UIButton(type: .custom)
         micButton.setImage(#imageLiteral(resourceName: "microphone"), for: .normal)
         micButton.frame = CGRect(x: 0, y: 0, width: 25, height: height)
         
-        self.inputToolbar.contentView.leftBarButtonItemWidth = 25
-        self.inputToolbar.contentView.leftBarButtonContainerView.addSubview(micButton)
-        self.inputToolbar.contentView.leftBarButtonItem.isHidden = true
+        inputToolbar.contentView.leftBarButtonItemWidth = 25
+        inputToolbar.contentView.leftBarButtonContainerView.addSubview(micButton)
+        inputToolbar.contentView.leftBarButtonItem.isHidden = true
         
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOfMic(gesture:)))
         micButton.addGestureRecognizer(longPressGesture)
     }
     
     func populateWithWelcomeMessage() {
-        self.addMessage(withId: "BotId", name: "Bot", text: "Hi I am Wal-Bot")
-        self.finishReceivingMessage()
-        self.addMessage(withId: "BotId", name: "Bot", text: "I am here to help you about Walmart e-commerce and retail")
-        self.finishReceivingMessage()
+        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Wal-Bot")
+        finishReceivingMessage()
+        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you about Walmart e-commerce and retail")
+        finishReceivingMessage()
     }
     
     private func addMessage(withId id: String, name: String, text: String) {
@@ -86,16 +81,12 @@ class ChatViewController: JSQMessagesViewController {
         return .default
     }
     
-    //MARK: Gesture Handler Methods
     @objc func handleLongPressOfMic(gesture:UILongPressGestureRecognizer) {
         if gesture.state == .began {
             SpeechManager.shared.startRecording()
-        }
-        else if gesture.state == .ended
-        {
+        } else if gesture.state == .ended {
             SpeechManager.shared.stopRecording()
-            if inputToolbar.contentView.textView.text == "Say something, I'm listening!"
-            {
+            if inputToolbar.contentView.textView.text == "Say something, I'm listening!" {
                 inputToolbar.contentView.textView.text = ""
             }
         }
@@ -103,93 +94,37 @@ class ChatViewController: JSQMessagesViewController {
     
     //MARK: Core Functionality
     func performQuery(senderId:String,name:String,text:String) {
+        guard !text.isEmpty else { return }
         let request = ApiAI.shared().textRequest()
-        if text != "" {
-            request?.query = text
-        } else {
-            return
-        }
+        request?.query = text
         
-        request?.setMappedCompletionBlockSuccess({ (request, response) in
-            let response = response as! AIResponse
-            
-            /*
-             // this below section is not used here
-            if response.result.action == "tell.about" {
-                if let parameters = response.result.parameters as? [String:AIResponseParameter] {
-                    if let about = parameters["about"]?.stringValue {
-                        switch about {
-                        case "Kings":
-                            print("Kings")
-                        case "Heat":
-                            print("Heat")
-                        default:
-                            print("Default")
-                        }
-                    }
-                }
-            } else if response.result.action == "tell.stats" {
-                if let parameters = response.result.parameters as? [String:AIResponseParameter] {
-                    if let stats = parameters["stats"]?.stringValue {
-                        switch stats {
-                        case "Lead":
-                            print("Lead")
-                        default:
-                            print("Default")
-                        }
-                    }
-                }
-            } else if response.result.action == "bot.capabilities" {
-                if let parameters = response.result.parameters as? [String:AIResponseParameter] {
-                    if let capabilities = parameters["capabilities"]?.stringValue {
-                        switch capabilities {
-                        case "multimedia":
-                            print("multimedia")
-                        default:
-                            print("Default")
-                        }
-                    }
-                }
-            } else if response.result.action == "bot.quit" {
-                if let parameters = response.result.parameters as? [String:AIResponseParameter] {
-                    if let quit = parameters["quit"]?.stringValue {
-                        let deadlineTime = DispatchTime.now() + .seconds(2)
-                        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
-                            self.minimiseBot()
-                        })
-                    }
-                }
-            } else {
-                print("Unknown")
-            }
-            */
-            
-            //response.result.fulfillment.
-            
+        request?.setMappedCompletionBlockSuccess({ [weak self] (request, response) in
+            guard let response = response as? AIResponse, let strongSelf = self else { return }
+            // check the messages in fullfillment response
             
             if let textResponse = response.result.fulfillment.speech {
                 if response.result.action == "input.navigation"{
-                    if let dest = StoreModel().productToNodeInt[textResponse]{
+                    if let dest = StoreModel().productToNodeInt[textResponse] {
                         SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-                        self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
-                        self.finishReceivingMessage()
-                        self.delegate?.navigate(to: textResponse)
-                        self.navigationController?.popViewController(animated: true)
+                        strongSelf.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                        strongSelf.finishReceivingMessage()
+                        strongSelf.delegate?.navigate(to: textResponse)
+                        strongSelf.navigationController?.popViewController(animated: true)
                     }
                     else{
-                        self.addMessage(withId: "BotId", name: "Bot", text: "Product store doesn't exist");
+                        strongSelf.addMessage(withId: "BotId", name: "Bot", text: "Product store doesn't exist");
                         SpeechManager.shared.speak(text: "Product store does not exist")
-                        self.finishReceivingMessage()
+                        strongSelf.finishReceivingMessage()
                     }
                 } else {
                     SpeechManager.shared.speak(text: textResponse)
-                    self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
-                    self.finishReceivingMessage()
+                    strongSelf.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                    strongSelf.finishReceivingMessage()
                 }
                 
             }
         }, failure: { (request, error) in
-            print(error)
+            print(error?.localizedDescription)
         })
         ApiAI.shared().enqueue(request)
     }
@@ -210,14 +145,14 @@ class ChatViewController: JSQMessagesViewController {
     
     private func setupIncomingBubble() -> JSQMessagesBubbleImage {
         let bubbleImageFactory = JSQMessagesBubbleImageFactory()
-        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
-        let message = messages[indexPath.item] // 1
-        if message.senderId == senderId { // 2
+        let message = messages[indexPath.item]
+        if message.senderId == senderId {
             return outgoingBubbleImageView
-        } else { // 3
+        } else {
             return incomingBubbleImageView
         }
     }
@@ -228,51 +163,33 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        guard let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as? JSQMessagesCollectionViewCell else { return UICollectionViewCell() }
         let message = messages[indexPath.item]
-        
-        if message.senderId == senderId {
-            cell.textView?.textColor = UIColor.white
-        } else {
-            cell.textView?.textColor = UIColor.black
-        }
+        cell.textView?.textColor = message.senderId == senderId ? UIColor.white: UIColor.black
         return cell
     }
     
-    
-    
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        
-        addMessage(withId: senderId, name: senderDisplayName!, text: text!)
+        addMessage(withId: userId, name: userName, text: text!)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        
         finishSendingMessage()
-        performQuery(senderId: senderId, name: senderDisplayName, text: text!)
-        
+        performQuery(senderId: userId, name: userName, text: text!)
     }
     
-    override func didPressAccessoryButton(_ sender: UIButton)
-    {
-        performQuery(senderId: senderId, name: senderDisplayName, text: "Multimedia")
-        
+    override func didPressAccessoryButton(_ sender: UIButton) {
+        performQuery(senderId: userId, name: userName, text: "Multimedia")
     }
 }
-extension ChatViewController:SpeechManagerDelegate
-{
-    func didStartedListening(status:Bool)
-    {
-        if status
-        {
+extension ChatViewController:SpeechManagerDelegate {
+    func didStartedListening(status:Bool) {
+        if status {
             self.inputToolbar.contentView.textView.text = "Say something, I'm listening!"
         }
     }
     
-    func didReceiveText(text: String)
-    {
+    func didReceiveText(text: String) {
         self.inputToolbar.contentView.textView.text = text
-        
-        if text != "Say something, I'm listening!"
-        {
+        if text != "Say something, I'm listening!" {
             self.inputToolbar.contentView.rightBarButtonItem.isEnabled = true
         }
     }

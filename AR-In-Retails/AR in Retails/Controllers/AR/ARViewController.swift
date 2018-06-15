@@ -32,21 +32,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     
     private func addRightBarButtonItems() {
-        
-        let barbuttonItem2 = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(tappedDialogflowView))
-        
-        navigationItem.rightBarButtonItems = [barbuttonItem2]
-        
+        let dismiss = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAR))
+        navigationItem.rightBarButtonItems = [dismiss]
     }
     
-    @objc func tappedDialogflowView() {
-        pushChatVC()
+    @objc func dismissAR() {
+       navigationController?.popViewController(animated: true)
     }
     
-    public func pushChatVC() {
-        guard let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else { return }
-        navigationController?.pushViewController(chatVC, animated: true)
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -59,6 +52,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
           super.viewWillDisappear(animated)
           sceneView.session.pause()
     }
+    
     private func addNodesToScene() {
         let position1 = SCNVector3(0, 0, 0)
         let position2 = SCNVector3(0, 0, -20)
