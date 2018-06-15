@@ -62,10 +62,9 @@ class SpeechManager {
             
             var isFinal = false
             
-            if result != nil {
-                
-                self.delegate?.didReceiveText(text: (result?.bestTranscription.formattedString)!)
-                isFinal = (result?.isFinal)!
+            if let result = result, let text = result.bestTranscription.formattedString  {
+                self.delegate?.didReceiveText(text: text)
+                isFinal = result.isFinal
             }
             
             if error != nil || isFinal {

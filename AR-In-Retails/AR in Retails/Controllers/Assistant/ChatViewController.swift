@@ -23,13 +23,20 @@ class ChatViewController: JSQMessagesViewController {
     private let displayName = "Wal-E"
     private let userId = "userId"
     private let userName = "user_name"
+    private let initialStatement = "Say something, I'm listening!"
     
     var messages = [JSQMessage]()
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
-    lazy var speechSynthesizer = AVSpeechSynthesizer()
     
     weak var delegate: ChatDelegate?
+    private var micButton: UIButton!
+    private var tapped = false {
+        didSet {
+            tapped ? micButton?.setTitle("Stop", for: .normal): micButton?.setTitle("Speech", for: .normal)
+            tapped ? SpeechManager.shared.startRecording() : SpeechManager.shared.stopRecording()
+        }
+    }
     
     //MARK: Lifecycle Methods
     override func viewDidLoad() {
@@ -38,9 +45,8 @@ class ChatViewController: JSQMessagesViewController {
         self.senderDisplayName = displayName
         
         SpeechManager.shared.delegate = self
-        self.addMicButton()
+        addMicButton()
         
-        // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
@@ -52,20 +58,25 @@ class ChatViewController: JSQMessagesViewController {
     
     func addMicButton() {
         let height = self.inputToolbar.contentView.leftBarButtonContainerView.frame.size.height
-        let micButton = UIButton(type: .custom)
-        micButton.setImage(#imageLiteral(resourceName: "microphone"), for: .normal)
-        micButton.frame = CGRect(x: 0, y: 0, width: 25, height: height)
+        micButton = UIButton(type: .custom)
+        micButton?.setTitle("Speech", for: .normal)
+        micButton?.frame = CGRect(x: 0, y: 0, width: 70, height: height)
+        micButton.setTitleColor(.red, for: .normal)
         
-        inputToolbar.contentView.leftBarButtonItemWidth = 25
+        inputToolbar.contentView.leftBarButtonItemWidth = 70
         inputToolbar.contentView.leftBarButtonContainerView.addSubview(micButton)
         inputToolbar.contentView.leftBarButtonItem.isHidden = true
         
-        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressOfMic(gesture:)))
-        micButton.addGestureRecognizer(longPressGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped(gesture:)))
+        micButton?.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func tapped(gesture: UITapGestureRecognizer) {
+        tapped = !tapped
     }
     
     func populateWithWelcomeMessage() {
-        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Wal-Bot")
+        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E")
         finishReceivingMessage()
         addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you about Walmart e-commerce and retail")
         finishReceivingMessage()
@@ -81,17 +92,6 @@ class ChatViewController: JSQMessagesViewController {
         return .default
     }
     
-    @objc func handleLongPressOfMic(gesture:UILongPressGestureRecognizer) {
-        if gesture.state == .began {
-            SpeechManager.shared.startRecording()
-        } else if gesture.state == .ended {
-            SpeechManager.shared.stopRecording()
-            if inputToolbar.contentView.textView.text == "Say something, I'm listening!" {
-                inputToolbar.contentView.textView.text = ""
-            }
-        }
-    }
-    
     //MARK: Core Functionality
     func performQuery(senderId:String,name:String,text:String) {
         guard !text.isEmpty else { return }
@@ -103,22 +103,22 @@ class ChatViewController: JSQMessagesViewController {
             // check the messages in fullfillment response
             
             if let textResponse = response.result.fulfillment.speech {
-                if response.result.action == "input.navigation"{
+                if response.result.action == "input.navigation" {
                     if let dest = StoreModel().productToNodeInt[textResponse] {
                         SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-                        strongSelf.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
                         strongSelf.finishReceivingMessage()
                         strongSelf.delegate?.navigate(to: textResponse)
                         strongSelf.navigationController?.popViewController(animated: true)
                     }
                     else{
-                        strongSelf.addMessage(withId: "BotId", name: "Bot", text: "Product store doesn't exist");
+                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: "Product store doesn't exist");
                         SpeechManager.shared.speak(text: "Product store does not exist")
                         strongSelf.finishReceivingMessage()
                     }
                 } else {
                     SpeechManager.shared.speak(text: textResponse)
-                    strongSelf.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                    strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
                     strongSelf.finishReceivingMessage()
                 }
                 
@@ -174,6 +174,8 @@ class ChatViewController: JSQMessagesViewController {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         finishSendingMessage()
         performQuery(senderId: userId, name: userName, text: text!)
+        tapped = !tapped
+        inputToolbar.contentView.textView.text = initialStatement
     }
     
     override func didPressAccessoryButton(_ sender: UIButton) {
@@ -183,13 +185,13 @@ class ChatViewController: JSQMessagesViewController {
 extension ChatViewController:SpeechManagerDelegate {
     func didStartedListening(status:Bool) {
         if status {
-            self.inputToolbar.contentView.textView.text = "Say something, I'm listening!"
+            self.inputToolbar.contentView.textView.text = initialStatement
         }
     }
     
     func didReceiveText(text: String) {
         self.inputToolbar.contentView.textView.text = text
-        if text != "Say something, I'm listening!" {
+        if text != initialStatement {
             self.inputToolbar.contentView.rightBarButtonItem.isEnabled = true
         }
     }
