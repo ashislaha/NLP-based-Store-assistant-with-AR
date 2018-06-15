@@ -11,6 +11,11 @@ import JSQMessagesViewController
 import UIKit
 import Speech
 
+protocol ChatDelegate: class {
+    func navigate(to: String)
+}
+
+
 class ChatViewController: JSQMessagesViewController {
     
     public var isUserInsideStore: Bool = false // this flag is caputured to restrict few queries to the users
@@ -19,6 +24,8 @@ class ChatViewController: JSQMessagesViewController {
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
     lazy var speechSynthesizer = AVSpeechSynthesizer()
+    
+    weak var delegate: ChatDelegate?
     
     //MARK: Lifecycle Methods
     override func viewDidLoad()
@@ -162,14 +169,24 @@ class ChatViewController: JSQMessagesViewController {
             
             if let textResponse = response.result.fulfillment.speech {
                 if response.result.action == "input.navigation"{
-                    SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-                    
+                    if let dest = StoreModel().productToNodeInt[textResponse]{
+                        SpeechManager.shared.speak(text: "Navigating to " + textResponse)
+                        self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                        self.finishReceivingMessage()
+                        self.delegate?.navigate(to: textResponse)
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else{
+                        self.addMessage(withId: "BotId", name: "Bot", text: "Product store doesn't exist");
+                        SpeechManager.shared.speak(text: "Product store does not exist")
+                        self.finishReceivingMessage()
+                    }
+                } else {
+                    SpeechManager.shared.speak(text: textResponse)
+                    self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
+                    self.finishReceivingMessage()
                 }
-                else{
-                SpeechManager.shared.speak(text: textResponse)
-                self.addMessage(withId: "BotId", name: "Bot", text: textResponse)
-                self.finishReceivingMessage()
-                }
+                
             }
         }, failure: { (request, error) in
             print(error)

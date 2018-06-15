@@ -14,39 +14,44 @@ struct StoreModel {
     var Ycenter: CGFloat = 0.0
     let graph = Graph(arr: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23])
     var jsonArray: [[String: Any]] = []
-    var productToNodeInt: [String:[Int]] = [:]
+    var productToNodeInt: [String:[Int]] = [
+        "fruits": [0,21],
+        "fruit": [0,21],
+        "sports": [1,21,22],
+        "sport": [1,21,22],
+        "dairy": [2,23,22],
+        "books": [3,23],
+        "book": [3,23],
+        "fashion": [4,20,0],
+        "mobiles": [5,20,1,12],
+        "mobile": [5,20,1,12],
+        "smartphone": [5,20,1,12],
+        "toys": [6,12,2,13],
+        "toy": [6,12,2,13],
+        "shoes": [7,13,3],
+        "bags": [8,4],
+        "bag": [8,4],
+        "grocery": [9,5,8],
+        "laptops": [10,6,11],
+        "laptop": [10,6,11],
+        "computer": [10,6,11],
+        "utensils": [11,7],
+        "utensil": [11,7],
+        "cookware": [11,7]
+    ]
     
-    mutating func createDictionary(view: UIView) {
-        Xcenter = view.frame.midX - 1.7
-        Ycenter = view.frame.midY + 33.0
+    mutating func createDictionary(view: UIImageView) {
+        Xcenter = view.frame.midX - view.frame.origin.x
+        Ycenter = view.frame.midY - view.frame.origin.y
+        
+        
+        print(Xcenter, Ycenter)
+        
         let height = view.frame.size.height
         let width = view.frame.size.width
         
-        productToNodeInt = [
-            "fruits": [0,21],
-            "fruit": [0,21],
-            "sports": [1,21,22],
-            "sport": [1,21,22],
-            "dairy": [2,23,22],
-            "books": [3,23],
-            "book": [3,23],
-            "fashion": [4,20,0],
-            "mobiles": [5,20,1,12],
-            "mobile": [5,20,1,12],
-            "smartphone": [5,20,1,12],
-            "toys": [6,12,2,13],
-            "toy": [6,12,2,13],
-            "shoes": [7,13,3],
-            "bags": [8,4],
-            "bag": [8,4],
-            "grocery": [9,5,8],
-            "laptops": [10,6,11],
-            "laptop": [10,6,11],
-            "computer": [10,6,11],
-            "utensils": [11,7],
-            "utensil": [11,7],
-            "cookware": [11,7]
-        ]
+        print(Xcenter, Ycenter, height, width)
+        
         
         jsonArray  = [
             [

@@ -42,7 +42,7 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
         locationManager.delegate = self
         title = "Store plan"
         storeModel.makeGraph()
-        storeModel.createDictionary(view: view)
+        storeModel.createDictionary(view: storePlan)
     }
     
     func displayPath(start: Int, des: [Int]) {
@@ -82,7 +82,7 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
             
             
             demoView?.removeFromSuperview()
-            demoView = DemoView(frame: CGRect(x: 0.0 ,y: 0.0,width: width,height: height), points: points)
+            demoView = DemoView(frame: CGRect(x: storePlan.frame.origin.x ,y: storePlan.frame.origin.y,width: storePlan.frame.size.width ,height: storePlan.frame.size.height), points: points)
             self.view.addSubview(demoView!)
         }
     }
@@ -95,6 +95,7 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
     private func initialiseChatViewController() {
         guard let chatVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as? ChatViewController else { return }
         navigationController?.pushViewController(chatVC, animated: true)
+        chatVC.delegate = self
         chatVC.isUserInsideStore = true 
     }
 }
@@ -110,6 +111,19 @@ extension StoreViewController {
         locationBuilder.setLocationOrientation(0)
         
         locationBuilder.addBeacon(withIdentifier: "test", atBoundarySegmentIndex: 0, inDistance: 2, from: .leftSide)
+        
+    }
+}
+
+// chat view delegate
+extension StoreViewController: ChatDelegate {
+    func navigate(to: String) {
+        
+        if let dest = StoreModel().productToNodeInt[to] {
+             displayPath(start: 22, des: dest)
+        }
+        // display path from user location to to-location
+        
         
     }
 }
