@@ -15,6 +15,7 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
     var demoView:DemoView?
     var storeModel = StoreModel()
     var userPosition: EILOrientedPoint?
+    
     let userPositionImage: UIImageView = {
         let imageView = UIImageView(image: #imageLiteral(resourceName: "blue_dot"))
         imageView.frame = .zero
@@ -51,14 +52,18 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+
         title = "Store plan"
         storeModel.makeGraph()
         storeModel.createDictionary(view: storePlan)
+        storePlan.addSubview(userPositionImage)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
             beaconManager.delegate = self
-            storePlan.addSubview(userPositionImage)
         }
     }
     
@@ -118,11 +123,16 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
 extension StoreViewController: ChatDelegate {
     
     func navigate(to: String) {
-        
+        let source = findOutSource()
         if let dest = StoreModel().productToNodeInt[to] {
-             displayPath(start: 22, des: dest)
+             displayPath(start: source, des: dest)
         }
-        // display path from user location to to-location
+    }
+    
+    private func findOutSource() -> Int {
+        // userPosition give you the current user location
+        // find out the nearest source node of that position to apply BFS
+        return 22
     }
 }
 

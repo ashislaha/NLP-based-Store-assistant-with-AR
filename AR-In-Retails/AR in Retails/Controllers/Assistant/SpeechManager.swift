@@ -45,29 +45,17 @@ class SpeechManager {
         }
         
         request = SFSpeechAudioBufferRecognitionRequest()
-        
-        guard let inputNode = audioEngine.inputNode as? AVAudioInputNode
-            else {
-                fatalError("Audio engine has no input node")
-        }
-        
-        guard let recognitionRequest = request as? SFSpeechAudioBufferRecognitionRequest
-            else {
-                fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
-        }
-        
+        let inputNode = audioEngine.inputNode
+        let recognitionRequest = request
         recognitionRequest.shouldReportPartialResults = true
         
         recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
-            
             var isFinal = false
-            
             if let result = result {
                 let text = result.bestTranscription.formattedString
                 self.delegate?.didReceiveText(text: text)
                 isFinal = result.isFinal
             }
-            
             if error != nil || isFinal {
                 self.audioEngine.stop()
                 inputNode.removeTap(onBus: 0)
@@ -78,7 +66,6 @@ class SpeechManager {
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
             self.request.append(buffer)
         }
-        
         audioEngine.prepare()
         
         do {
@@ -86,7 +73,6 @@ class SpeechManager {
         } catch {
             print("audioEngine couldn't start because of an error.")
         }
-        
         delegate?.didStartedListening(status: true)
     }
     

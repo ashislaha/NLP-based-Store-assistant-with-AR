@@ -16,11 +16,24 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
    
     @IBOutlet weak var sceneView: ARSCNView!
     
+    private let debugLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .red
+        label.text = ""
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addRightBarButtonItems()
         sceneView.delegate = self
         navigationItem.title = productData
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
+            beaconManager.delegate = self
+            addDebugLabel()
+        }
         
         guard let scene = SCNScene(named: "./art.scnassets/model.scn") else { return }
         let sceneNode = scene.rootNode
@@ -30,6 +43,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(sceneNode)
     }
     
+    private func addDebugLabel() {
+        sceneView.addSubview(debugLabel)
+        debugLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        debugLabel.bottomAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+    }
     
     private func addRightBarButtonItems() {
         let dismiss = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAR))
@@ -67,5 +85,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(node2)
         
         view.addSubview(sceneView)
+    }
+}
+
+extension ARViewController: UserPositionUpdateProtocol {
+    
+    func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation) {
+        let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
+        debugLabel.text = userLocation
     }
 }
