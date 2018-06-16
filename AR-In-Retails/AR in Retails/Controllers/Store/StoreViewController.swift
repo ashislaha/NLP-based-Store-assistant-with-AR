@@ -10,10 +10,9 @@ import UIKit
 import AVFoundation
 import Speech
 
-class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, SFSpeechRecognizerDelegate {
+class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
 
     var demoView:DemoView?
-    let locationManager = EILIndoorLocationManager()
     var storeModel = StoreModel()
     
     @IBOutlet weak var assistantButton: UIButton! {
@@ -39,16 +38,12 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
     override func viewDidLoad() {
         super.viewDidLoad()
      
-        locationManager.delegate = self
         title = "Store plan"
         storeModel.makeGraph()
         storeModel.createDictionary(view: storePlan)
     }
     
     func displayPath(start: Int, des: [Int]) {
-        
-        let width: CGFloat = view.frame.size.width
-        let height: CGFloat = view.frame.size.height/2
         
         var vertices:[Int] = storeModel.graph.BFS(start: start, des: des)
         var ourDes:Int = -1
@@ -97,21 +92,6 @@ class StoreViewController: UIViewController, EILIndoorLocationManagerDelegate, S
         navigationController?.pushViewController(chatVC, animated: true)
         chatVC.delegate = self
         chatVC.isUserInsideStore = true 
-    }
-}
-
-
-// MARK: Setting up new location
-extension StoreViewController {
-    
-    func buildLocation() {
-        let locationBuilder = EILLocationBuilder()
-        let boundaryPoints: [EILPoint] = [EILPoint(x: 0, y: 0), EILPoint(x: 5, y: 0), EILPoint(x: 5, y: 5), EILPoint(x: 0, y: 5)]
-        locationBuilder.setLocationBoundaryPoints(boundaryPoints)
-        locationBuilder.setLocationOrientation(0)
-        
-        locationBuilder.addBeacon(withIdentifier: "test", atBoundarySegmentIndex: 0, inDistance: 2, from: .leftSide)
-        
     }
 }
 
