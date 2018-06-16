@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct StoreModel {
     
@@ -14,7 +15,8 @@ struct StoreModel {
     var Ycenter: CGFloat = 0.0
     let graph = Graph(arr: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23])
     var jsonArray: [[String: Any]] = []
-    var productToNodeInt: [String:[Int]] = [
+    
+    let productToNodeInt: [String:[Int]] = [
         "fruits": [0,21],
         "fruit": [0,21],
         "sports": [1,21,22],
@@ -39,6 +41,35 @@ struct StoreModel {
         "utensil": [11,7],
         "cookware": [11,7]
     ]
+    
+    let planStore: [ProductDepartment: CGPoint] = [
+        .fruits: CGPoint(x: 0.5, y: 3.5),
+        .sports: CGPoint(x: 1.5, y: 3.5),
+        .dairyAndEggs: CGPoint(x: 2.5, y: 3.5),
+        .books: CGPoint(x: 3.5, y: 3.5),
+        .fashion: CGPoint(x: 0.5, y: 2.5),
+        .electronics: CGPoint(x: 1.5, y: 2.5),
+        .personalAndBabyCare: CGPoint(x: 2.5, y: 2.5),
+        .shoes: CGPoint(x: 3.5, y: 2.5),
+        .bags: CGPoint(x: 0.5, y: 1.5),
+        .groceries: CGPoint(x: 1.5, y: 1.5),
+        .utensils: CGPoint(x: 3.5, y: 1.5)
+    ]
+    
+    let images: [ProductDepartment: UIImage] = [
+        .fruits: #imageLiteral(resourceName: "fruits"),
+        .sports: #imageLiteral(resourceName: "sports"),
+        .dairyAndEggs: #imageLiteral(resourceName: "dairy"),
+        .books: #imageLiteral(resourceName: "books"),
+        .fashion: #imageLiteral(resourceName: "dress"),
+        .electronics: #imageLiteral(resourceName: "electronics"),
+        .personalAndBabyCare: #imageLiteral(resourceName: "toys"),
+        .shoes: #imageLiteral(resourceName: "shoes"),
+        .bags: #imageLiteral(resourceName: "bags"),
+        .groceries: #imageLiteral(resourceName: "groceries"),
+        .utensils: #imageLiteral(resourceName: "utensils")
+    ]
+    
     
     mutating func createDictionary(view: UIImageView) {
         Xcenter = view.frame.midX - view.frame.origin.x

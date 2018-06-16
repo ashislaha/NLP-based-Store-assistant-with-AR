@@ -11,7 +11,6 @@ import ARKit
 
 class ARView: ARSCNView {
     
-    //let locationManager = LocationManager()
     var showFeaturePoints = true
     public var orientToTrueNorth = true
     

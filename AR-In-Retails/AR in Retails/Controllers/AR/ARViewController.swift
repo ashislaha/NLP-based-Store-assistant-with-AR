@@ -86,6 +86,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         
         view.addSubview(sceneView)
     }
+    
+    private func updateProducts() {
+        
+    }
 }
 
 extension ARViewController: UserPositionUpdateProtocol {
@@ -93,5 +97,7 @@ extension ARViewController: UserPositionUpdateProtocol {
     func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation) {
         let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
         debugLabel.text = userLocation
+        
+        // update scene node based on user location
     }
 }
