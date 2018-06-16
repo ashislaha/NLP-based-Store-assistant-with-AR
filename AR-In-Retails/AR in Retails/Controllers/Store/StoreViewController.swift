@@ -15,6 +15,11 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
     var demoView:DemoView?
     var storeModel = StoreModel()
     var userPosition: EILOrientedPoint?
+    let userPositionImage: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "blue_dot"))
+        imageView.frame = .zero
+        return imageView
+    }()
     
     @IBOutlet weak var assistantButton: UIButton! {
         didSet {
@@ -53,6 +58,7 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
             beaconManager.delegate = self
+            storePlan.addSubview(userPositionImage)
         }
     }
     
@@ -126,6 +132,20 @@ extension StoreViewController: UserPositionUpdateProtocol {
         let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
         debugLabel.text = userLocation
         userPosition = position
+        updateUserImage(position: position)
+    }
+    
+    private func updateUserImage(position: EILOrientedPoint) {
+        let userX = CGFloat(position.x)
+        let userY = CGFloat(position.y)
+        let storePlanWidth = storePlan.frame.width
+        let storePlanHeight = storePlan.frame.height
+        
+        let userPositionX = userX * (storePlanWidth/BeaconConstants.storeWidth)
+        let userPositionY = storePlanHeight - (userY * (storePlanHeight/BeaconConstants.storeHeight))
+        
+        let newFrame = CGRect(x: userPositionX, y: userPositionY, width: 10, height: 10)
+        userPositionImage.frame = newFrame
     }
 }
 
