@@ -19,13 +19,36 @@ struct BeaconConstants {
         static let position = CGPoint(x: 0, y: 0)
     }
     
+    struct Purple2 {
+        static let identifier = "9b9532806d66002812707710ac27fa2d"
+        static let position = CGPoint(x: 4.5, y: 0)
+    }
+    
+    struct Pink1 {
+        static let identifier = "bc9acba5091010f1af1c2673386a8d1c"
+        static let position = CGPoint(x: 4.5, y: 4.5)
+    }
+    
+    struct Yellow1 {
+        static let identifier = "b9e0a297628e933e4998b691968a5e08"
+        static let position = CGPoint(x: 0.0, y: 4.5)
+    }
+    
+}
+
+protocol UserPositionUpdateProtocol:class {
+    func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation)
 }
 
 class BeaconManager: NSObject {
     
     let locationManager = EILIndoorLocationManager()
+    var location: EILLocation?
+    
     let estimoteBeaconManager = ESTBeaconManager()
     let userNotificationCenter = UNUserNotificationCenter.current()
+    
+    weak var delegate: UserPositionUpdateProtocol?
     
     override init() {
         super.init()
@@ -33,7 +56,11 @@ class BeaconManager: NSObject {
         // indoor location manager
         locationManager.delegate = self
         ESTConfig.setupAppID(BeaconConstants.appId, andAppToken: BeaconConstants.appToken)
-        buildLocation()
+        
+        if let beaconLocation = beaconsSetup() {
+            location = beaconLocation
+            locationManager.startPositionUpdates(for: beaconLocation)
+        }
         
         // estimote
         estimoteBeaconManager.delegate = self
@@ -50,17 +77,21 @@ class BeaconManager: NSObject {
         setupLocalNotification()
     }
     
-    func buildLocation() {
+    private func beaconsSetup() -> EILLocation? {
         let locationBuilder = EILLocationBuilder()
         
-        // define boundary 
+        locationBuilder.setLocationName("Walmart Store")
         let boundaryPoints: [EILPoint] = [EILPoint(x: 0, y: 0), EILPoint(x: 4.5, y: 0), EILPoint(x: 4.5, y: 4.5), EILPoint(x: 0, y: 4.5)]
         locationBuilder.setLocationBoundaryPoints(boundaryPoints)
         locationBuilder.setLocationOrientation(23)
         
-        // add beacons
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple1.identifier, atBoundarySegmentIndex: 0, inDistance: 2, from: .leftSide)
+        // adding beacons to the builder
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple1.identifier, atBoundarySegmentIndex: 0, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple2.identifier, atBoundarySegmentIndex: 1, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Pink1.identifier, atBoundarySegmentIndex: 2, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Yellow1.identifier, atBoundarySegmentIndex: 3, inDistance: 0, from: .leftSide)
         
+        return locationBuilder.build()
     }
     
     private func setupLocalNotification() {
@@ -68,14 +99,16 @@ class BeaconManager: NSObject {
         let category = UNNotificationCategory(identifier: "groceries", actions: [grocery], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [])
         userNotificationCenter.setNotificationCategories([category])
     }
-    
-    
 }
 
+// MARK: Indoor positioning delegate
+
 extension BeaconManager: EILIndoorLocationManagerDelegate {
+    
     func indoorLocationManager(_ manager: EILIndoorLocationManager, didFailToUpdatePositionWithError error: Error) {
         print("ERROR: failed to update position \(error)")
     }
+    
     func indoorLocationManager(_ manager: EILIndoorLocationManager, didUpdatePosition position: EILOrientedPoint, with positionAccuracy: EILPositionAccuracy, in location: EILLocation) {
         
         var accuracy: String!
@@ -87,10 +120,12 @@ extension BeaconManager: EILIndoorLocationManagerDelegate {
         case .veryLow:  accuracy = "+/- ? :-("
         case .unknown:  accuracy = "unknown"
         }
-        print(String(format: "x: %5.2f, y: %5.2f, orientation: %3.0f, accuracy: %@",
-                     position.x, position.y, position.orientation, accuracy))
+        //print(accuracy)
+        delegate?.getUserUpdate(position: position, accuracy: positionAccuracy, location: location)
     }
 }
+
+// MARK: Beacon regions delegates
 
 extension BeaconManager: ESTBeaconManagerDelegate {
     
@@ -125,6 +160,8 @@ extension BeaconManager: ESTBeaconManagerDelegate {
         print("authorization status changed: \(status)")
     }
 }
+
+// MARK: Local Notification handling
 
 extension BeaconManager: UNUserNotificationCenterDelegate {
     

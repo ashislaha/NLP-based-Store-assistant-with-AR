@@ -14,6 +14,7 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
 
     var demoView:DemoView?
     var storeModel = StoreModel()
+    var userPosition: EILOrientedPoint?
     
     @IBOutlet weak var assistantButton: UIButton! {
         didSet {
@@ -27,8 +28,16 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
     }
     @IBOutlet weak var storePlan: UIImageView!
     
+    
     @IBAction func assistantTapped(_ sender: UIButton) {
         initialiseChatViewController()
+    }
+    
+    @IBOutlet weak var debugLabel: UILabel! {
+        didSet {
+            debugLabel.text = ""
+            debugLabel.textColor = .red
+        }
     }
     
     @IBAction func arButtonTapped(_ sender: UIButton) {
@@ -41,6 +50,10 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
         title = "Store plan"
         storeModel.makeGraph()
         storeModel.createDictionary(view: storePlan)
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
+            beaconManager.delegate = self
+        }
     }
     
     func displayPath(start: Int, des: [Int]) {
@@ -97,14 +110,22 @@ class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
 
 // chat view delegate
 extension StoreViewController: ChatDelegate {
+    
     func navigate(to: String) {
         
         if let dest = StoreModel().productToNodeInt[to] {
              displayPath(start: 22, des: dest)
         }
         // display path from user location to to-location
-        
-        
+    }
+}
+
+extension StoreViewController: UserPositionUpdateProtocol {
+    
+    func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation) {
+        let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
+        debugLabel.text = userLocation
+        userPosition = position
     }
 }
 

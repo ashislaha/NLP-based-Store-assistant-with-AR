@@ -48,6 +48,12 @@
                                     <action selector="arButtonTapped:" destination="8WV-nd-YID" eventType="touchUpInside" id="E7U-iE-lFg"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="debug position" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0hb-Yl-wlH">
+                                <rect key="frame" x="130.33333333333334" y="757" width="114.33333333333334" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -55,7 +61,9 @@
                             <constraint firstItem="nff-L0-aEb" firstAttribute="leading" secondItem="Mj5-ty-bpF" secondAttribute="leading" constant="16" id="1sZ-xN-mp5"/>
                             <constraint firstItem="6fh-36-sTO" firstAttribute="centerX" secondItem="Mj5-ty-bpF" secondAttribute="centerX" id="9VL-6c-989"/>
                             <constraint firstItem="UXe-7f-eQ3" firstAttribute="top" secondItem="6fh-36-sTO" secondAttribute="bottom" constant="30" id="CbS-bF-uny"/>
+                            <constraint firstItem="Mj5-ty-bpF" firstAttribute="bottom" secondItem="0hb-Yl-wlH" secondAttribute="bottom" id="YUe-HJ-y3L"/>
                             <constraint firstItem="6fh-36-sTO" firstAttribute="top" secondItem="nff-L0-aEb" secondAttribute="bottom" constant="20" id="mbw-Xf-1bv"/>
+                            <constraint firstItem="0hb-Yl-wlH" firstAttribute="centerX" secondItem="Mj5-ty-bpF" secondAttribute="centerX" id="oDP-Uf-u6D"/>
                             <constraint firstItem="Mj5-ty-bpF" firstAttribute="trailing" secondItem="nff-L0-aEb" secondAttribute="trailing" constant="16" id="v2U-gE-Z1q"/>
                             <constraint firstItem="nff-L0-aEb" firstAttribute="top" secondItem="Mj5-ty-bpF" secondAttribute="top" constant="16" id="wr5-rk-M6R"/>
                         </constraints>
@@ -64,12 +72,13 @@
                     <connections>
                         <outlet property="arButtonOutlet" destination="UXe-7f-eQ3" id="r82-U2-AnP"/>
                         <outlet property="assistantButton" destination="6fh-36-sTO" id="E5y-wx-QDb"/>
+                        <outlet property="debugLabel" destination="0hb-Yl-wlH" id="qaB-gC-jm3"/>
                         <outlet property="storePlan" destination="nff-L0-aEb" id="t84-vV-Bmj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5FI-KK-lUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1447" y="-641"/>
+            <point key="canvasLocation" x="1445.5999999999999" y="-641.37931034482756"/>
         </scene>
         <!--AR VC-->
         <scene sceneID="eBt-I5-qbU">
