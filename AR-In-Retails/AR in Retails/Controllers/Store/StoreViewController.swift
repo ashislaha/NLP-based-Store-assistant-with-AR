@@ -129,10 +129,29 @@ extension StoreViewController: ChatDelegate {
         }
     }
     
+    private func CGPointDistanceSquared(from: CGPoint, to: CGPoint) -> CGFloat {
+        return (from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)
+    }
+
     private func findOutSource() -> Int {
         // userPosition give you the current user location
         // find out the nearest source node of that position to apply BFS
-        return 22
+        var i: Int = 0
+        var minDis: CGFloat = 10000.0
+        var minNode: Int = -1
+        while i < 23, let userX = userPosition?.x, let userY = userPosition?.y {
+            let node = storeModel.returnPoint(index: i)
+            let point: CGPoint = CGPoint(x: (node.x/storeModel.width)*8.0, y: (node.y/storeModel.height)*8.0)
+            let dis = CGPointDistanceSquared(from: point,to: CGPoint(x: userX, y: userY))
+            print ( " Checking" , i)
+            print( userPosition?.x, userPosition?.y, point.x, point.y ,dis)
+            if  dis - minDis < 0.0 {
+                minDis = dis
+                minNode = i
+            }
+            i = i+1
+        }
+        return minNode
     }
 }
 

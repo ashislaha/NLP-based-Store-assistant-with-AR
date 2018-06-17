@@ -13,6 +13,8 @@ struct StoreModel {
     
     var Xcenter: CGFloat = 0.0
     var Ycenter: CGFloat = 0.0
+    var height: CGFloat = 0.0
+    var width: CGFloat = 0.0
     let graph = Graph(arr: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23])
     var jsonArray: [[String: Any]] = []
     
@@ -80,8 +82,8 @@ struct StoreModel {
     mutating func createDictionary(view: UIImageView) {
         Xcenter = view.frame.midX - view.frame.origin.x
         Ycenter = view.frame.midY - view.frame.origin.y
-        let height = view.frame.size.height
-        let width = view.frame.size.width
+        height = view.frame.size.height
+        width = view.frame.size.width
         
         print(Xcenter, Ycenter, height, width)
         
