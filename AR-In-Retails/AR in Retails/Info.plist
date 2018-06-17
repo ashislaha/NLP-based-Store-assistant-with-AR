@@ -4,22 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>$(PRODUCT_NAME) calendar events</string>
-    <key>NSRemindersUsageDescription</key>
-    <string>$(PRODUCT_NAME) reminder use</string>
-    <key>NSCameraUsageDescription</key>
-    <string>This app requires to access your photo library to show image on profile and send via chat</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>This app requires to access your microphone to record video with your voice send via chat</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>This app requires to access your photo library to show image on profile and send via chat</string>
-    <key>NSContactsUsageDescription</key>
-    <string>$(PRODUCT_NAME) contact use</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>$(PRODUCT_NAME) location use</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>$(PRODUCT_NAME) location use</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,6 +20,24 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCalendarsUsageDescription</key>
+	<string>$(PRODUCT_NAME) calendar events</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires to access your photo library to show image on profile and send via chat</string>
+	<key>NSContactsUsageDescription</key>
+	<string>$(PRODUCT_NAME) contact use</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>$(PRODUCT_NAME) location use</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>$(PRODUCT_NAME) location use</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your microphone will be used to record your speech when you press the "Start Recording" button.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires to access your photo library to show image on profile and send via chat</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>$(PRODUCT_NAME) reminder use</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition will be used to determine which words you speak into this device's microphone.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -47,8 +49,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -57,10 +57,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    
-    <key>NSMicrophoneUsageDescription</key>  <string>Your microphone will be used to record your speech when you press the "Start Recording" button.</string>
-    
-    <key>NSSpeechRecognitionUsageDescription</key>  <string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
-    
 </dict>
 </plist>

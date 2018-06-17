@@ -12,6 +12,7 @@ import SceneKit
 class SceneNodeCreator {
     
     static let pathColor = UIColor(red: 20.0/255.0, green: 126.0/255.0, blue: 193.0/255.0, alpha: 1.0)
+    static let sceneName = "art.scnassets/arrow.scn"
     
     class func getPathNode(position1 : SCNVector3, position2 : SCNVector3 ) -> SCNNode {
         
@@ -53,5 +54,78 @@ class SceneNodeCreator {
         node.constraints = [billboardConstraint]
         
         return node
+    }
+    
+    class func getArrow3D(sceneName : String, downArrow : Bool = false) -> SCNNode {
+        guard let scene = SCNScene(named:sceneName) else { return SCNNode() }
+        if scene.rootNode.childNodes.count == 2 {
+            scene.rootNode.childNodes[0].geometry?.firstMaterial?.diffuse.contents = UIColor.getFrontSideArrowColor()
+            scene.rootNode.childNodes[1].geometry?.firstMaterial?.diffuse.contents = UIColor.getBackSideArrrowColor()
+        } else {
+            for each in scene.rootNode.childNodes {
+                each.geometry?.firstMaterial?.diffuse.contents = UIColor.getFrontSideArrowColor()
+            }
+        }
+        scene.rootNode.scale = SCNVector3Make(2, 2, 2)
+        if downArrow {
+            scene.rootNode.rotation = SCNVector4Make(0, 0, 1, -Float(Double.pi/2))
+        }
+        return scene.rootNode
+    }
+    
+    class func addTexture(node : SCNNode, backward : Bool = false) {
+        let toPow: Double = 3
+        let timeDuration: Double = 15 / pow(2, toPow)
+        let textureAction = SCNAction.customAction(duration: timeDuration) { (node, d) in
+            let num = Int(Double(d) * pow(2, toPow)) + 1
+            let imageName = backward ? "b\(num)" : "f\(num)"
+            //print(imgName)
+            if let image = UIImage(named: imageName) {
+                let material1 = SCNMaterial()
+                material1.diffuse.contents = image
+                
+                let material2 = SCNMaterial()
+                material2.diffuse.contents = UIColor.getFrontSideArrowColor()
+                
+                node.childNodes[0].geometry?.firstMaterial = material1
+                node.childNodes[1].geometry?.firstMaterial = material2
+            }
+        }
+        let repeatAction = SCNAction.repeatForever(textureAction)
+        node.runAction(repeatAction)
+    }
+    
+    public func getAngle(location1 : CLLocationCoordinate2D, location2 : CLLocationCoordinate2D) -> Double {
+        let dx = location2.longitude - location1.longitude
+        let dy = location2.latitude - location1.latitude
+        var theta = 0.0
+        
+        theta += atan(Double(dy/dx))
+        print("tan-inverse theta: \(theta * 180 / Double.pi)")
+        
+        if dx < 0 && dy > 0 || dx < 0 && dy < 0 { // 2nd, 3rd coordinates, no need to add anything for 1st coordinate and 4th coordinates
+            theta += Double.pi
+        } else if theta == .nan && dy >= 0 { // dx = 0
+            theta = Double.pi/2 // 90 Degree
+        } else if theta == .nan && dy < 0 { // dx = 0
+            theta = -Double.pi/2 // -90 Degree
+        } else if theta == 0.0 && dx < 0 { // dy = 0
+            theta = Double.pi // 180 degree
+        } // else if theta == 0.0 && dx>= 0 { theta = 0.0 }
+        
+        print("dx = \(dx) and dy =\(dy) Angle: \(theta * 180 / Double.pi) ")
+        return theta
+    }
+}
+
+extension UIColor {
+    class func getFrontSideArrowColor() -> UIColor {
+        return self.init(red: 237.0/255.0, green: 252.0/255.0, blue: 41.0/255.0, alpha: 1.0)
+    }
+    class func getBackSideArrrowColor() -> UIColor {
+        return self.init(red: 212.0/255.0, green: 219.0/255.0, blue: 40.0/255.0, alpha: 1.0)
+    }
+    class func getCustomColor() -> UIColor {
+        return self.init(red: 239.0/255.0, green: 253.0/255.0, blue: 65.0/255.0, alpha: 0.8)
     }
 }

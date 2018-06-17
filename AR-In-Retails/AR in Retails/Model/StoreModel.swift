@@ -43,17 +43,17 @@ struct StoreModel {
     ]
     
     let planStore: [ProductDepartment: CGPoint] = [
-        .fruits: CGPoint(x: 0.5, y: 3.5),
-        .sports: CGPoint(x: 1.5, y: 3.5),
-        .dairyAndEggs: CGPoint(x: 2.5, y: 3.5),
-        .books: CGPoint(x: 3.5, y: 3.5),
-        .fashion: CGPoint(x: 0.5, y: 2.5),
-        .electronics: CGPoint(x: 1.5, y: 2.5),
-        .personalAndBabyCare: CGPoint(x: 2.5, y: 2.5),
-        .shoes: CGPoint(x: 3.5, y: 2.5),
-        .bags: CGPoint(x: 0.5, y: 1.5),
-        .groceries: CGPoint(x: 1.5, y: 1.5),
-        .utensils: CGPoint(x: 3.5, y: 1.5)
+        .fruits: CGPoint(x: 1, y: 7),
+        .sports: CGPoint(x: 3, y: 7),
+        .dairyAndEggs: CGPoint(x: 5, y: 7),
+        .books: CGPoint(x: 7, y: 7),
+        .fashion: CGPoint(x: 1, y: 5),
+        .electronics: CGPoint(x: 3, y: 5),
+        .personalAndBabyCare: CGPoint(x: 5, y: 5),
+        .shoes: CGPoint(x: 7, y: 5),
+        .bags: CGPoint(x: 1, y: 1),
+        .groceries: CGPoint(x: 3, y: 1),
+        .utensils: CGPoint(x: 7, y: 1)
     ]
     
     let images: [ProductDepartment: UIImage] = [
@@ -74,15 +74,10 @@ struct StoreModel {
     mutating func createDictionary(view: UIImageView) {
         Xcenter = view.frame.midX - view.frame.origin.x
         Ycenter = view.frame.midY - view.frame.origin.y
-        
-        
-        print(Xcenter, Ycenter)
-        
         let height = view.frame.size.height
         let width = view.frame.size.width
         
         print(Xcenter, Ycenter, height, width)
-        
         
         jsonArray  = [
             [
