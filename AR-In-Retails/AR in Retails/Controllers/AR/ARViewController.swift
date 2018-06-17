@@ -15,7 +15,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     var model: ARModel?
     let storeModel = StoreModel()
    
-    @IBOutlet weak var sceneView: ARSCNView!
+    private var sceneView: ARView = {
+        let view = ARView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     private let debugLabel: UILabel = {
         let label = UILabel()
@@ -28,12 +32,24 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addSceneView()
         sceneView.delegate = self
+        
         navigationItem.title = productData
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
             beaconManager.delegate = self
             addDebugLabel()
         }
+    }
+    
+    private func addSceneView() {
+        view.addSubview(sceneView)
+        NSLayoutConstraint.activate([
+            sceneView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            sceneView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            sceneView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            sceneView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            ])
     }
     
     private func addDebugLabel() {
@@ -46,14 +62,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let configuration = ARWorldTrackingConfiguration()
-        sceneView.session.run(configuration)
+        sceneView.run()
         addNodesToScene()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
           super.viewWillDisappear(animated)
-          sceneView.session.pause()
+          sceneView.pause()
     }
     
     private func addNodesToScene() {

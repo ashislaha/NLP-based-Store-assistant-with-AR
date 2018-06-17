@@ -25,6 +25,8 @@
 		ADB90933207876AB0052C417 /* ARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB90932207876AB0052C417 /* ARViewController.swift */; };
 		ADB9093720787AB50052C417 /* ARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9093620787AB50052C417 /* ARView.swift */; };
 		ADB9FB1520D4B4D400705241 /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9FB1420D4B4D400705241 /* BeaconManager.swift */; };
+		ADCD342320D65CE800262CC9 /* ProceedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCD342220D65CE800262CC9 /* ProceedView.xib */; };
+		ADCD342520D65D9D00262CC9 /* ProceedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD342420D65D9D00262CC9 /* ProceedView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		ADB90932207876AB0052C417 /* ARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewController.swift; sourceTree = "<group>"; };
 		ADB9093620787AB50052C417 /* ARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
 		ADB9FB1420D4B4D400705241 /* BeaconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
+		ADCD342220D65CE800262CC9 /* ProceedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProceedView.xib; sourceTree = "<group>"; };
+		ADCD342420D65D9D00262CC9 /* ProceedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProceedView.swift; sourceTree = "<group>"; };
 		D8F411E4BBD531AC59FB6459 /* Pods-AR in Retails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR in Retails.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR in Retails/Pods-AR in Retails.debug.xcconfig"; sourceTree = "<group>"; };
 		EC7F674B92A63A15B2D26ADD /* Pods-AR in Retails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR in Retails.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR in Retails/Pods-AR in Retails.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -177,6 +181,8 @@
 				ADB9093620787AB50052C417 /* ARView.swift */,
 				AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */,
 				61E894C520C6632700F2B0CE /* DemoView.swift */,
+				ADCD342220D65CE800262CC9 /* ProceedView.xib */,
+				ADCD342420D65D9D00262CC9 /* ProceedView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCD342320D65CE800262CC9 /* ProceedView.xib in Resources */,
 				ADB9092B20786EAC0052C417 /* LaunchScreen.storyboard in Resources */,
 				AD42808020D15EEA00C36A52 /* art.scnassets in Resources */,
 				ADB9092820786EAC0052C417 /* Assets.xcassets in Resources */,
@@ -305,6 +312,7 @@
 				"${PODS_ROOT}/EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/beaconWhiteSmall.png",
 				"${PODS_ROOT}/EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/beaconWhiteSmall@2x.png",
 				"${PODS_ROOT}/EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Resources/beaconWhiteSmall@3x.png",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
@@ -344,6 +352,7 @@
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/beaconWhiteSmall.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/beaconWhiteSmall@2x.png",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/beaconWhiteSmall@3x.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -406,6 +415,7 @@
 				AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */,
 				AD955AF4207B07C100355522 /* StoreViewController.swift in Sources */,
 				ADB9FB1520D4B4D400705241 /* BeaconManager.swift in Sources */,
+				ADCD342520D65D9D00262CC9 /* ProceedView.swift in Sources */,
 				ADB90933207876AB0052C417 /* ARViewController.swift in Sources */,
 				61E894C620C6632700F2B0CE /* DemoView.swift in Sources */,
 				AD2A9F7620BF9FAA00CDC189 /* SceneNode.swift in Sources */,

@@ -21,8 +21,6 @@ class ARView: ARSCNView {
     
     public override init(frame: CGRect, options: [String : Any]? = nil) {
         super.init(frame: frame, options: options)
-        
-        //locationManager.delegate = self
         delegate = self
         showsStatistics = false
         if showFeaturePoints {

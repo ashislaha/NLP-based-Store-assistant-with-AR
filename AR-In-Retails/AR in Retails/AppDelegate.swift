@@ -9,14 +9,20 @@
 import UIKit
 import ApiAI
 import IQKeyboardManagerSwift
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var beaconManager: BeaconManager?
+    let locationManager = CLLocationManager()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
+        // google maps
+        registerLocationManager()
+        GMSServices.provideAPIKey("AIzaSyDS39eDu8P1zwKqsVNPuMeIJro2qzzAFl4")
         
         // initialise beacons
         beaconManager = BeaconManager()
@@ -30,6 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         UIApplication.shared.statusBarStyle = .lightContent
         return true
+    }
+    
+    private func registerLocationManager() {
+        if CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        locationManager.startUpdatingLocation()
+        locationManager.distanceFilter = 1.0 // update to the user when location changes more than 1 meter
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

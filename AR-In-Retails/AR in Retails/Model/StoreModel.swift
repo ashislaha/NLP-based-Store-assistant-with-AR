@@ -16,6 +16,12 @@ struct StoreModel {
     let graph = Graph(arr: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23])
     var jsonArray: [[String: Any]] = []
     
+    let storesBoundary: [String: [(Double,Double)]] = [
+        "aura-block-b": [(12.938026, 77.690704), (12.937993, 77.691184), (12.936907, 77.691089), (12.936925, 77.690787)],
+        "aura-block-a": [(12.936807, 77.690841), (12.936803, 77.691079), (12.936042, 77.691032), (12.936002, 77.690855)]
+    ]
+    
+    
     let productToNodeInt: [String:[Int]] = [
         "fruits": [0,21],
         "fruit": [0,21],
