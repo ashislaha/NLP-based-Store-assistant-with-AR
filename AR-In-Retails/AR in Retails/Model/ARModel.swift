@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ProductDepartment {
+enum ProductDepartment: String {
     case fruits
     case packagedFoods // noodles, pasta, breakfast cereals
     case personalAndBabyCare // soap, body wash, hair care etc.

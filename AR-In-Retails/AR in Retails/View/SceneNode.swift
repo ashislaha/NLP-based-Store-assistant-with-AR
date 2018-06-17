@@ -38,4 +38,20 @@ class SceneNodeCreator {
         node.rotation = SCNVector4Make(0, 1, 0, Float(theta))
         return node
     }
+    
+    class func getImageNode(image: UIImage, name: String) -> SCNNode {
+        let plane = SCNPlane(width: 0.5, height: 0.5)
+        plane.firstMaterial?.diffuse.contents = image
+        plane.firstMaterial?.lightingModel = .constant
+        
+        let node = SCNNode()
+        node.geometry = plane
+        node.name = name
+        
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        node.constraints = [billboardConstraint]
+        
+        return node
+    }
 }

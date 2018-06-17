@@ -13,6 +13,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
 
     var productData: String?
     var model: ARModel?
+    let storeModel = StoreModel()
    
     @IBOutlet weak var sceneView: ARSCNView!
     
@@ -26,21 +27,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addRightBarButtonItems()
+        
         sceneView.delegate = self
         navigationItem.title = productData
-        
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate, let beaconManager = appDelegate.beaconManager {
             beaconManager.delegate = self
             addDebugLabel()
         }
-        
-        guard let scene = SCNScene(named: "./art.scnassets/model.scn") else { return }
-        let sceneNode = scene.rootNode
-        sceneNode.position = SCNVector3(x: 0, y: 0, z: -1)
-        sceneNode.runAction(SCNAction.rotateBy(x: 0, y: CGFloat(Float.pi/2), z: 0, duration: 0.5))
-        addNodesToScene()
-        sceneView.scene.rootNode.addChildNode(sceneNode)
     }
     
     private func addDebugLabel() {
@@ -49,21 +42,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         debugLabel.bottomAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
     }
     
-    private func addRightBarButtonItems() {
-        let dismiss = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAR))
-        navigationItem.rightBarButtonItems = [dismiss]
-    }
-    
-    @objc func dismissAR() {
-       navigationController?.popViewController(animated: true)
-    }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         let configuration = ARWorldTrackingConfiguration()
         sceneView.session.run(configuration)
+        addNodesToScene()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,23 +57,27 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     }
     
     private func addNodesToScene() {
-        let position1 = SCNVector3(0, 0, 0)
-        let position2 = SCNVector3(0, 0, -20)
-        
-        let position3 = SCNVector3(0, 0, -20)
-        let position4 = SCNVector3(-20, 0, -50)
-
-        let node1 = SceneNodeCreator.getPathNode(position1: position1, position2: position2)
-        let node2 = SceneNodeCreator.getPathNode(position1: position3, position2: position4)
-        
-        sceneView.scene.rootNode.addChildNode(node1)
-        sceneView.scene.rootNode.addChildNode(node2)
-        
+        for each in storeModel.planStore {
+            if let image = storeModel.images[each.key] {
+                let imageNode = SceneNodeCreator.getImageNode(image: image, name: each.key.rawValue)
+                sceneView.scene.rootNode.addChildNode(imageNode)
+            }
+        }
         view.addSubview(sceneView)
     }
     
-    private func updateProducts() {
-        
+    private func updateNodesPosition(userPosition: EILOrientedPoint) {
+        for eachNode in sceneView.scene.rootNode.childNodes {
+            if let nodeName = eachNode.name, let product = ProductDepartment(rawValue: nodeName), let productPosition = storeModel.planStore[product] {
+                let userPositionX = Float(userPosition.x)
+                let userPositionY = Float(userPosition.y)
+                let productX = Float(productPosition.x)
+                let productY = Float(productPosition.y)
+                
+                let position = SCNVector3Make(productX-userPositionX, 0, -(productY-userPositionY))
+                eachNode.position = position
+            }
+        }
     }
 }
 
@@ -97,7 +86,6 @@ extension ARViewController: UserPositionUpdateProtocol {
     func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation) {
         let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
         debugLabel.text = userLocation
-        
-        // update scene node based on user location
+        updateNodesPosition(userPosition: position)
     }
 }
