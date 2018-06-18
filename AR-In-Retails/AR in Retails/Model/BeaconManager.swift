@@ -14,38 +14,38 @@ struct BeaconConstants {
     static let appToken = "f97b822b4052ae9d44f1802f9dc5ce3b"
     static let locationName = "Walmart Store"
     static let storeOrientation: Double = 270 // with respect to true north
-    static let storeWidth: CGFloat = 8
-    static let storeHeight: CGFloat = 8
+    static let storeWidth: CGFloat = 9.5
+    static let storeHeight: CGFloat = 5
     
     // beacons
     struct Purple1 {
         static let identifier = "466aa0756095522195038c737d29e61f"
-        static let position = CGPoint(x: 0, y: 0)
+        static let position = CGPoint(x: 0, y: 5)
     }
     
     struct Purple2 {
         static let identifier = "9b9532806d66002812707710ac27fa2d"
-        static let position = CGPoint(x: 0, y: 8)
+        static let position = CGPoint(x: 0, y: 0)
     }
     
     struct Pink1 {
         static let identifier = "bc9acba5091010f1af1c2673386a8d1c"
-        static let position = CGPoint(x: 8, y: 0)
+        static let position = CGPoint(x: 9.5, y: 5)
     }
     
     struct Pink2 {
         static let identifier = "f8caf97dd768d9c2f981379e7e439a3d"
-        static let position = CGPoint(x: 8, y: 8)
+        static let position = CGPoint(x: 9.5, y: 0)
     }
     
     struct Yellow1 {
         static let identifier = "b9e0a297628e933e4998b691968a5e08"
-        static let position = CGPoint(x: 0, y: 4)
+        static let position = CGPoint(x: 4.5, y: 5)
     }
     
     struct Yellow2 {
         static let identifier = "7dcb5539b9bc3e8411202f0e2829c80c"
-        static let position = CGPoint(x: 8, y: 4)
+        static let position = CGPoint(x: 4.5, y: 0)
     }
     
     
@@ -97,23 +97,23 @@ class BeaconManager: NSObject {
         
         locationBuilder.setLocationName(BeaconConstants.locationName)
         let boundaryPoints: [EILPoint] = [
+            EILPoint(x: Double(BeaconConstants.Purple2.position.x), y: Double(BeaconConstants.Purple2.position.y)),
             EILPoint(x: Double(BeaconConstants.Purple1.position.x), y: Double(BeaconConstants.Purple1.position.y)),
             EILPoint(x: Double(BeaconConstants.Yellow1.position.x), y: Double(BeaconConstants.Yellow1.position.y)),
-            EILPoint(x: Double(BeaconConstants.Purple2.position.x), y: Double(BeaconConstants.Purple2.position.y)),
+            EILPoint(x: Double(BeaconConstants.Pink1.position.x), y: Double(BeaconConstants.Pink1.position.y)),
             EILPoint(x: Double(BeaconConstants.Pink2.position.x), y: Double(BeaconConstants.Pink2.position.y)),
             EILPoint(x: Double(BeaconConstants.Yellow2.position.x), y: Double(BeaconConstants.Yellow2.position.y)),
-            EILPoint(x: Double(BeaconConstants.Pink1.position.x), y: Double(BeaconConstants.Pink1.position.y))
         ]
         locationBuilder.setLocationBoundaryPoints(boundaryPoints)
         locationBuilder.setLocationOrientation(BeaconConstants.storeOrientation)
         
         // adding beacons to the builder
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple1.identifier, atBoundarySegmentIndex: 0, inDistance: 0, from: .leftSide)
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Yellow1.identifier, atBoundarySegmentIndex: 1, inDistance: 0, from: .leftSide)
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple2.identifier, atBoundarySegmentIndex: 2, inDistance: 0, from: .leftSide)
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Pink2.identifier, atBoundarySegmentIndex: 3, inDistance: 0, from: .leftSide)
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Yellow2.identifier, atBoundarySegmentIndex: 4, inDistance: 0, from: .leftSide)
-        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Pink1.identifier, atBoundarySegmentIndex: 5, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple2.identifier, atBoundarySegmentIndex: 0, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Purple1.identifier, atBoundarySegmentIndex: 1, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Yellow1.identifier, atBoundarySegmentIndex: 2, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Pink1.identifier, atBoundarySegmentIndex: 3, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Pink2.identifier, atBoundarySegmentIndex: 4, inDistance: 0, from: .leftSide)
+        locationBuilder.addBeacon(withIdentifier: BeaconConstants.Yellow2.identifier, atBoundarySegmentIndex: 5, inDistance: 0, from: .leftSide)
         
         return locationBuilder.build()
     }
