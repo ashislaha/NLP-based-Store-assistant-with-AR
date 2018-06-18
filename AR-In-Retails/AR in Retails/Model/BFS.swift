@@ -52,7 +52,7 @@ class Graph {
     public func BFS(start : Int, des : [Int]) -> [Int] {
         
         
-        guard start < vertices else { return []}
+        guard start != -1, start < vertices else { return []}
         var parent:[Int] = []
         var j:Int = 0
         while j<vertices {

@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // initialise dialogflow
         let configuration = AIDefaultConfiguration()
-        configuration.clientAccessToken = "230cafb65f2248a2a915c896773e1ba5" // "de465ca6dabf41bc82e93b40be6d30a3"
+        configuration.clientAccessToken = "de465ca6dabf41bc82e93b40be6d30a3" // "230cafb65f2248a2a915c896773e1ba5"
         let apiai = ApiAI.shared()
         apiai?.configuration = configuration
         

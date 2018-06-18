@@ -174,7 +174,7 @@ class ChatViewController: JSQMessagesViewController {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         finishSendingMessage()
         performQuery(senderId: userId, name: userName, text: text!)
-        tapped = !tapped
+        tapped = false
         inputToolbar.contentView.textView.text = initialStatement
     }
     
