@@ -84,12 +84,18 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private func updateNodesPosition(userPosition: EILOrientedPoint) {
         for eachNode in sceneView.scene.rootNode.childNodes {
             if let nodeName = eachNode.name, let product = ProductDepartment(rawValue: nodeName), let productPosition = storeModel.planStore[product] {
-                let userPositionX = Float(userPosition.x)
-                let userPositionY = Float(userPosition.y)
+                let userPositionX = Float(floor(userPosition.x))
+                let userPositionY = Float(floor(userPosition.y))
                 let productX = Float(productPosition.x)
                 let productY = Float(productPosition.y)
                 
-                let position = SCNVector3Make(productX-userPositionX, 0, -(productY-userPositionY))
+                // let's translate the positions
+                let newUserX = -userPositionY
+                let newUserY = userPositionX
+                let newProductX = -productY
+                let newProductY = productX
+                
+                let position = SCNVector3Make(newProductX-newUserX, 0, -(newProductY-newUserY))
                 eachNode.position = position
             }
         }

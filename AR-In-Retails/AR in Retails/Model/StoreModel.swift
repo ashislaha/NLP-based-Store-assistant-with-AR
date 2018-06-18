@@ -40,31 +40,21 @@ struct StoreModel {
     ]
     
     let planStore: [ProductDepartment: CGPoint] = [
-        .fruits: CGPoint(x: 2, y: 2.5),
-        .sports: CGPoint(x: 3, y: 7),
-        .dairyAndEggs: CGPoint(x: 5, y: 7),
-        .books: CGPoint(x: 7, y: 7),
-        .fashion: CGPoint(x: 1, y: 5),
-        .electronics: CGPoint(x: 3, y: 5),
-        .personalAndBabyCare: CGPoint(x: 5, y: 5),
+        .fruits: CGPoint(x: 2, y: 4),
+        .groceries: CGPoint(x: 4.5, y: 4),
         .shoes: CGPoint(x: 7, y: 5),
-        .bags: CGPoint(x: 1, y: 1),
-        .groceries: CGPoint(x: 3, y: 1),
-        .utensils: CGPoint(x: 7, y: 1)
+        .fashion: CGPoint(x: 2, y: 1),
+        .laptops: CGPoint(x: 4.5, y: 1),
+        .mobiles: CGPoint(x: 7, y: 1)
     ]
     
     let images: [ProductDepartment: UIImage] = [
         .fruits: #imageLiteral(resourceName: "fruits"),
-        .sports: #imageLiteral(resourceName: "sports"),
-        .dairyAndEggs: #imageLiteral(resourceName: "dairy"),
-        .books: #imageLiteral(resourceName: "books"),
-        .fashion: #imageLiteral(resourceName: "dress"),
-        .electronics: #imageLiteral(resourceName: "electronics"),
-        .personalAndBabyCare: #imageLiteral(resourceName: "toys"),
-        .shoes: #imageLiteral(resourceName: "shoes"),
-        .bags: #imageLiteral(resourceName: "bags"),
         .groceries: #imageLiteral(resourceName: "groceries"),
-        .utensils: #imageLiteral(resourceName: "utensils")
+        .shoes: #imageLiteral(resourceName: "shoes"),
+        .fashion: #imageLiteral(resourceName: "dress"),
+        .laptops: #imageLiteral(resourceName: "electronics"),
+        .mobiles: #imageLiteral(resourceName: "electronics")
     ]
     
     

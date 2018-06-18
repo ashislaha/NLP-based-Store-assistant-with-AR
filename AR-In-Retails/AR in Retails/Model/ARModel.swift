@@ -10,18 +10,11 @@ import Foundation
 
 enum ProductDepartment: String {
     case fruits
-    case packagedFoods // noodles, pasta, breakfast cereals
-    case personalAndBabyCare // soap, body wash, hair care etc.
-    case householdCare // detergent, laundry etc.
-    case dairyAndEggs // milk, eggs,
-    case electronics // mobile, computers, tvs etc.
-    case fashion // dresses for men, women, kids
-    case sports // sports necessities like bat, ball, rackets etc.
-    case books // book stall
-    case shoes
-    case bags
     case groceries
-    case utensils
+    case shoes
+    case fashion 
+    case laptops
+    case mobiles
 }
 
 /**
