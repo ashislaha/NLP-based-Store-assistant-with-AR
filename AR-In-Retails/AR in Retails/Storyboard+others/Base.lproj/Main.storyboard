@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="finalMap2" translatesAutoresizingMaskIntoConstraints="NO" id="nff-L0-aEb">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NewStoreMap" translatesAutoresizingMaskIntoConstraints="NO" id="nff-L0-aEb">
                                 <rect key="frame" x="16" y="60" width="343" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="wLD-kp-fBP"/>
@@ -147,6 +147,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="finalMap2" width="323" height="243"/>
+        <image name="NewStoreMap" width="302" height="252"/>
     </resources>
 </document>

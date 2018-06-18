@@ -106,7 +106,7 @@ class ChatViewController: JSQMessagesViewController {
                 if response.result.action == "input.navigation" {
                     if let dest = StoreModel().productToNodeInt[textResponse] {
                         SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
+//                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
                         strongSelf.finishReceivingMessage()
                         strongSelf.delegate?.navigate(to: textResponse)
                         strongSelf.navigationController?.popViewController(animated: true)
