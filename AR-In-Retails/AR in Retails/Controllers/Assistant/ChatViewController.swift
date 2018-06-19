@@ -15,6 +15,30 @@ protocol ChatDelegate: class {
     func navigate(to: String)
 }
 
+class OutgoingAvatar:NSObject, JSQMessageAvatarImageDataSource {
+    func avatarImage() -> UIImage! {
+        return #imageLiteral(resourceName: "Walmart")
+    }
+    func avatarHighlightedImage() -> UIImage! {
+        return #imageLiteral(resourceName: "Walmart")
+    }
+    func avatarPlaceholderImage() -> UIImage! {
+        return #imageLiteral(resourceName: "Walmart")
+    }
+}
+
+class IncomingAvatar:NSObject, JSQMessageAvatarImageDataSource {
+    func avatarImage() -> UIImage! {
+        return #imageLiteral(resourceName: "user_avatar")
+    }
+    func avatarHighlightedImage() -> UIImage! {
+        return #imageLiteral(resourceName: "user_avatar")
+    }
+    func avatarPlaceholderImage() -> UIImage! {
+        return #imageLiteral(resourceName: "user_avatar")
+    }
+}
+
 
 class ChatViewController: JSQMessagesViewController {
     
@@ -47,12 +71,15 @@ class ChatViewController: JSQMessagesViewController {
         SpeechManager.shared.delegate = self
         addMicButton()
         
-        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
-        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize(width: 30, height: 30)
+        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize(width: 30, height: 30)
         
         let deadlineTime = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: {
-            self.populateWithWelcomeMessage()
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
+            self?.populateWithWelcomeMessage()
+            // remove later
+            self?.addOffers(offers: ["hdfc-offer", "paytm"])
+            
         })
     }
     
@@ -76,15 +103,25 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     func populateWithWelcomeMessage() {
-        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E")
+        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E.")
         finishReceivingMessage()
-        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you about Walmart e-commerce and retail")
+        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you.")
         finishReceivingMessage()
     }
     
     private func addMessage(withId id: String, name: String, text: String) {
         if let message = JSQMessage(senderId: id, displayName: name, text: text) {
             messages.append(message)
+        }
+    }
+    
+    private func addOffers(offers: [String]) {
+
+        for eachOffer in offers {
+            if let image = UIImage(named: eachOffer), let media = JSQPhotoMediaItem(image: image), let message = JSQMessage(senderId: senderIdentifier, displayName: displayName, media: media) {
+                messages.append(message)
+                finishSendingMessage()
+            }
         }
     }
     
@@ -106,12 +143,10 @@ class ChatViewController: JSQMessagesViewController {
                 if response.result.action == "input.navigation" {
                     if let dest = StoreModel().productToNodeInt[textResponse] {
                         SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-//                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
                         strongSelf.finishReceivingMessage()
                         strongSelf.delegate?.navigate(to: textResponse)
                         strongSelf.navigationController?.popViewController(animated: true)
-                    }
-                    else{
+                    } else {
                         strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: "Product store doesn't exist");
                         SpeechManager.shared.speak(text: "Product store does not exist")
                         strongSelf.finishReceivingMessage()
@@ -157,9 +192,9 @@ class ChatViewController: JSQMessagesViewController {
         }
     }
     
-    //removing avatars
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return nil
+        let message = messages[indexPath.item]
+        return message.senderId == senderId ? OutgoingAvatar(): IncomingAvatar()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -169,13 +204,17 @@ class ChatViewController: JSQMessagesViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 20
+    }
+    
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         addMessage(withId: userId, name: userName, text: text!)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         finishSendingMessage()
         performQuery(senderId: userId, name: userName, text: text!)
         tapped = false
-        inputToolbar.contentView.textView.text = initialStatement
+        inputToolbar.contentView.textView.text = ""
     }
     
     override func didPressAccessoryButton(_ sender: UIButton) {
