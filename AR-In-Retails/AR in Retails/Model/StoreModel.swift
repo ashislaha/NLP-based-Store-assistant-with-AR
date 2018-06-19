@@ -51,10 +51,10 @@ struct StoreModel {
     let images: [ProductDepartment: UIImage] = [
         .fruits: #imageLiteral(resourceName: "fruits"),
         .groceries: #imageLiteral(resourceName: "groceries"),
-        .shoes: #imageLiteral(resourceName: "shoes"),
+        .shoes: #imageLiteral(resourceName: "shoes2"),
         .fashion: #imageLiteral(resourceName: "dress"),
-        .laptops: #imageLiteral(resourceName: "electronics"),
-        .mobiles: #imageLiteral(resourceName: "electronics")
+        .laptops: #imageLiteral(resourceName: "Laptop-Free-Download-PNG"),
+        .mobiles: #imageLiteral(resourceName: "mobiles")
     ]
     
     

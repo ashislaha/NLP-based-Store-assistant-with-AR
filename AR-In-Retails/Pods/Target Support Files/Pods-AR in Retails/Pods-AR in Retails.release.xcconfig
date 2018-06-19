@@ -1,5 +1,13 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+ENABLE_BITCODE = NO
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/ApiAI" "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift" "${PODS_CONFIGURATION_BUILD_DIR}/JSQMessagesViewController" "${PODS_CONFIGURATION_BUILD_DIR}/JSQSystemSoundPlayer" "${PODS_ROOT}/EstimoteSDK/EstimoteSDK" "${PODS_ROOT}/GoogleMaps/Base/Frameworks" "${PODS_ROOT}/GoogleMaps/Maps/Frameworks"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/EstimoteIndoorSDK" "${PODS_ROOT}/Headers/EstimoteSDK" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/EstimoteIndoorSDK"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "$(PODS_ROOT)/EstimoteIndoorSDK" "$(PODS_ROOT)/EstimoteSDK" "${PODS_ROOT}/EstimoteIndoorSDK/EstimoteIndoorLocationSDK"
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/ApiAI/ApiAI.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework/Headers" -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/EstimoteIndoorSDK"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"EstimoteIndoorSDK" -l"c++" -l"z" -framework "Accelerate" -framework "ApiAI" -framework "AudioToolbox" -framework "CoreBluetooth" -framework "CoreData" -framework "CoreGraphics" -framework "CoreImage" -framework "CoreLocation" -framework "CoreMotion" -framework "CoreTelephony" -framework "CoreText" -framework "EstimoteSDK" -framework "Foundation" -framework "GLKit" -framework "GoogleMaps" -framework "GoogleMapsBase" -framework "GoogleMapsCore" -framework "IQKeyboardManagerSwift" -framework "ImageIO" -framework "JSQMessagesViewController" -framework "JSQSystemSoundPlayer" -framework "MediaPlayer" -framework "MessageUI" -framework "MobileCoreServices" -framework "OpenGLES" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

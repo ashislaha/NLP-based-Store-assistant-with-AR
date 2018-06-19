@@ -1,0 +1,1 @@
+../../../EstimoteIndoorSDK/EstimoteIndoorLocationSDK/Headers/EILIndoorSDK.h
