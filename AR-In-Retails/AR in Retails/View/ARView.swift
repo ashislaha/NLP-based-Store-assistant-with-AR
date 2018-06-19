@@ -23,9 +23,6 @@ class ARView: ARSCNView {
         super.init(frame: frame, options: options)
         delegate = self
         showsStatistics = false
-        if showFeaturePoints {
-            debugOptions = [ARSCNDebugOptions.showWorldOrigin]
-        }
     }
     
     required public init?(coder aDecoder: NSCoder) {

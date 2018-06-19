@@ -95,9 +95,9 @@ class SceneNodeCreator {
         node.runAction(repeatAction)
     }
     
-    public func getAngle(location1 : CLLocationCoordinate2D, location2 : CLLocationCoordinate2D) -> Double {
-        let dx = location2.longitude - location1.longitude
-        let dy = location2.latitude - location1.latitude
+    class func getAngle(location1 : CGPoint, location2 : CGPoint) -> Double {
+        let dx = location2.x - location1.x
+        let dy = location2.y - location1.y
         var theta = 0.0
         
         theta += atan(Double(dy/dx))
@@ -115,6 +115,17 @@ class SceneNodeCreator {
         
         print("dx = \(dx) and dy =\(dy) Angle: \(theta * 180 / Double.pi) ")
         return theta
+    }
+    
+    class func rotateNode(node : SCNNode, theta : Double, with animation : Bool = false) {
+        if animation {
+            let rotation = CABasicAnimation(keyPath: "rotation")
+            rotation.fromValue = SCNVector4Make(0, 1, 0, 0)
+            rotation.toValue = SCNVector4Make(0, 1, 0,  Float(theta))
+            rotation.duration = 2.0
+            node.addAnimation(rotation, forKey: "Rotate it")
+        }
+        node.rotation = SCNVector4Make(0, 1, 0, Float(theta))
     }
 }
 

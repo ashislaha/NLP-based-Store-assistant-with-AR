@@ -57,6 +57,11 @@ struct StoreModel {
         .mobiles: #imageLiteral(resourceName: "mobiles")
     ]
     
+    public func findoutRoutePoints(from: CGPoint, to: CGPoint ) -> [CGPoint] {
+        // send the points
+        return [CGPoint(x: 1, y: 0), CGPoint(x: 3, y: 0), CGPoint(x: 3, y: 3)]
+    }
+    
     
     mutating func createDictionary(view: UIImageView) {
         height = view.frame.size.height

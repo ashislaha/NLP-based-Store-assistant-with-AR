@@ -12,7 +12,7 @@
 		6186A81B20D0EC6D00C523FA /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6186A81A20D0EC6D00C523FA /* ChatViewController.swift */; };
 		6186A81D20D0F07900C523FA /* SpeechManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6186A81C20D0F07900C523FA /* SpeechManager.swift */; };
 		61E894C620C6632700F2B0CE /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E894C520C6632700F2B0CE /* DemoView.swift */; };
-		AD2A9F7320BF99B900CDC189 /* ARModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A9F7220BF99B900CDC189 /* ARModel.swift */; };
+		AD2A9F7320BF99B900CDC189 /* ARViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A9F7220BF99B900CDC189 /* ARViewModel.swift */; };
 		AD2A9F7620BF9FAA00CDC189 /* SceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */; };
 		AD42808020D15EEA00C36A52 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AD42807F20D15EEA00C36A52 /* art.scnassets */; };
 		AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */; };
@@ -35,7 +35,7 @@
 		6186A81C20D0F07900C523FA /* SpeechManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechManager.swift; sourceTree = "<group>"; };
 		61A09ACA2DBAD241B4820F65 /* Pods_AR_in_Retails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_in_Retails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E894C520C6632700F2B0CE /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
-		AD2A9F7220BF99B900CDC189 /* ARModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARModel.swift; sourceTree = "<group>"; };
+		AD2A9F7220BF99B900CDC189 /* ARViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewModel.swift; sourceTree = "<group>"; };
 		AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNode.swift; sourceTree = "<group>"; };
 		AD42807F20D15EEA00C36A52 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				612BA20120C7AB7200E240DE /* BFS.swift */,
-				AD2A9F7220BF99B900CDC189 /* ARModel.swift */,
+				AD2A9F7220BF99B900CDC189 /* ARViewModel.swift */,
 				AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */,
 				ADB9FB1420D4B4D400705241 /* BeaconManager.swift */,
 			);
@@ -411,7 +411,7 @@
 				6186A81D20D0F07900C523FA /* SpeechManager.swift in Sources */,
 				612BA20220C7AB7200E240DE /* BFS.swift in Sources */,
 				6186A81B20D0EC6D00C523FA /* ChatViewController.swift in Sources */,
-				AD2A9F7320BF99B900CDC189 /* ARModel.swift in Sources */,
+				AD2A9F7320BF99B900CDC189 /* ARViewModel.swift in Sources */,
 				AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */,
 				AD955AF4207B07C100355522 /* StoreViewController.swift in Sources */,
 				ADB9FB1520D4B4D400705241 /* BeaconManager.swift in Sources */,

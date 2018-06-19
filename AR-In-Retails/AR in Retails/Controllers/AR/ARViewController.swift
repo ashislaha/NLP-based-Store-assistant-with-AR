@@ -12,8 +12,11 @@ import ARKit
 class ARViewController: UIViewController, ARSCNViewDelegate {
 
     var productData: String?
-    var model: ARModel?
     let storeModel = StoreModel()
+    let viewModel = ARViewModel()
+    
+    var navigateToProduct: ProductDepartment?
+    private var userPosition: EILOrientedPoint?
    
     private var sceneView: ARView = {
         let view = ARView()
@@ -63,7 +66,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         super.viewWillAppear(animated)
         
         sceneView.run()
-        addNodesToScene()
+        //addProductsImagesIntoScene()
+        drawRoute()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -71,33 +75,35 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
           sceneView.pause()
     }
     
-    private func addNodesToScene() {
+    private func addProductsImagesIntoScene() {
         for each in storeModel.planStore {
             if let image = storeModel.images[each.key] {
                 let imageNode = SceneNodeCreator.getImageNode(image: image, name: each.key.rawValue)
                 sceneView.scene.rootNode.addChildNode(imageNode)
             }
         }
-        view.addSubview(sceneView)
     }
     
     private func updateNodesPosition(userPosition: EILOrientedPoint) {
         for eachNode in sceneView.scene.rootNode.childNodes {
             if let nodeName = eachNode.name, let product = ProductDepartment(rawValue: nodeName), let productPosition = storeModel.planStore[product] {
-                let userPositionX = Float(floor(userPosition.x))
-                let userPositionY = Float(floor(userPosition.y))
-                let productX = Float(productPosition.x)
-                let productY = Float(productPosition.y)
-                
-                // let's translate the positions
-                let newUserX = -userPositionY
-                let newUserY = userPositionX
-                let newProductX = -productY
-                let newProductY = productX
-                
-                let position = SCNVector3Make(newProductX-newUserX, 0, -(newProductY-newUserY))
-                eachNode.position = position
+                let userPos = CGPoint(x: userPosition.x, y: userPosition.y)
+                eachNode.position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
             }
+        }
+    }
+    
+    private func drawRoute() {
+        userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
+        navigateToProduct = .fruits
+        
+        guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
+        
+        let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
+        let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition)
+        let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
+        for each in nodes {
+            sceneView.scene.rootNode.addChildNode(each)
         }
     }
 }
@@ -107,6 +113,7 @@ extension ARViewController: UserPositionUpdateProtocol {
     func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation) {
         let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
         debugLabel.text = userLocation
+        userPosition = position
         updateNodesPosition(userPosition: position)
     }
 }
