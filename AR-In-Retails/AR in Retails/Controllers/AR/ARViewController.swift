@@ -96,11 +96,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     private func drawRoute() {
         userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
         navigateToProduct = .fruits
-        
         guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
-        
         let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
-        let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition)
+        let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
         let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
         for each in nodes {
             sceneView.scene.rootNode.addChildNode(each)
@@ -117,3 +115,5 @@ extension ARViewController: UserPositionUpdateProtocol {
         updateNodesPosition(userPosition: position)
     }
 }
+
+

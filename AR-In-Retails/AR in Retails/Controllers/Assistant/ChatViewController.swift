@@ -12,7 +12,8 @@ import UIKit
 import Speech
 
 protocol ChatDelegate: class {
-    func navigate(to: String)
+    func navigate(to: ProductDepartment)
+    func findOutSource(userX : CGFloat, userY: CGFloat) -> Int
 }
 
 
@@ -104,11 +105,12 @@ class ChatViewController: JSQMessagesViewController {
             
             if let textResponse = response.result.fulfillment.speech {
                 if response.result.action == "input.navigation" {
-                    if let dest = StoreModel().productToNodeInt[textResponse] {
+                    
+                    if let dest = StoreModel().productToNodeInt[ProductDepartment(rawValue: textResponse)!] {
                         SpeechManager.shared.speak(text: "Navigating to " + textResponse)
 //                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
                         strongSelf.finishReceivingMessage()
-                        strongSelf.delegate?.navigate(to: textResponse)
+                        strongSelf.delegate?.navigate(to: ProductDepartment(rawValue: textResponse)!)
                         strongSelf.navigationController?.popViewController(animated: true)
                     }
                     else{

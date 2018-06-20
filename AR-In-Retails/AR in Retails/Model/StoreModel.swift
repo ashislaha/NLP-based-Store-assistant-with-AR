@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+
+
 struct StoreModel {
     
     var Xcenter: CGFloat = 0.0
@@ -24,19 +26,13 @@ struct StoreModel {
     ]
     
     
-    let productToNodeInt: [String:[Int]] = [
-        "fruits": [0,2],
-        "fruit": [0,2],
-        "fashion": [2, 7, 9],
-        "mobiles": [6, 8, 13],
-        "mobile": [6, 8, 13],
-        "shoes": [1, 6],
-        "grocery": [0, 1, 4],
-        "groceries": [0, 1, 4],
-        "laptops": [4, 7, 8, 11],
-        "laptop": [4, 7, 8, 11],
-        "computer": [4, 7, 8, 11],
-
+    let productToNodeInt: [ProductDepartment :[Int]] = [
+        .fruits: [0,2],
+        .fashion: [2, 7, 9],
+        .mobiles: [6, 8, 13],
+        .shoes: [1, 6],
+        .groceries: [0, 1, 4],
+        .laptops: [4, 7, 8, 11],
     ]
     
     let planStore: [ProductDepartment: CGPoint] = [
@@ -57,9 +53,19 @@ struct StoreModel {
         .mobiles: #imageLiteral(resourceName: "mobiles")
     ]
     
-    public func findoutRoutePoints(from: CGPoint, to: CGPoint ) -> [CGPoint] {
-        // send the points
-        return [CGPoint(x: 1, y: 0), CGPoint(x: 3, y: 0), CGPoint(x: 3, y: 3)]
+    public func findoutRoutePoints(from: CGPoint, to: CGPoint, product: ProductDepartment) -> [CGPoint] {
+        
+        
+        weak var delegate: ChatDelegate?
+        let source = delegate?.findOutSource(userX: from.x, userY: from.y)
+        let dest: [Int]  = productToNodeInt[product]!
+        let nodes:[Int] = graph.BFS(start: source!, des: dest)
+        var interNodes:[CGPoint] = []
+        for item in nodes {
+            let mapPoint : CGPoint = returnPoint(index: item)
+            interNodes.append(CGPoint(x: mapPoint.x*9.5/width, y: mapPoint.y*5.0/height))
+        }
+        return interNodes
     }
     
     
