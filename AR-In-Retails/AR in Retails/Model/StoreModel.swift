@@ -53,6 +53,16 @@ struct StoreModel {
         .mobiles:#imageLiteral(resourceName: "mobiles")
     ]
     
+    // mapped beacons
+    let productsToBeacons: [ProductDepartment: String] = [
+        .fruits: "purple1",
+        .groceries: "yellow1",
+        .shoes: "pink1",
+        .fashion: "purple2",
+        .laptops: "yellow2",
+        .mobiles: "pink2"
+    ]
+    
     public func findoutRoutePoints(from: CGPoint, to: CGPoint, product: ProductDepartment) -> [CGPoint] {
         
         
