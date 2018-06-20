@@ -15,6 +15,13 @@ protocol ChatDelegate: class {
     func navigate(to: String)
 }
 
+struct Message {
+    static let title = "title"
+    static let imageUrl = "imageUrl"
+    static let type = "type"
+    static let subtitle = "subtitle"
+}
+
 class OutgoingAvatar:NSObject, JSQMessageAvatarImageDataSource {
     func avatarImage() -> UIImage! {
         return #imageLiteral(resourceName: "Walmart")
@@ -48,6 +55,8 @@ class ChatViewController: JSQMessagesViewController {
     private let userId = "userId"
     private let userName = "user_name"
     private let initialStatement = "Say something, I'm listening!"
+    private var finalIndex: Int = 0
+    private var dialogflowMessages: [[String: Any]] = []
     
     var messages = [JSQMessage]()
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -77,9 +86,6 @@ class ChatViewController: JSQMessagesViewController {
         let deadlineTime = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime, execute: { [weak self] in
             self?.populateWithWelcomeMessage()
-            // remove later
-            self?.addOffers(offers: ["hdfc-offer", "paytm"])
-            
         })
     }
     
@@ -102,69 +108,10 @@ class ChatViewController: JSQMessagesViewController {
         tapped = !tapped
     }
     
-    func populateWithWelcomeMessage() {
-        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E.")
-        finishReceivingMessage()
-        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you.")
-        finishReceivingMessage()
-    }
-    
-    private func addMessage(withId id: String, name: String, text: String) {
-        if let message = JSQMessage(senderId: id, displayName: name, text: text) {
-            messages.append(message)
-        }
-    }
-    
-    private func addOffers(offers: [String]) {
-
-        for eachOffer in offers {
-            if let image = UIImage(named: eachOffer), let media = JSQPhotoMediaItem(image: image), let message = JSQMessage(senderId: senderIdentifier, displayName: displayName, media: media) {
-                messages.append(message)
-                finishSendingMessage()
-            }
-        }
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
     
-    //MARK: Core Functionality
-    func performQuery(senderId:String,name:String,text:String) {
-        guard !text.isEmpty else { return }
-        let request = ApiAI.shared().textRequest()
-        request?.query = text
-        
-        request?.setMappedCompletionBlockSuccess({ [weak self] (request, response) in
-            guard let response = response as? AIResponse, let strongSelf = self else { return }
-            // check the messages in fullfillment response
-            
-            if let textResponse = response.result.fulfillment.speech {
-                if response.result.action == "input.navigation" {
-                    if let dest = StoreModel().productToNodeInt[textResponse] {
-                        SpeechManager.shared.speak(text: "Navigating to " + textResponse)
-                        strongSelf.finishReceivingMessage()
-                        strongSelf.delegate?.navigate(to: textResponse)
-                        strongSelf.navigationController?.popViewController(animated: true)
-                    } else {
-                        strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: "Product store doesn't exist");
-                        SpeechManager.shared.speak(text: "Product store does not exist")
-                        strongSelf.finishReceivingMessage()
-                    }
-                } else {
-                    SpeechManager.shared.speak(text: textResponse)
-                    strongSelf.addMessage(withId: strongSelf.senderId, name: strongSelf.senderDisplayName, text: textResponse)
-                    strongSelf.finishReceivingMessage()
-                }
-                
-            }
-        }, failure: { (request, error) in
-            print(error?.localizedDescription)
-        })
-        ApiAI.shared().enqueue(request)
-    }
-    
-    //MARK: JSQMessageViewController Methods
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
         return messages[indexPath.item]
     }
@@ -211,7 +158,6 @@ class ChatViewController: JSQMessagesViewController {
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         addMessage(withId: userId, name: userName, text: text!)
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        finishSendingMessage()
         performQuery(senderId: userId, name: userName, text: text!)
         tapped = false
         inputToolbar.contentView.textView.text = ""
@@ -221,6 +167,119 @@ class ChatViewController: JSQMessagesViewController {
         performQuery(senderId: userId, name: userName, text: "Multimedia")
     }
 }
+
+// MARK: Dialogflow handling
+
+extension ChatViewController {
+    
+    func populateWithWelcomeMessage() {
+        addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E.")
+        finishReceivingMessage()
+        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you.")
+        finishReceivingMessage()
+    }
+    
+    func performQuery(senderId:String,name:String,text:String) {
+        guard !text.isEmpty else { return }
+        let request = ApiAI.shared().textRequest()
+        request?.query = text
+        
+        request?.setMappedCompletionBlockSuccess({ [weak self] (request, response) in
+            
+            guard let response = response as? AIResponse, let strongSelf = self, let action = response.result.action else { return }
+            switch action {
+            case "input.searchproduct": strongSelf.handlProductSearch(response: response)
+            case "input.navigation": strongSelf.handleNavigation(response: response)
+            default: strongSelf.defaultHandling(response: response)
+            }
+            
+            }, failure: { (request, error) in
+                print(error?.localizedDescription)
+        })
+        ApiAI.shared().enqueue(request)
+    }
+    
+    private func handlProductSearch(response: AIResponse) {
+        if let messages = response.result.fulfillment.messages as? [[String: Any]], !messages.isEmpty {
+            if let dict = messages.first, let speech = dict["speech"] as? String {
+                addMessage(withId: senderId, name: senderDisplayName, text: speech)
+            } else {
+                dialogflowMessages = messages
+                finalIndex = messages.count
+                productsDetailsWithImages(index: 0)
+            }
+        }
+    }
+    
+    private func productsDetailsWithImages(index: Int) {
+        if index == finalIndex {
+            finalIndex = 0
+            dialogflowMessages = []
+        } else {
+            let productDetails = dialogflowMessages[index][Message.title] as? String ?? ""
+            let imageUrl = dialogflowMessages[index][Message.imageUrl] as? String ?? ""
+            addMessage(withId: senderId, name: senderDisplayName, text: productDetails)
+            addMedia(imageUrl: imageUrl, callBack: { [weak self] in
+                self?.productsDetailsWithImages(index: index+1)
+            })
+        }
+    }
+    
+    private func handleNavigation(response: AIResponse) {
+        guard let textResponse = response.result.fulfillment.speech else { return }
+        if let dest = StoreModel().productToNodeInt[textResponse] {
+            SpeechManager.shared.speak(text: "Navigating to " + textResponse)
+            finishReceivingMessage()
+            delegate?.navigate(to: textResponse)
+            navigationController?.popViewController(animated: true)
+        } else {
+            addMessage(withId: senderId, name: senderDisplayName, text: "Product store doesn't exist");
+            SpeechManager.shared.speak(text: "Product store does not exist")
+            finishReceivingMessage()
+        }
+    }
+    
+    private func addMessage(withId id: String, name: String, text: String) {
+        if let message = JSQMessage(senderId: id, displayName: name, text: text) {
+            messages.append(message)
+            finishSendingMessage()
+        }
+    }
+    
+    private func addMedia(imageUrl: String, callBack: @escaping (() -> ()) ) {
+        guard let url = URL(string: imageUrl) else { return }
+        let dataTask = URLSession.shared.dataTask(with: url) { (data, response, err) in
+            if let data = data {
+                DispatchQueue.main.async { [weak self] in
+                    if let image = UIImage(data: data) {
+                        self?.addImageMedia(image: image)
+                        callBack()
+                    }
+                }
+            } else {
+                callBack()
+            }
+        }
+        dataTask.resume()
+    }
+    
+    private func addImageMedia(image: UIImage) {
+        if let media = JSQPhotoMediaItem(image: image), let message = JSQMessage(senderId: senderIdentifier, displayName: displayName, media: media) {
+            messages.append(message)
+            finishSendingMessage()
+        }
+    }
+    
+    private func defaultHandling(response: AIResponse) {
+        guard let textResponse = response.result.fulfillment.speech else { return }
+        SpeechManager.shared.speak(text: textResponse)
+        addMessage(withId: senderId, name: senderDisplayName, text: textResponse)
+    }
+}
+
+
+// MARK: Speech Manager delegate
+
 extension ChatViewController:SpeechManagerDelegate {
     func didStartedListening(status:Bool) {
         if status {
