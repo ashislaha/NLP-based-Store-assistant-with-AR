@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     
     private var mapView : GMSMapView!
     private var isUserInsideStore = false
-    private let storeModel = StoreModel()
+    private let storeModel = StoreModel.shared
     private var mapPath: [GMSPath] = []
     
     lazy var proceedView: ProceedView = {

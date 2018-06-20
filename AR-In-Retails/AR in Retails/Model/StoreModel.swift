@@ -11,18 +11,19 @@ import UIKit
 
 
 
-struct StoreModel {
+class StoreModel {
+    
+    static let shared = StoreModel()
     
     var Xcenter: CGFloat = 0.0
     var Ycenter: CGFloat = 0.0
-    var height: CGFloat = 0.0
-    var width: CGFloat = 0.0
+
     let graph = Graph(arr: [0,1,2,3,4,5,6,7,8,9,10,11,12,13])
     var jsonArray: [[String: Any]] = []
     
     let storesBoundary: [String: [(Double,Double)]] = [
         "aura-block-b": [(12.938026, 77.690704), (12.937993, 77.691184), (12.936907, 77.691089), (12.936910, 77.690698)],
-        "aura-block-a": [(12.936807, 77.690841), (12.936803, 77.691079), (12.936042, 77.691032), (12.936002, 77.690855)]
+        "aura-block-a": [(12.936806, 77.690747), (12.936803, 77.691079), (12.936042, 77.691032), (12.936002, 77.690855)]
     ]
     
     
@@ -63,25 +64,82 @@ struct StoreModel {
         .mobiles: "pink2"
     ]
     
+    func findOutSource(userX : CGFloat, userY: CGFloat) -> Int {
+        // userPosition give you the current user location
+        // find out the nearest source node of that position to apply BFS
+        //        guard let userX = userPosition?.x, let userY = userPosition?.y else {return -1}
+        
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return -1 }
+        let width = appDel.width
+        let height = appDel.height
+        
+        var i: Int = 0
+        var minDis: CGFloat = 10000.0
+        var minNode: Int = -1
+        
+        while i < 14 {
+            let node = returnPoint(index: i)
+            let point: CGPoint = CGPoint(x: (node.x/width)*9.5, y: (node.y/height)*5.0)
+            let dis = CGPointDistanceSquared(from: point,to: CGPoint(x: userX, y: userY))
+            if  dis - minDis < 0.0 {
+                minDis = dis
+                minNode = i
+            }
+            i = i+1
+        }
+        return minNode
+    }
+    
+    private func CGPointDistanceSquared(from: CGPoint, to: CGPoint) -> CGFloat {
+        return (from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)
+    }
+    
     public func findoutRoutePoints(from: CGPoint, to: CGPoint, product: ProductDepartment) -> [CGPoint] {
+
+        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return [] }
+        let width = appDel.width
+        let height = appDel.height
         
-        
-        weak var delegate: ChatDelegate?
-        let source = delegate?.findOutSource(userX: from.x, userY: from.y)
-        let dest: [Int]  = productToNodeInt[product]!
-        let nodes:[Int] = graph.BFS(start: source!, des: dest)
+        let source = findOutSource(userX: from.x, userY: from.y)
+        let dest: [Int] = productToNodeInt[product]!
+        let nodes:[Int] = graph.BFS(start: source, des: dest)
         var interNodes:[CGPoint] = []
-        for item in nodes {
-            let mapPoint : CGPoint = returnPoint(index: item)
-            interNodes.append(CGPoint(x: mapPoint.x*9.5/width, y: mapPoint.y*5.0/height))
+        let pathPoints = calculatePathPoints(parents: nodes, des: dest, source:source )
+        for item in pathPoints {
+            interNodes.append(CGPoint(x: item.x*9.5/width, y: item.y*5.0/height))
         }
         return interNodes
     }
     
+    private func calculatePathPoints(parents: [Int], des: [Int], source: Int)-> [CGPoint] {
+        var ourDes:Int = -1
+        for i in des {
+            if parents[i] != -1 {
+                ourDes = i
+                break
+            }
+        }
+        // back tracking
+        var val = ourDes
+        var points: [CGPoint] = []
+        
+        while val != source {
+            let point = returnPoint(index: val)
+            points.append(point)
+            val = parents[val]
+        }
+        points.append(returnPoint(index: source)) 
+        return points
+    }
     
-    mutating func createDictionary(view: UIImageView) {
-        height = view.frame.size.height
-        width = view.frame.size.width
+    
+    func createDictionary(view: UIImageView) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.height = view.frame.size.height
+        appDelegate.width = view.frame.size.width
+
+        let width = view.frame.size.width
+        let height = view.frame.size.height
         Xcenter = view.frame.midX - view.frame.origin.x
         Ycenter = view.frame.midY - view.frame.origin.y - height/50.0
         
@@ -179,6 +237,7 @@ struct StoreModel {
     }
     
     func returnPoint(index: Int) -> CGPoint {
+        
         guard index < jsonArray.count, let pointX = jsonArray[index]["coordinateX"] as? CGFloat, let pointY = jsonArray[index]["coordinateY"] as? CGFloat else { return CGPoint.zero }
         return CGPoint(x: pointX, y: pointY)
     }

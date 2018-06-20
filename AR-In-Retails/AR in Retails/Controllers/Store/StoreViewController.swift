@@ -13,7 +13,7 @@ import Speech
 class StoreViewController: UIViewController, SFSpeechRecognizerDelegate {
 
     var demoView:DemoView?
-    var storeModel = StoreModel()
+    var storeModel = StoreModel.shared
     var userPosition: EILOrientedPoint?
     
     let userPositionImage: UIImageView = {
@@ -127,36 +127,10 @@ extension StoreViewController: ChatDelegate {
        // guard let userX = userPosition?.x, let userY = userPosition?.y else {return}
         let userX = 9
         let userY = 5
-        let source = findOutSource(userX: CGFloat(userX), userY: CGFloat(userY))
-        if let dest = StoreModel().productToNodeInt[to] {
+        let source = storeModel.findOutSource(userX: CGFloat(userX), userY: CGFloat(userY))
+        if let dest = StoreModel.shared.productToNodeInt[to] {
              displayPath(start: source, des: dest)
         }
-    }
-    
-    private func CGPointDistanceSquared(from: CGPoint, to: CGPoint) -> CGFloat {
-        return (from.x - to.x) * (from.x - to.x) + (from.y - to.y) * (from.y - to.y)
-    }
-
-    func findOutSource(userX : CGFloat, userY: CGFloat) -> Int {
-        // userPosition give you the current user location
-        // find out the nearest source node of that position to apply BFS
-//        guard let userX = userPosition?.x, let userY = userPosition?.y else {return -1}
-
-        var i: Int = 0
-        var minDis: CGFloat = 10000.0
-        var minNode: Int = -1
-
-        while i < 14 {
-            let node = storeModel.returnPoint(index: i)
-            let point: CGPoint = CGPoint(x: (node.x/storeModel.width)*9.5, y: (node.y/storeModel.height)*5.0)
-            let dis = CGPointDistanceSquared(from: point,to: CGPoint(x: userX, y: userY))
-            if  dis - minDis < 0.0 {
-                minDis = dis
-                minNode = i
-            }
-            i = i+1
-        }
-        return minNode
     }
 }
 

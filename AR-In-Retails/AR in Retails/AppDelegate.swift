@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var beaconManager: BeaconManager?
     let locationManager = CLLocationManager()
+    
+    var height: CGFloat = 0.0
+    var width: CGFloat = 0.0
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         

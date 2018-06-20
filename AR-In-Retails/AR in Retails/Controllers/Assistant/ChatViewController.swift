@@ -13,7 +13,6 @@ import Speech
 
 protocol ChatDelegate: class {
     func navigate(to: ProductDepartment)
-    func findOutSource(userX : CGFloat, userY: CGFloat) -> Int
 }
 
 struct Message {
@@ -228,7 +227,7 @@ extension ChatViewController {
     
     private func handleNavigation(response: AIResponse) {
         guard let textResponse = response.result.fulfillment.speech else { return }
-        if let dest = StoreModel().productToNodeInt[ProductDepartment(rawValue: textResponse)!] {
+        if let dest = StoreModel.shared.productToNodeInt[ProductDepartment(rawValue: textResponse)!] {
             SpeechManager.shared.speak(text: "Navigating to " + textResponse)
             finishReceivingMessage()
             delegate?.navigate(to: ProductDepartment(rawValue: textResponse)!)

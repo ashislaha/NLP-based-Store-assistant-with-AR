@@ -12,7 +12,7 @@ import ARKit
 class ARViewController: UIViewController, ARSCNViewDelegate {
 
     var productData: String?
-    let storeModel = StoreModel()
+    let storeModel = StoreModel.shared
     let viewModel = ARViewModel()
     
     var navigateToProduct: ProductDepartment?
@@ -95,8 +95,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private func drawRoute() {
         userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
-        navigateToProduct = .fruits
+        navigateToProduct = .shoes
+        
         guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
+        
+        storeModel.makeGraph()
         let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
         let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
         let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
