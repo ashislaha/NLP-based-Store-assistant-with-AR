@@ -274,6 +274,7 @@ extension ChatViewController {
     
     private func defaultHandling(response: AIResponse) {
         guard let textResponse = response.result.fulfillment.speech else { return }
+        print(textResponse)
         SpeechManager.shared.speak(text: textResponse)
         addMessage(withId: senderId, name: senderDisplayName, text: textResponse)
     }
