@@ -38,7 +38,7 @@ struct StoreModel {
     let planStore: [ProductDepartment: CGPoint] = [
         .fruits: CGPoint(x: 2, y: 4),
         .groceries: CGPoint(x: 4.5, y: 4),
-        .shoes: CGPoint(x: 7, y: 5),
+        .shoes: CGPoint(x: 7, y: 4),
         .fashion: CGPoint(x: 2, y: 1),
         .laptops: CGPoint(x: 4.5, y: 1),
         .mobiles: CGPoint(x: 7, y: 1)
@@ -47,10 +47,10 @@ struct StoreModel {
     let images: [ProductDepartment: UIImage] = [
         .fruits: #imageLiteral(resourceName: "fruits"),
         .groceries: #imageLiteral(resourceName: "groceries"),
-        .shoes: #imageLiteral(resourceName: "shoes2"),
-        .fashion: #imageLiteral(resourceName: "dress"),
-        .laptops: #imageLiteral(resourceName: "Laptop-Free-Download-PNG"),
-        .mobiles: #imageLiteral(resourceName: "mobiles")
+        .shoes: #imageLiteral(resourceName: "shoes"),
+        .fashion: #imageLiteral(resourceName: "fashion"),
+        .laptops: #imageLiteral(resourceName: "laptop"),
+        .mobiles:#imageLiteral(resourceName: "mobiles")
     ]
     
     public func findoutRoutePoints(from: CGPoint, to: CGPoint, product: ProductDepartment) -> [CGPoint] {
