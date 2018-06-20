@@ -181,5 +181,9 @@ extension StoreViewController: UserPositionUpdateProtocol {
         let newFrame = CGRect(x: userPositionX, y: userPositionY, width: 10, height: 10)
         userPositionImage.frame = newFrame
     }
+    
+    func userDidEnterBeaconsRegion(attachmentValue: String) {
+        print(attachmentValue)
+    }
 }
 

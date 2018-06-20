@@ -7,6 +7,7 @@ target 'AR in Retails' do
 
 # pod 'GoogleMaps'
 # pod ‘EstimoteIndoorSDK’
+# pod 'EstimoteProximitySDK'
 # pod 'ApiAI'
 # pod 'IQKeyboardManagerSwift'
 # pod 'JSQMessagesViewController'

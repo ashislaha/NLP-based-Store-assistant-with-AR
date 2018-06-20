@@ -114,6 +114,10 @@ extension ARViewController: UserPositionUpdateProtocol {
         userPosition = position
         updateNodesPosition(userPosition: position)
     }
+    
+    func userDidEnterBeaconsRegion(attachmentValue: String) {
+        print(attachmentValue)
+    }
 }
 
 

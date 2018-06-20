@@ -8,6 +8,7 @@
 
 import Foundation
 import UserNotifications
+import EstimoteProximitySDK
 
 struct BeaconConstants {
     static let appId = "explore-world-aox"
@@ -21,31 +22,37 @@ struct BeaconConstants {
     struct Purple1 {
         static let identifier = "466aa0756095522195038c737d29e61f"
         static let position = CGPoint(x: 0, y: 5)
+        static let attachmentValue = "purple1"
     }
     
     struct Purple2 {
         static let identifier = "9b9532806d66002812707710ac27fa2d"
         static let position = CGPoint(x: 0, y: 0)
+        static let attachmentValue = "purple2"
     }
     
     struct Pink1 {
         static let identifier = "bc9acba5091010f1af1c2673386a8d1c"
         static let position = CGPoint(x: 9.5, y: 5)
+        static let attachmentValue = "pink1"
     }
     
     struct Pink2 {
         static let identifier = "f8caf97dd768d9c2f981379e7e439a3d"
         static let position = CGPoint(x: 9.5, y: 0)
+        static let attachmentValue = "pink2"
     }
     
     struct Yellow1 {
         static let identifier = "b9e0a297628e933e4998b691968a5e08"
         static let position = CGPoint(x: 4.5, y: 5)
+        static let attachmentValue = "yellow1"
     }
     
     struct Yellow2 {
         static let identifier = "7dcb5539b9bc3e8411202f0e2829c80c"
         static let position = CGPoint(x: 4.5, y: 0)
+        static let attachmentValue = "yellow2"
     }
     
     
@@ -53,6 +60,7 @@ struct BeaconConstants {
 
 protocol UserPositionUpdateProtocol:class {
     func getUserUpdate(position: EILOrientedPoint, accuracy: EILPositionAccuracy, location: EILLocation)
+    func userDidEnterBeaconsRegion(attachmentValue: String)
 }
 
 class BeaconManager: NSObject {
@@ -64,6 +72,8 @@ class BeaconManager: NSObject {
     let userNotificationCenter = UNUserNotificationCenter.current()
     
     weak var delegate: UserPositionUpdateProtocol?
+    var proximityObserver: EPXProximityObserver!
+    
     
     override init() {
         super.init()
@@ -89,7 +99,9 @@ class BeaconManager: NSObject {
                 print("something wrong in local notification permission")
             }
         }
+        
         setupLocalNotification()
+        defineProximityZone()
     }
     
     private func beaconsSetup() -> EILLocation? {
@@ -117,12 +129,7 @@ class BeaconManager: NSObject {
         
         return locationBuilder.build()
     }
-    
-    private func setupLocalNotification() {
-        let grocery = UNNotificationAction(identifier: "groceries", title: "Groceries", options: [.destructive])
-        let category = UNNotificationCategory(identifier: "groceries", actions: [grocery], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [])
-        userNotificationCenter.setNotificationCategories([category])
-    }
+
 }
 
 // MARK: Indoor positioning delegate
@@ -155,19 +162,28 @@ extension BeaconManager: ESTBeaconManagerDelegate {
     
     func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
         print("you entered a new beacon region: \(region)")
-        
-        // you can send a notification if you want
-        setupNotification()
     }
     
-    private func setupNotification() {
+    private func setupNotification(attachmentValue: String) {
         let content = UNMutableNotificationContent()
         content.title = "Hello!"
-        content.body = "This is a new message from Groceries"
-        content.sound = UNNotificationSound.default()
+        var desc = ""
         
-        //make sure to assign the correct category identifier
-        content.categoryIdentifier = "groceries"
+        switch attachmentValue {
+        case BeaconConstants.Purple1.attachmentValue:
+            desc = "Welcome to Fruits section!!"
+        case BeaconConstants.Purple2.attachmentValue:
+            desc = "Welcome to Fashion section!!"
+        case BeaconConstants.Pink1.attachmentValue:
+            desc = "Welcome to Shoes section!!"
+        case BeaconConstants.Pink2.attachmentValue:
+            desc = "Welcome to Mobiles section!!"
+        default: break
+        }
+        
+        content.body = desc
+        content.sound = UNNotificationSound.default()
+        content.categoryIdentifier = attachmentValue
         
         // Deliver the notification in five seconds.
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
@@ -204,4 +220,96 @@ extension BeaconManager: UNUserNotificationCenterDelegate {
             print("default action handler of local notification")
         }
     }
+}
+
+// MARK: Proximity & notifications
+
+extension BeaconManager {
+    
+    private func setupLocalNotification() {
+        
+        var allCategories = Set<UNNotificationCategory>()
+        
+        [BeaconConstants.Pink1.attachmentValue, BeaconConstants.Pink2.attachmentValue, BeaconConstants.Purple1.attachmentValue, BeaconConstants.Purple2.attachmentValue].forEach {
+            let action = UNNotificationAction(identifier: $0, title: $0, options: [.destructive])
+            let category = UNNotificationCategory(identifier: $0, actions: [action], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: [])
+            allCategories.insert(category)
+        }
+       userNotificationCenter.setNotificationCategories(allCategories)
+    }
+    
+    
+    func defineProximityZone() {
+        
+        let couldCredentials = EPXCloudCredentials(appID: BeaconConstants.appId, appToken: BeaconConstants.appToken)
+        let configuration = EPXProximityObserverConfiguration()
+        proximityObserver = EPXProximityObserver(credentials: couldCredentials, configuration: configuration, errorBlock: { (error) in
+            print(error.localizedDescription)
+        })
+        
+        // pink 1
+        let pink1 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: BeaconConstants.Pink1.attachmentValue)
+        pink1.onEnterAction = { [weak self] context in
+            print("You entered into the Pink 1 Zone")
+            self?.setupNotification(attachmentValue: BeaconConstants.Pink1.attachmentValue)
+            self?.delegate?.userDidEnterBeaconsRegion(attachmentValue: BeaconConstants.Pink1.attachmentValue)
+        }
+        pink1.onExitAction = { _ in
+            print("Bye Bye Pink 1 Zone")
+        }
+        
+        // Pink 2
+        let pink2 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: BeaconConstants.Pink2.attachmentValue)
+        pink2.onEnterAction = { [weak self] context in
+            print("You entered into the Pink 2 Zone")
+            self?.setupNotification(attachmentValue: BeaconConstants.Pink2.attachmentValue)
+            self?.delegate?.userDidEnterBeaconsRegion(attachmentValue: BeaconConstants.Pink2.attachmentValue)
+        }
+        pink2.onExitAction = { _ in
+            print("Bye Bye Pink 2 Zone")
+        }
+        
+        // purple 1
+        let purple1 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: BeaconConstants.Purple1.attachmentValue)
+        purple1.onEnterAction = { [weak self] context in
+            print("You entered into the Purple 1 Zone")
+            self?.setupNotification(attachmentValue: BeaconConstants.Purple1.attachmentValue)
+            self?.delegate?.userDidEnterBeaconsRegion(attachmentValue: BeaconConstants.Purple1.attachmentValue)
+        }
+        purple1.onExitAction = { _ in
+            print("Bye Bye Purple 1 Zone")
+        }
+        
+        // Purple 2
+        let purple2 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: BeaconConstants.Purple2.attachmentValue)
+        purple2.onEnterAction = { [weak self] context in
+            print("You entered into the Purple 2 Zone")
+            self?.setupNotification(attachmentValue: BeaconConstants.Purple2.attachmentValue)
+            self?.delegate?.userDidEnterBeaconsRegion(attachmentValue: BeaconConstants.Purple2.attachmentValue)
+        }
+        purple2.onExitAction = { _ in
+            print("Bye Bye Purple 2 Zone")
+        }
+        
+        // yellow 2
+        let yellow2 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: "yellow2")
+        yellow2.onEnterAction = { context in
+            print("You entered into the Yellow 2 Zone")
+        }
+        yellow2.onExitAction = { _ in
+            print("Bye Bye Yellow 2 Zone")
+        }
+        
+        // yellow 1
+        let yellow1 = EPXProximityZone(range: .near, attachmentKey: "color", attachmentValue: "yellow1")
+        yellow1.onEnterAction = { context in
+            print("You entered into the Yellow 2 Zone")
+        }
+        yellow1.onExitAction = { _ in
+            print("Bye Bye Yellow 2 Zone")
+        }
+        
+        proximityObserver.startObserving([pink2, purple2, yellow2])
+    }
+    
 }
