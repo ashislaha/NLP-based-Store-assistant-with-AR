@@ -15,13 +15,13 @@ struct BeaconConstants {
     static let appToken = "f97b822b4052ae9d44f1802f9dc5ce3b"
     static let locationName = "Walmart Store"
     static let storeOrientation: Double = 270 // with respect to true north
-    static let storeWidth: CGFloat = 9.5
-    static let storeHeight: CGFloat = 5
+    static let storeWidth: CGFloat = 10
+    static let storeHeight: CGFloat = 10
     
     // beacons
     struct Purple1 {
         static let identifier = "466aa0756095522195038c737d29e61f"
-        static let position = CGPoint(x: 0, y: 5)
+        static let position = CGPoint(x: 0, y: 10)
         static let attachmentValue = "purple1"
     }
     
@@ -33,16 +33,17 @@ struct BeaconConstants {
     
     struct Pink1 {
         static let identifier = "bc9acba5091010f1af1c2673386a8d1c"
-        static let position = CGPoint(x: 9.5, y: 5)
+        static let position = CGPoint(x: 10, y: 10)
         static let attachmentValue = "pink1"
     }
     
     struct Pink2 {
         static let identifier = "f8caf97dd768d9c2f981379e7e439a3d"
-        static let position = CGPoint(x: 9.5, y: 0)
+        static let position = CGPoint(x: 10, y: 0)
         static let attachmentValue = "pink2"
     }
     
+    // not used now 
     struct Yellow1 {
         static let identifier = "b9e0a297628e933e4998b691968a5e08"
         static let position = CGPoint(x: 4.5, y: 5)

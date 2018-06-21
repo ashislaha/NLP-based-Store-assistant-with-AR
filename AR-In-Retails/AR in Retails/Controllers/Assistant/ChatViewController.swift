@@ -174,9 +174,11 @@ extension ChatViewController {
     
     func populateWithWelcomeMessage() {
         addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E.")
-        finishReceivingMessage()
+        addMessage(withId: senderId, name: senderDisplayName, text: "Todays's Offers:")
+        addImageMedia(image: #imageLiteral(resourceName: "hdfc-offer"))
+        addImageMedia(image: #imageLiteral(resourceName: "paytm"))
         addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you.")
-        finishReceivingMessage()
+        addMessage(withId: senderId, name: senderDisplayName, text: "Do you have wish list to purchase?")
     }
     
     func performQuery(senderId:String,name:String,text:String) {
@@ -228,13 +230,13 @@ extension ChatViewController {
     
     private func handleNavigation(response: AIResponse) {
         guard let textResponse = response.result.fulfillment.speech else { return }
-        if let dest = StoreModel.shared.productToNodeInt[ProductDepartment(rawValue: textResponse)!] {
+        
+        if let department = ProductDepartment(rawValue: textResponse), let dest = StoreModel.shared.productToNodeInt[department] {
             SpeechManager.shared.speak(text: "Navigating to " + textResponse)
             finishReceivingMessage()
             delegate?.navigate(to: ProductDepartment(rawValue: textResponse)!)
             navigationController?.popViewController(animated: true)
-        }
-        else{
+        } else{
             addMessage(withId: senderId, name: senderDisplayName, text: "Product store doesn't exist");
             SpeechManager.shared.speak(text: "Product store does not exist")
             finishReceivingMessage()

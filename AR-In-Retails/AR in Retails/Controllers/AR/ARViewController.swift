@@ -100,7 +100,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     
     private func drawStore() {
         userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
-        let pathNodes = viewModel.getPaths(userLocation: CGPoint.zero, groundClearance: sceneView.groundClearance)
+        
+        let pathNodes = viewModel.getPaths(userLocation: CGPoint.zero, groundClearance: sceneView.groundClearance - 0.5)
         for node in pathNodes {
            sceneView.scene.rootNode.addChildNode(node)
         }
