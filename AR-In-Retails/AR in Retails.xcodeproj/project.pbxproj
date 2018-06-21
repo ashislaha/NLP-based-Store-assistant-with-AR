@@ -16,6 +16,9 @@
 		AD2A9F7620BF9FAA00CDC189 /* SceneNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */; };
 		AD42808020D15EEA00C36A52 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = AD42807F20D15EEA00C36A52 /* art.scnassets */; };
 		AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */; };
+		AD6D60C220DBDADC006B4EF6 /* ShoppingList.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6D60C120DBDADC006B4EF6 /* ShoppingList.xib */; };
+		AD6D60C420DBDDAA006B4EF6 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D60C320DBDDAA006B4EF6 /* ShoppingList.swift */; };
+		AD6D60C620DBE287006B4EF6 /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D60C520DBE287006B4EF6 /* ShoppingListCell.swift */; };
 		AD800A7B20D28901006CFD78 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD800A7A20D28901006CFD78 /* HomeViewController.swift */; };
 		AD955AF4207B07C100355522 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD955AF3207B07C100355522 /* StoreViewController.swift */; };
 		ADB9092120786EAC0052C417 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9092020786EAC0052C417 /* AppDelegate.swift */; };
@@ -39,6 +42,9 @@
 		AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneNode.swift; sourceTree = "<group>"; };
 		AD42807F20D15EEA00C36A52 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
 		AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
+		AD6D60C120DBDADC006B4EF6 /* ShoppingList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShoppingList.xib; sourceTree = "<group>"; };
+		AD6D60C320DBDDAA006B4EF6 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
+		AD6D60C520DBE287006B4EF6 /* ShoppingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
 		AD800A7A20D28901006CFD78 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AD955AF3207B07C100355522 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		AD955AF5207B0F3900355522 /* ObjcBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcBridge.h; sourceTree = "<group>"; };
@@ -183,6 +189,9 @@
 				61E894C520C6632700F2B0CE /* DemoView.swift */,
 				ADCD342220D65CE800262CC9 /* ProceedView.xib */,
 				ADCD342420D65D9D00262CC9 /* ProceedView.swift */,
+				AD6D60C120DBDADC006B4EF6 /* ShoppingList.xib */,
+				AD6D60C320DBDDAA006B4EF6 /* ShoppingList.swift */,
+				AD6D60C520DBE287006B4EF6 /* ShoppingListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -261,6 +270,7 @@
 				ADCD342320D65CE800262CC9 /* ProceedView.xib in Resources */,
 				ADB9092B20786EAC0052C417 /* LaunchScreen.storyboard in Resources */,
 				AD42808020D15EEA00C36A52 /* art.scnassets in Resources */,
+				AD6D60C220DBDADC006B4EF6 /* ShoppingList.xib in Resources */,
 				ADB9092820786EAC0052C417 /* Assets.xcassets in Resources */,
 				ADB9092620786EAC0052C417 /* Main.storyboard in Resources */,
 			);
@@ -417,8 +427,10 @@
 				6186A81B20D0EC6D00C523FA /* ChatViewController.swift in Sources */,
 				AD2A9F7320BF99B900CDC189 /* ARViewModel.swift in Sources */,
 				AD5460EA20D35A4C00E2CDB3 /* StoreModel.swift in Sources */,
+				AD6D60C620DBE287006B4EF6 /* ShoppingListCell.swift in Sources */,
 				AD955AF4207B07C100355522 /* StoreViewController.swift in Sources */,
 				ADB9FB1520D4B4D400705241 /* BeaconManager.swift in Sources */,
+				AD6D60C420DBDDAA006B4EF6 /* ShoppingList.swift in Sources */,
 				ADCD342520D65D9D00262CC9 /* ProceedView.swift in Sources */,
 				ADB90933207876AB0052C417 /* ARViewController.swift in Sources */,
 				61E894C620C6632700F2B0CE /* DemoView.swift in Sources */,

@@ -95,7 +95,7 @@ class StoreModel {
         var interNodes:[CGPoint] = []
         let pathPoints = calculatePathPoints(parents: nodes, des: dest, source:source )
         for item in pathPoints {
-            interNodes.append(CGPoint(x: item.x*9.5/width, y: item.y*5.0/height))
+            interNodes.append(CGPoint(x: item.x*BeaconConstants.storeWidth/width, y: item.y*BeaconConstants.storeHeight/height))
         }
         return interNodes
     }

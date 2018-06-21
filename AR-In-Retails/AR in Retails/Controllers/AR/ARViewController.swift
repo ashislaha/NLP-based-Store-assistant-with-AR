@@ -32,6 +32,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         return label
     }()
     
+    private let shoppingList: ShoppingList = {
+        let shoppingList = ShoppingList()
+        shoppingList.translatesAutoresizingMaskIntoConstraints = false
+        shoppingList.clipsToBounds = true
+        return shoppingList
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +50,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
             beaconManager.delegate = self
             addDebugLabel()
         }
+        addShoppingList()
     }
     
     private func addSceneView() {
@@ -59,7 +67,19 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         sceneView.addSubview(debugLabel)
         sceneView.viewDelegate = self
         debugLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        debugLabel.bottomAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        debugLabel.bottomAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.bottomAnchor, constant: -116).isActive = true
+    }
+    
+    private func addShoppingList() {
+        sceneView.addSubview(shoppingList)
+        shoppingList.images = [#imageLiteral(resourceName: "shoes"), #imageLiteral(resourceName: "fruits"), #imageLiteral(resourceName: "laptop")]
+        
+        NSLayoutConstraint.activate([
+            shoppingList.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            shoppingList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            shoppingList.widthAnchor.constraint(equalToConstant: 210),
+            shoppingList.heightAnchor.constraint(equalToConstant: 100)
+            ])
     }
     
     func getGroundClearance(_ groundClearance: Float) {

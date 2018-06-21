@@ -144,6 +144,11 @@ class ChatViewController: JSQMessagesViewController {
         return message.senderId == senderId ? OutgoingAvatar(): IncomingAvatar()
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+    }
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as? JSQMessagesCollectionViewCell else { return UICollectionViewCell() }
         let message = messages[indexPath.item]
