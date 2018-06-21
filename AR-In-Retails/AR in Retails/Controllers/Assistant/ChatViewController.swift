@@ -152,7 +152,7 @@ class ChatViewController: JSQMessagesViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return 10
     }
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
@@ -190,6 +190,7 @@ extension ChatViewController {
             switch action {
             case "input.searchproduct": strongSelf.handlProductSearch(response: response)
             case "input.navigation": strongSelf.handleNavigation(response: response)
+            case "input.userOffer": strongSelf.userOfferHandler(response: response)
             default: strongSelf.defaultHandling(response: response)
             }
             
@@ -271,9 +272,20 @@ extension ChatViewController {
         }
     }
     
+    private func userOfferHandler(response: AIResponse){
+        guard let textResponse = response.result.fulfillment.speech else { return }
+        let responseArray = textResponse.components(separatedBy: "\n\n")
+        var i:String
+        SpeechManager.shared.speak(text: "Here are the offers as per your past history")
+        for i in responseArray {
+            if(i != ""){
+            addMessage(withId: senderId, name: senderDisplayName, text: i)
+            }
+        }
+    }
+    
     private func defaultHandling(response: AIResponse) {
         guard let textResponse = response.result.fulfillment.speech else { return }
-        print(textResponse)
         SpeechManager.shared.speak(text: textResponse)
         addMessage(withId: senderId, name: senderDisplayName, text: textResponse)
     }

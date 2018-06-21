@@ -171,13 +171,13 @@ extension BeaconManager: ESTBeaconManagerDelegate {
         
         switch attachmentValue {
         case BeaconConstants.Purple1.attachmentValue:
-            desc = "Welcome to Fruits section!!"
+            desc = "Buy 2kg apples and get 1kg extra\n Buy 3 dozens of banana and get 1 dozen free"
         case BeaconConstants.Purple2.attachmentValue:
-            desc = "Welcome to Fashion section!!"
+            desc = "Shop more than 3,000 and get coupons of 500\n Off upto 50% on fbb products"
         case BeaconConstants.Pink1.attachmentValue:
-            desc = "Welcome to Shoes section!!"
+            desc = "25% off on every pair of shoes\n 40% off on Nike brand. Only for today"
         case BeaconConstants.Pink2.attachmentValue:
-            desc = "Welcome to Mobiles section!!"
+            desc = "Use American Express card and get 10% off on IPod\n Exchange offers on IPhone 7 or above"
         default: break
         }
         
