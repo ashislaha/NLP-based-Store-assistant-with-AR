@@ -29,12 +29,12 @@ struct RoutePath {
 
 class ARViewModel {
     
-    private func getPaths() -> [RoutePath] {
+    private func getPaths() -> [RoutePath] { // with respect to store map
         let paths: [RoutePath] = [
-            RoutePath(source: CGPoint(x: 0.5, y: 0.5), destination: CGPoint(x: 9, y: 0.5), alongTrueNorth: true, routeColor: .yellow),
-            RoutePath(source: CGPoint(x: 0.5, y: 2.5), destination: CGPoint(x: 9, y: 2.5), alongTrueNorth: true, routeColor: .yellow),
-            RoutePath(source: CGPoint(x: 3, y: 0.5), destination: CGPoint(x: 3, y: 4.5), alongTrueNorth: false, routeColor: .green),
-            RoutePath(source: CGPoint(x: 6, y: 0.5), destination: CGPoint(x: 6, y: 4.5), alongTrueNorth: false, routeColor: .green)
+            RoutePath(source: CGPoint(x: 0, y: 9), destination: CGPoint(x: 9, y: 9), alongTrueNorth: true, routeColor: .yellow),
+            RoutePath(source: CGPoint(x: 9, y: 9), destination: CGPoint(x: 9, y: 6), alongTrueNorth: true, routeColor: .red),
+            RoutePath(source: CGPoint(x: 9, y: 6), destination: CGPoint(x: 0, y: 6), alongTrueNorth: false, routeColor: .green),
+            RoutePath(source: CGPoint(x: 0, y: 6), destination: CGPoint(x: 0, y: 9), alongTrueNorth: false, routeColor: .blue)
         ]
         return paths
     }
@@ -66,7 +66,7 @@ class ARViewModel {
         return node
     }
     
-    func getPosition(userPosition: CGPoint, productPosition: CGPoint) -> SCNVector3 {
+    func getPosition(userPosition: CGPoint, productPosition: CGPoint, groundClearance: Float = 0) -> SCNVector3 {
         let userPositionX = Float(floor(userPosition.x))
         let userPositionY = Float(floor(userPosition.y))
         let productX = Float(productPosition.x)
@@ -78,18 +78,19 @@ class ARViewModel {
         let newProductX = -productY
         let newProductY = productX
         
-        let position = SCNVector3Make(newProductX-newUserX, 0, -(newProductY-newUserY))
+        let position = SCNVector3Make(newProductX-newUserX, groundClearance, -(newProductY-newUserY))
         return position
     }
     
     func getPaths(userLocation: CGPoint, groundClearance: Float) -> [SCNNode] {
         var nodes: [SCNNode] = []
+        
         for each in getPaths() {
-            //TODO: update from Point and toPoint based on user position
+            //TODO: assume user at (0,9)
             
-            let fromPoint = SCNVector3Make(Float(each.source.x), groundClearance, Float(each.source.y))
-            let toPosition = SCNVector3Make(Float(each.destination.x), groundClearance, Float(each.destination.y))
-            let pathNode = SceneNodeCreator.getPathNode(position1: fromPoint, position2: toPosition)
+            let source = getPosition(userPosition: userLocation, productPosition: each.source, groundClearance: groundClearance )
+            let destination = getPosition(userPosition: userLocation, productPosition: each.destination, groundClearance: groundClearance)
+            let pathNode = SceneNodeCreator.getPathNode(position1: source, position2: destination)
             nodes.append(pathNode)
         }
         return nodes

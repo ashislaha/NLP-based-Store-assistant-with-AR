@@ -63,6 +63,7 @@ extension ARView: ARSCNViewDelegate {
         viewDelegate?.getGroundClearance(groundClearance)
         print("groundClearance: ",groundClearance)
         
+        /*
         let width = CGFloat(planeAnchor.extent.x)
         let height = CGFloat(planeAnchor.extent.z)
         let plane = SCNPlane(width: width, height: height)
@@ -82,6 +83,7 @@ extension ARView: ARSCNViewDelegate {
         
         // 6
         //scene.rootNode.addChildNode(planeNode)
+         */
     }
     
     public func sessionWasInterrupted(_ session: ARSession) {

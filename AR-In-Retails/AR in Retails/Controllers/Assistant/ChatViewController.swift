@@ -193,6 +193,7 @@ extension ChatViewController {
             case "input.searchproduct": strongSelf.handlProductSearch(response: response)
             case "input.navigation": strongSelf.handleNavigation(response: response)
             case "input.userOffer": strongSelf.userOfferHandler(response: response)
+            case "input.wishListYes-custom": strongSelf.handleWishList(response: response)
             default: strongSelf.defaultHandling(response: response)
             }
             
@@ -200,6 +201,16 @@ extension ChatViewController {
                 print(error?.localizedDescription)
         })
         ApiAI.shared().enqueue(request)
+    }
+    
+    private func handleWishList(response: AIResponse) {
+        addMessage(withId: senderId, name: senderDisplayName, text: "Got your list, Navigating you to the path")
+        if let messages = response.result.fulfillment.messages as? [[String: Any]], !messages.isEmpty {
+            // retrieve the products
+            
+        }
+        // initialise the AR kit with
+        
     }
     
     private func handlProductSearch(response: AIResponse) {

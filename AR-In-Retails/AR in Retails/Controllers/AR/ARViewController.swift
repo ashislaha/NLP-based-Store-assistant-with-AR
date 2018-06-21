@@ -70,7 +70,9 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         super.viewWillAppear(animated)
         
         sceneView.run()
-        //addProductsImagesIntoScene()
+        
+        addProductsImagesIntoScene()
+        updateNodesPosition(userPosition: EILOrientedPoint(x: 0, y: 9))
         //drawRoute()
         
     }
@@ -101,7 +103,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     private func drawStore() {
         userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
         
-        let pathNodes = viewModel.getPaths(userLocation: CGPoint.zero, groundClearance: sceneView.groundClearance - 0.5)
+        let pathNodes = viewModel.getPaths(userLocation: CGPoint(x: 0, y: 9), groundClearance: sceneView.groundClearance - 0.5)
         for node in pathNodes {
            sceneView.scene.rootNode.addChildNode(node)
         }
@@ -130,7 +132,8 @@ extension ARViewController: UserPositionUpdateProtocol {
         let userLocation = String(format: "x: %5.2f, y: %5.2f",position.x, position.y)
         debugLabel.text = userLocation
         userPosition = position
-        updateNodesPosition(userPosition: position)
+        // update product based on user location
+        // updateNodesPosition(userPosition: position)
     }
     
     func userDidEnterBeaconsRegion(attachmentValue: String) {

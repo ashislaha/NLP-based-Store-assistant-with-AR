@@ -39,12 +39,12 @@ class StoreModel {
     ]
     
     let planStore: [ProductDepartment: CGPoint] = [
-        .fruits: CGPoint(x: 2, y: 4),
-        .groceries: CGPoint(x: 4.5, y: 4),
-        .shoes: CGPoint(x: 7, y: 4),
-        .fashion: CGPoint(x: 2, y: 1),
-        .laptops: CGPoint(x: 4.5, y: 1),
-        .mobiles: CGPoint(x: 7, y: 1)
+        .fruits: CGPoint(x: 0, y: 9),
+        .groceries: CGPoint(x: 4.5, y: 9),
+        .shoes: CGPoint(x: 9, y: 9),
+        .fashion: CGPoint(x: 0, y: 6),
+        .laptops: CGPoint(x: 4.5, y: 6),
+        .mobiles: CGPoint(x: 9, y: 6)
     ]
     
     let images: [ProductDepartment: UIImage] = [
