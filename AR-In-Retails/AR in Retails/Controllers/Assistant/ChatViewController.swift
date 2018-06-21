@@ -20,6 +20,7 @@ struct Message {
     static let imageUrl = "imageUrl"
     static let type = "type"
     static let subtitle = "subtitle"
+    static let productName = "productName"
 }
 
 class OutgoingAvatar:NSObject, JSQMessageAvatarImageDataSource {
@@ -57,6 +58,8 @@ class ChatViewController: JSQMessagesViewController {
     private let initialStatement = "Say something, I'm listening!"
     private var finalIndex: Int = 0
     private var dialogflowMessages: [[String: Any]] = []
+    private var category: String = ""
+    private var productName: String = ""
     
     var messages = [JSQMessage]()
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -171,6 +174,15 @@ class ChatViewController: JSQMessagesViewController {
     override func didPressAccessoryButton(_ sender: UIButton) {
         performQuery(senderId: userId, name: userName, text: "Multimedia")
     }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        
+        guard let test = self.messages[indexPath.row].media, let photoItem = test as? JSQPhotoMediaItem,
+            let selectedImage = photoItem.image, !productName.isEmpty,  !category.isEmpty else { return }
+        let wishList = WishList(prodName: productName, category: category, image: selectedImage)
+        StoreModel.shared.shoppingList.append(wishList)
+        addMessage(withId: senderId, name: displayName, text: "\(productName) added to your shopping list.")
+    }
 }
 
 // MARK: Dialogflow handling
@@ -226,6 +238,8 @@ extension ChatViewController {
                 dialogflowMessages = messages
                 finalIndex = messages.count
                 productsDetailsWithImages(index: 0)
+                category = messages[0][Message.subtitle] as? String ?? ""
+                productName = messages[0][Message.productName] as? String ?? ""
             }
         }
     }

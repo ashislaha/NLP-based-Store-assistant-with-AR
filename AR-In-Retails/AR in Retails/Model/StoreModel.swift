@@ -9,7 +9,11 @@
 import Foundation
 import UIKit
 
-
+struct WishList{
+    let prodName: String
+    let category: String
+    let image: UIImage
+}
 
 class StoreModel {
     
@@ -28,6 +32,7 @@ class StoreModel {
         "aura-block-a": [(12.936806, 77.690747), (12.936803, 77.691079), (12.936042, 77.691032), (12.936002, 77.690855)]
     ]
     
+    var shoppingList: [WishList] = []
     
     let productToNodeInt: [ProductDepartment :[Int]] = [
         .fruits: [0,2],
