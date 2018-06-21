@@ -114,6 +114,7 @@ class SceneNodeCreator {
         } // else if theta == 0.0 && dx>= 0 { theta = 0.0 }
         
         print("dx = \(dx) and dy =\(dy) Angle: \(theta * 180 / Double.pi) ")
+        theta += Double.pi/2 // TODO: remove this line later
         return theta
     }
     

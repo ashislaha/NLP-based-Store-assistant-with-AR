@@ -210,7 +210,7 @@ extension ChatViewController {
             case "input.searchproduct": strongSelf.handlProductSearch(response: response)
             case "input.navigation": strongSelf.handleNavigation(response: response)
             case "input.userOffer": strongSelf.userOfferHandler(response: response)
-            case "input.wishListYes-custom": strongSelf.handleWishList(response: response)
+            case "input.startShopping": strongSelf.handleShoppingList(response: response)
             default: strongSelf.defaultHandling(response: response)
             }
             
@@ -220,14 +220,12 @@ extension ChatViewController {
         ApiAI.shared().enqueue(request)
     }
     
-    private func handleWishList(response: AIResponse) {
-        addMessage(withId: senderId, name: senderDisplayName, text: "Got your list, Navigating you to the path")
-        if let messages = response.result.fulfillment.messages as? [[String: Any]], !messages.isEmpty {
-            // retrieve the products
-            
-        }
+    private func handleShoppingList(response: AIResponse) {
+        addMessage(withId: senderId, name: senderDisplayName, text: "Got your list, Let's start shopping")
         // initialise the AR kit with
-        
+        guard let arVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ARViewController") as? ARViewController else { return }
+        arVC.isStartShopping = true
+        navigationController?.pushViewController(arVC, animated: true)
     }
     
     private func handlProductSearch(response: AIResponse) {

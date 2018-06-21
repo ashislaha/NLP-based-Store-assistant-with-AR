@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AR in Retails/Controllers/Assistant/ChatViewController.swift"
-            timestampString = "551285243.001109"
+            filePath = "AR in Retails/Controllers/AR/SceneNode.swift"
+            timestampString = "551288121.9096791"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
-            landmarkName = "collectionView(_:didTapMessageBubbleAt:)"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "getAngle(location1:location2:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

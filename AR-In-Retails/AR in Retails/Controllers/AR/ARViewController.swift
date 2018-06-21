@@ -14,6 +14,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     var productData: String?
     let storeModel = StoreModel.shared
     let viewModel = ARViewModel()
+    var isStartShopping = false
     
     var navigateToProduct: ProductDepartment?
     private var userPosition: EILOrientedPoint?
@@ -50,7 +51,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
             beaconManager.delegate = self
             addDebugLabel()
         }
-        addShoppingList()
+       
+        if isStartShopping {
+            addShoppingList()
+            drawRoute()
+        }
     }
     
     private func addSceneView() {
@@ -71,9 +76,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     }
     
     private func addShoppingList() {
-        sceneView.addSubview(shoppingList)
-        shoppingList.images = [#imageLiteral(resourceName: "shoes"), #imageLiteral(resourceName: "fruits"), #imageLiteral(resourceName: "laptop")]
+        guard !StoreModel.shared.shoppingList.isEmpty else { return }
+        var images: [UIImage] = []
+        for each in StoreModel.shared.shoppingList {
+            images.append(each.image)
+        }
+        shoppingList.images = images
         
+        sceneView.addSubview(shoppingList)
         NSLayoutConstraint.activate([
             shoppingList.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
             shoppingList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
@@ -90,11 +100,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         super.viewWillAppear(animated)
         
         sceneView.run()
-        
         addProductsImagesIntoScene()
         updateNodesPosition(userPosition: EILOrientedPoint(x: 0, y: 9))
-        //drawRoute()
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,7 +128,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     }
     
     private func drawStore() {
-        userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
+        userPosition = EILOrientedPoint(x: 0, y: 9) //TODO: remove it
         
         let pathNodes = viewModel.getPaths(userLocation: CGPoint(x: 0, y: 9), groundClearance: sceneView.groundClearance - 0.5)
         for node in pathNodes {
@@ -130,15 +137,19 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     }
     
     private func drawRoute() {
-        userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
+        userPosition = EILOrientedPoint(x: 0, y: 9) //TODO: remove it
+        let userLocation = CGPoint(x: 0, y: 9)
+       
+        /*
         navigateToProduct = .shoes
-        
         guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
-        
         storeModel.makeGraph()
         let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
         let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
         print("Path Nodes:", routePoints)
+        */
+        
+        let routePoints: [CGPoint] = [CGPoint(x: 4.5, y: 9)] //  CGPoint(x: 9, y: 9), CGPoint(x: 9, y: 6), CGPoint(x: 4.5, y: 6)
         let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
         for each in nodes {
             sceneView.scene.rootNode.addChildNode(each)
