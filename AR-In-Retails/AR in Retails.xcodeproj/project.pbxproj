@@ -82,6 +82,7 @@
 			children = (
 				612BA20120C7AB7200E240DE /* BFS.swift */,
 				AD2A9F7220BF99B900CDC189 /* ARViewModel.swift */,
+				AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */,
 				AD5460E920D35A4C00E2CDB3 /* StoreModel.swift */,
 				ADB9FB1420D4B4D400705241 /* BeaconManager.swift */,
 			);
@@ -179,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				ADB9093620787AB50052C417 /* ARView.swift */,
-				AD2A9F7520BF9FAA00CDC189 /* SceneNode.swift */,
 				61E894C520C6632700F2B0CE /* DemoView.swift */,
 				ADCD342220D65CE800262CC9 /* ProceedView.xib */,
 				ADCD342420D65D9D00262CC9 /* ProceedView.swift */,

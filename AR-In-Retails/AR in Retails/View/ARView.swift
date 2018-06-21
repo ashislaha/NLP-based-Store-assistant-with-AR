@@ -9,10 +9,16 @@
 import UIKit
 import ARKit
 
+protocol ARViewDelegate: class {
+    func getGroundClearance(_ groundClearance: Float)
+}
+
 class ARView: ARSCNView {
     
     var showFeaturePoints = true
     public var orientToTrueNorth = true
+    public var groundClearance: Float = 0.0
+    weak var viewDelegate: ARViewDelegate?
     
     //MARK: Setup
     public convenience init() {
@@ -21,8 +27,6 @@ class ARView: ARSCNView {
     
     public override init(frame: CGRect, options: [String : Any]? = nil) {
         super.init(frame: frame, options: options)
-        delegate = self
-        showsStatistics = false
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -41,15 +45,45 @@ class ARView: ARSCNView {
         
         // Run the view's session
         session.run(configuration)
+        delegate = self
+        showsStatistics = false
+        debugOptions = [ARSCNDebugOptions.showFeaturePoints]
     }
     
     public func pause() {
         session.pause()
     }
-    
 }
 
 extension ARView: ARSCNViewDelegate {
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
+        
+        groundClearance = planeAnchor.center.y
+        viewDelegate?.getGroundClearance(groundClearance)
+        print("groundClearance: ",groundClearance)
+        
+        let width = CGFloat(planeAnchor.extent.x)
+        let height = CGFloat(planeAnchor.extent.z)
+        let plane = SCNPlane(width: width, height: height)
+        
+        // 3
+        plane.materials.first?.diffuse.contents = UIColor.blue
+        
+        // 4
+        let planeNode = SCNNode(geometry: plane)
+        
+        // 5
+        let x = CGFloat(planeAnchor.center.x)
+        let y = CGFloat(planeAnchor.center.y)
+        let z = CGFloat(planeAnchor.center.z)
+        planeNode.position = SCNVector3(x,y,z)
+        planeNode.eulerAngles.x = -.pi / 2
+        
+        // 6
+        //scene.rootNode.addChildNode(planeNode)
+    }
+    
     public func sessionWasInterrupted(_ session: ARSession) {
         print("session was interrupted")
     }

@@ -14,7 +14,7 @@ class SceneNodeCreator {
     static let pathColor = UIColor(red: 20.0/255.0, green: 126.0/255.0, blue: 193.0/255.0, alpha: 1.0)
     static let sceneName = "art.scnassets/arrow.scn"
     
-    class func getPathNode(position1 : SCNVector3, position2 : SCNVector3 ) -> SCNNode {
+    class func getPathNode(position1 : SCNVector3, position2 : SCNVector3, color: UIColor = SceneNodeCreator.pathColor ) -> SCNNode {
         
         // calculate Angle
         let dx = position2.x - position1.x
@@ -26,12 +26,12 @@ class SceneNodeCreator {
         print("Angle between point1 and point2 is : \(theta * 180 / Double.pi) along Y-Axis")
         
         //Create Node
-        let width = CGFloat(sqrt( dx*dx + dz*dz ))
+        let width: CGFloat = CGFloat(sqrt( dx*dx + dz*dz ))
         let height : CGFloat = 0.1
         let length : CGFloat = 0.8
         let chamferRadius : CGFloat = 0.05
         let route = SCNBox(width: width, height: height, length: length, chamferRadius: chamferRadius)
-        route.firstMaterial?.diffuse.contents = SceneNodeCreator.pathColor
+        route.firstMaterial?.diffuse.contents = color
         let midPosition = SCNVector3Make((position1.x+position2.x)/2, -1, (position1.z+position2.z)/2)
         let node = SCNNode(geometry: route)
         node.position = midPosition

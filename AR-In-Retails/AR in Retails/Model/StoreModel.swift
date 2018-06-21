@@ -15,6 +15,8 @@ class StoreModel {
     
     static let shared = StoreModel()
     
+    var width: CGFloat = 0.0
+    var height: CGFloat = 0.0
     var Xcenter: CGFloat = 0.0
     var Ycenter: CGFloat = 0.0
 
@@ -65,14 +67,6 @@ class StoreModel {
     ]
     
     func findOutSource(userX : CGFloat, userY: CGFloat) -> Int {
-        // userPosition give you the current user location
-        // find out the nearest source node of that position to apply BFS
-        //        guard let userX = userPosition?.x, let userY = userPosition?.y else {return -1}
-        
-        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return -1 }
-        let width = appDel.width
-        let height = appDel.height
-        
         var i: Int = 0
         var minDis: CGFloat = 10000.0
         var minNode: Int = -1
@@ -95,11 +89,6 @@ class StoreModel {
     }
     
     public func findoutRoutePoints(from: CGPoint, to: CGPoint, product: ProductDepartment) -> [CGPoint] {
-
-        guard let appDel = UIApplication.shared.delegate as? AppDelegate else { return [] }
-        let width = appDel.width
-        let height = appDel.height
-        
         let source = findOutSource(userX: from.x, userY: from.y)
         let dest: [Int] = productToNodeInt[product]!
         let nodes:[Int] = graph.BFS(start: source, des: dest)
@@ -134,12 +123,8 @@ class StoreModel {
     
     
     func createDictionary(view: UIImageView) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        appDelegate.height = view.frame.size.height
-        appDelegate.width = view.frame.size.width
-
-        let width = view.frame.size.width
-        let height = view.frame.size.height
+        height = view.frame.size.height
+        width = view.frame.size.width
         Xcenter = view.frame.midX - view.frame.origin.x
         Ycenter = view.frame.midY - view.frame.origin.y - height/50.0
         

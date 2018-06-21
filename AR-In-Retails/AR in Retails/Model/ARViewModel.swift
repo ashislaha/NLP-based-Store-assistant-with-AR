@@ -20,8 +20,25 @@ enum ProductDepartment: String {
     case mobiles
 }
 
+struct RoutePath {
+    let source: CGPoint
+    let destination: CGPoint
+    let alongTrueNorth: Bool
+    let routeColor: UIColor
+}
 
 class ARViewModel {
+    
+    private func getPaths() -> [RoutePath] {
+        let paths: [RoutePath] = [
+            RoutePath(source: CGPoint(x: 0.5, y: 0.5), destination: CGPoint(x: 9, y: 0.5), alongTrueNorth: true, routeColor: .yellow),
+            RoutePath(source: CGPoint(x: 0.5, y: 2.5), destination: CGPoint(x: 9, y: 2.5), alongTrueNorth: true, routeColor: .yellow),
+            RoutePath(source: CGPoint(x: 3, y: 0.5), destination: CGPoint(x: 3, y: 4.5), alongTrueNorth: false, routeColor: .green),
+            RoutePath(source: CGPoint(x: 6, y: 0.5), destination: CGPoint(x: 6, y: 4.5), alongTrueNorth: false, routeColor: .green)
+        ]
+        return paths
+    }
+    
     
     // get all arrow nodes
     func getArrowNodes(from: CGPoint, with points: [CGPoint]) -> [ArrowNode] {
@@ -63,6 +80,19 @@ class ARViewModel {
         
         let position = SCNVector3Make(newProductX-newUserX, 0, -(newProductY-newUserY))
         return position
+    }
+    
+    func getPaths(userLocation: CGPoint, groundClearance: Float) -> [SCNNode] {
+        var nodes: [SCNNode] = []
+        for each in getPaths() {
+            //TODO: update from Point and toPoint based on user position
+            
+            let fromPoint = SCNVector3Make(Float(each.source.x), groundClearance, Float(each.source.y))
+            let toPosition = SCNVector3Make(Float(each.destination.x), groundClearance, Float(each.destination.y))
+            let pathNode = SceneNodeCreator.getPathNode(position1: fromPoint, position2: toPosition)
+            nodes.append(pathNode)
+        }
+        return nodes
     }
 }
 

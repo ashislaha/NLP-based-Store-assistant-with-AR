@@ -9,7 +9,7 @@
 import UIKit
 import ARKit
 
-class ARViewController: UIViewController, ARSCNViewDelegate {
+class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
 
     var productData: String?
     let storeModel = StoreModel.shared
@@ -57,17 +57,22 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
     
     private func addDebugLabel() {
         sceneView.addSubview(debugLabel)
+        sceneView.viewDelegate = self
         debugLabel.centerXAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.centerXAnchor).isActive = true
         debugLabel.bottomAnchor.constraint(equalTo: sceneView.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
     }
     
+    func getGroundClearance(_ groundClearance: Float) {
+        drawStore()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         sceneView.run()
         //addProductsImagesIntoScene()
-        drawRoute()
+        //drawRoute()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,6 +98,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    private func drawStore() {
+        userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
+        let pathNodes = viewModel.getPaths(userLocation: CGPoint.zero, groundClearance: sceneView.groundClearance)
+        for node in pathNodes {
+           sceneView.scene.rootNode.addChildNode(node)
+        }
+    }
+    
     private func drawRoute() {
         userPosition = EILOrientedPoint(x: 0, y: 0) //TODO: remove it
         navigateToProduct = .shoes
@@ -102,6 +115,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate {
         storeModel.makeGraph()
         let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
         let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
+        print("Path Nodes:", routePoints)
         let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
         for each in nodes {
             sceneView.scene.rootNode.addChildNode(each)
