@@ -18,6 +18,8 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     
     var navigateToProduct: ProductDepartment?
     private var userPosition: EILOrientedPoint?
+    
+    private var productList: [ProductDepartment: [String]] = [:]
    
     private var sceneView: ARView = {
         let view = ARView()
@@ -80,6 +82,14 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         
         var totalImages: [(UIImage, String)] = []
         let departments: [ProductDepartment] = [.fruits, .groceries, .shoes, .mobiles, .laptops, .fashion]
+        
+        // product names - show in 3-D text
+        for each in departments {
+            let productName = StoreModel.shared.shoppingList[each]!.map{ $0.prodName }
+            productList[each] = productName
+        }
+
+        // product images
         for each in departments {
             let images = StoreModel.shared.shoppingList[each]!.map{ ($0.image, $0.prodName) }
             totalImages.append(contentsOf: images)
