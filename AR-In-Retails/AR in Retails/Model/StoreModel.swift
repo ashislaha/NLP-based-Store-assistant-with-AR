@@ -61,10 +61,10 @@ class StoreModel {
     ]
     
     let planStore: [ProductDepartment: CGPoint] = [
-        .fruits: CGPoint(x: 2, y: 9),
-        .groceries: CGPoint(x: 7, y: 9),
-        .shoes: CGPoint(x: 9, y: 9),
-        .fashion: CGPoint(x: 0, y: 6),
+        .fruits: CGPoint(x: 2, y: 9.5),
+        .groceries: CGPoint(x: 6.5, y: 10),
+        .shoes: CGPoint(x: 9, y: 8),
+        .fashion: CGPoint(x: 1, y: 6),
         .laptops: CGPoint(x: 4.5, y: 6),
         .mobiles: CGPoint(x: 9, y: 6)
     ]

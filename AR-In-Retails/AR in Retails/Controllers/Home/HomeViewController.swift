@@ -63,7 +63,8 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: ProceedTappedProtocol {
     func proceedTapped() {
-        isUserInsideStore ? initialiseStoreMapViewController(): initialiseChatViewController()
+        //isUserInsideStore ? initialiseStoreMapViewController(): initialiseChatViewController()
+        initialiseStoreMapViewController()
     }
     
     private func initialiseStoreMapViewController() {

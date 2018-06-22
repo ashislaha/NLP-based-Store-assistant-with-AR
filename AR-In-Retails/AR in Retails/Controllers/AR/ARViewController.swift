@@ -133,12 +133,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                 let productPosition = storeModel.planStore[.fruits]!
                 let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
                 for eachItem in value {
-                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x - 0.5, 0 + i, position.z))
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
                 let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
+                marker.position = SCNVector3Make(position.x - 0.5, 0 + i, position.z)
                 sceneView.scene.rootNode.addChildNode(marker)
                 
             case .groceries:
@@ -146,13 +146,16 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                 let productPosition = storeModel.planStore[.groceries]!
                 let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
                 for eachItem in value {
-                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x + 0.5, 0 + i, position.z))
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
-                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
-                sceneView.scene.rootNode.addChildNode(marker)
+                
+                if !value.isEmpty {
+                    let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                    marker.position = SCNVector3Make(position.x + 0.5, 0 + i , position.z)
+                    sceneView.scene.rootNode.addChildNode(marker)
+                }
                 
             case .shoes:
                 var i: Float = 0
@@ -163,9 +166,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
-                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
-                sceneView.scene.rootNode.addChildNode(marker)
+                
+                if !value.isEmpty {
+                    let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                    marker.position = SCNVector3Make(position.x, 0 + i, position.z + 1)
+                    sceneView.scene.rootNode.addChildNode(marker)
+                }
+                
             case .mobiles:
                 var i: Float = 0
                 let productPosition = storeModel.planStore[.mobiles]!
@@ -175,9 +182,11 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
-                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
-                sceneView.scene.rootNode.addChildNode(marker)
+                if !value.isEmpty {
+                    let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                    marker.position = SCNVector3Make(position.x, 0 + i, position.z + 1)
+                    sceneView.scene.rootNode.addChildNode(marker)
+                }
                 
             case .laptops:
                 
@@ -189,9 +198,13 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
-                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z - 1)
-                sceneView.scene.rootNode.addChildNode(marker)
+                
+                if !value.isEmpty {
+                    let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                    marker.position = SCNVector3Make(position.x, 0 + i, position.z - 1)
+                    sceneView.scene.rootNode.addChildNode(marker)
+                }
+                
                 
             case .fashion:
                 var i: Float = 0
@@ -202,9 +215,12 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
                     sceneView.scene.rootNode.addChildNode(node)
                     i += 0.3
                 }
-                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
-                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z - 1)
-                sceneView.scene.rootNode.addChildNode(marker)
+                
+                if !value.isEmpty {
+                    let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                    marker.position = SCNVector3Make(position.x, 0 + i, position.z - 1)
+                    sceneView.scene.rootNode.addChildNode(marker)
+                }
             }
         }
     }
@@ -226,7 +242,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
          print("Path Nodes:", routePoints)
          */
         
-        let routePoints: [CGPoint] = [CGPoint(x: 4.5, y: 10)] //  CGPoint(x: 9, y: 9), CGPoint(x: 9, y: 6), CGPoint(x: 4.5, y: 6)
+        let routePoints: [CGPoint] = [CGPoint(x: 4.5, y: 9.5)] //  CGPoint(x: 9, y: 9), CGPoint(x: 9, y: 6), CGPoint(x: 4.5, y: 6)
         let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
         for each in nodes {
             sceneView.scene.rootNode.addChildNode(each)
