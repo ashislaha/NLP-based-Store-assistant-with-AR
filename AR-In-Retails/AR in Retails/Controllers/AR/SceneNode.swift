@@ -14,6 +14,45 @@ class SceneNodeCreator {
     static let pathColor = UIColor(red: 20.0/255.0, green: 126.0/255.0, blue: 193.0/255.0, alpha: 0.75)
     static let sceneName = "art.scnassets/arrow.scn"
     
+    class func create3DText(_ text : String, position : SCNVector3) -> SCNNode {
+        
+        // Warning: Creating 3D Text is susceptible to crashing. To reduce chances of crashing; reduce number of polygons, letters, smoothness, etc.
+        
+        // text billboard constraint
+        let billboardConstraint = SCNBillboardConstraint()
+        billboardConstraint.freeAxes = SCNBillboardAxis.Y
+        
+        // text
+        let depth : CGFloat = 0.02
+        let bubble = SCNText(string: text, extrusionDepth: depth)
+        var font = UIFont(name: "Futura", size: 0.25)
+        font = font?.withTraits(traits: .traitItalic)
+        bubble.font = font
+        bubble.alignmentMode = kCAAlignmentCenter
+        bubble.firstMaterial?.diffuse.contents = UIColor.orange
+        bubble.firstMaterial?.specular.contents = UIColor.white
+        bubble.firstMaterial?.isDoubleSided = true
+        bubble.chamferRadius = CGFloat(depth)
+        
+        // node
+        let (minBound, maxBound) = bubble.boundingBox
+        let bubbleNode = SCNNode(geometry: bubble)
+        
+        // Centre Node - to Centre-Bottom point
+        bubbleNode.pivot = SCNMatrix4MakeTranslation( (maxBound.x - minBound.x)/2, minBound.y, Float(depth/2))
+        
+        // Reduce default text size
+        bubbleNode.scale = SCNVector3Make(0.5, 0.5, 0.5)
+        
+        let bubbleNodeParent = SCNNode()
+        bubbleNodeParent.addChildNode(bubbleNode)
+        bubbleNodeParent.constraints = []
+        bubbleNodeParent.position = position
+        
+        return bubbleNodeParent
+    }
+    
+    
     class func getPathNode(position1 : SCNVector3, position2 : SCNVector3, color: UIColor = SceneNodeCreator.pathColor ) -> SCNNode {
         
         // calculate Angle
@@ -139,5 +178,13 @@ extension UIColor {
     }
     class func getCustomColor() -> UIColor {
         return self.init(red: 239.0/255.0, green: 253.0/255.0, blue: 65.0/255.0, alpha: 0.8)
+    }
+}
+
+private extension UIFont {
+    // Based on: https://stackoverflow.com/questions/4713236/how-do-i-set-bold-and-italic-on-uilabel-of-iphone-ipad
+    func withTraits(traits:UIFontDescriptorSymbolicTraits...) -> UIFont {
+        let descriptor = self.fontDescriptor.withSymbolicTraits(UIFontDescriptorSymbolicTraits(traits))
+        return UIFont(descriptor: descriptor!, size: 0)
     }
 }

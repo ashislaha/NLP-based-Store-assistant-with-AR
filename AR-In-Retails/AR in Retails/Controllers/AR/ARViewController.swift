@@ -19,7 +19,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     var navigateToProduct: ProductDepartment?
     private var userPosition: EILOrientedPoint?
     
-    private var productList: [ProductDepartment: [String]] = [:]
+    private var items: [ProductDepartment: [String]] = [:]
    
     private var sceneView: ARView = {
         let view = ARView()
@@ -42,6 +42,19 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         return shoppingList
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        sceneView.run()
+        addProductsImagesIntoScene()
+        updateNodesPosition(userPosition: EILOrientedPoint(x: 0, y: 9))
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sceneView.pause()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +70,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         if isStartShopping {
             addShoppingList()
             drawRoute()
+            drawShoppingItems()
         }
     }
     
@@ -86,7 +100,7 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         // product names - show in 3-D text
         for each in departments {
             let productName = StoreModel.shared.shoppingList[each]!.map{ $0.prodName }
-            productList[each] = productName
+            items[each] = productName
         }
 
         // product images
@@ -107,21 +121,116 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
             ])
     }
     
+    func drawShoppingItems() {
+        guard !items.isEmpty else { return }
+        let userPos = CGPoint(x: 0, y: 9)
+        
+        for (key, value) in items {
+            switch key {
+                
+            case .fruits:
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.fruits]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+                
+            case .groceries:
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.groceries]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+                
+            case .shoes:
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.shoes]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+            case .mobiles:
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.mobiles]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z + 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z + 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+                
+            case .laptops:
+                
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.shoes]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z - 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z - 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+                
+            case .fashion:
+                var i: Float = 0
+                let productPosition = storeModel.planStore[.fashion]!
+                let position = viewModel.getPosition(userPosition: userPos, productPosition: productPosition)
+                for eachItem in value {
+                    let node = SceneNodeCreator.create3DText(eachItem, position: SCNVector3Make(position.x, 0 + i, position.z - 1))
+                    sceneView.scene.rootNode.addChildNode(node)
+                    i += 0.3
+                }
+                let marker = SceneNodeCreator.getImageNode(image: #imageLiteral(resourceName: "map-pin-hi"), name: "")
+                marker.position = SCNVector3Make(position.x, 0 + i + 1, position.z - 1)
+                sceneView.scene.rootNode.addChildNode(marker)
+            }
+        }
+    }
+    
     func getGroundClearance(_ groundClearance: Float) {
         drawStore()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    private func drawRoute() {
+        userPosition = EILOrientedPoint(x: 0, y: 9) //TODO: remove it
+        let userLocation = CGPoint(x: 0, y: 9)
         
-        sceneView.run()
-        addProductsImagesIntoScene()
-        updateNodesPosition(userPosition: EILOrientedPoint(x: 0, y: 9))
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-          super.viewWillDisappear(animated)
-          sceneView.pause()
+        /*
+         navigateToProduct = .shoes
+         guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
+         storeModel.makeGraph()
+         let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
+         let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
+         print("Path Nodes:", routePoints)
+         */
+        
+        let routePoints: [CGPoint] = [CGPoint(x: 4.5, y: 10)] //  CGPoint(x: 9, y: 9), CGPoint(x: 9, y: 6), CGPoint(x: 4.5, y: 6)
+        let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
+        for each in nodes {
+            sceneView.scene.rootNode.addChildNode(each)
+        }
     }
     
     private func addProductsImagesIntoScene() {
@@ -148,26 +257,6 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
         let pathNodes = viewModel.getPaths(userLocation: CGPoint(x: 0, y: 9), groundClearance: sceneView.groundClearance - 0.5)
         for node in pathNodes {
            sceneView.scene.rootNode.addChildNode(node)
-        }
-    }
-    
-    private func drawRoute() {
-        userPosition = EILOrientedPoint(x: 0, y: 9) //TODO: remove it
-        let userLocation = CGPoint(x: 0, y: 9)
-       
-        /*
-        navigateToProduct = .shoes
-        guard let product = navigateToProduct, let navigateToPosition = storeModel.planStore[product], let userPosition = userPosition else { return }
-        storeModel.makeGraph()
-        let userLocation = CGPoint(x: userPosition.x, y: userPosition.y)
-        let routePoints = storeModel.findoutRoutePoints(from: userLocation, to: navigateToPosition, product: navigateToProduct!)
-        print("Path Nodes:", routePoints)
-        */
-        
-        let routePoints: [CGPoint] = [CGPoint(x: 4.5, y: 9)] //  CGPoint(x: 9, y: 9), CGPoint(x: 9, y: 6), CGPoint(x: 4.5, y: 6)
-        let nodes = viewModel.getArrowNodes(from: userLocation, with: routePoints)
-        for each in nodes {
-            sceneView.scene.rootNode.addChildNode(each)
         }
     }
 }
