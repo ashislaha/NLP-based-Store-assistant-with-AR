@@ -78,10 +78,10 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     private func addShoppingList() {
         guard !StoreModel.shared.shoppingList.isEmpty else { return }
         
-        var totalImages: [UIImage] = []
+        var totalImages: [(UIImage, String)] = []
         let departments: [ProductDepartment] = [.fruits, .groceries, .shoes, .mobiles, .laptops, .fashion]
         for each in departments {
-            let images = StoreModel.shared.shoppingList[each]!.map{ $0.image }
+            let images = StoreModel.shared.shoppingList[each]!.map{ ($0.image, $0.prodName) }
             totalImages.append(contentsOf: images)
         }
 
@@ -179,8 +179,8 @@ extension ARViewController: UserPositionUpdateProtocol {
 
 extension ARViewController: ShoppingListProtocol {
     func didSelectProduct(indexPath: IndexPath) {
-        
-        let alert = UIAlertController(title: "Pick up Confirmation", message: "Did you pick up the product?", preferredStyle: .alert)
+        let productName = shoppingList.images[indexPath.item].1
+        let alert = UIAlertController(title: "Pick up Confirmation", message: "\(productName) picked up", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (action) in
             // remove the product from shopping images and store dictionary
             self?.shoppingList.images.remove(at: indexPath.item)

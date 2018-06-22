@@ -15,7 +15,7 @@ protocol ShoppingListProtocol: class {
 class ShoppingList: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     private let nibName = "ShoppingList"
-    var images: [UIImage] = []
+    var images: [(UIImage, String)] = []
     
     weak var delegate: ShoppingListProtocol?
     
@@ -65,7 +65,7 @@ class ShoppingList: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ShoppingListCell else { return UICollectionViewCell() }
-        cell.image = images[indexPath.item]
+        cell.image = images[indexPath.item].0
         return cell
     }
     
