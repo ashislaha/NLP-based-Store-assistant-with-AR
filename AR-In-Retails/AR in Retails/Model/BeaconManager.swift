@@ -186,8 +186,8 @@ extension BeaconManager: ESTBeaconManagerDelegate {
         content.sound = UNNotificationSound.default()
         content.categoryIdentifier = attachmentValue
         
-        // Deliver the notification in five seconds.
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        // Deliver the notification in one second.
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
         let request = UNNotificationRequest(identifier: "hello", content: content, trigger: trigger)
         
         userNotificationCenter.add(request) { (error : Error?) in

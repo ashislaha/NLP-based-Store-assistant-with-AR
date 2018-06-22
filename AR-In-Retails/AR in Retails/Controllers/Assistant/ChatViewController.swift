@@ -60,6 +60,10 @@ class ChatViewController: JSQMessagesViewController {
     private var dialogflowMessages: [[String: Any]] = []
     private var category: String = ""
     private var productName: String = ""
+    private var timer: Timer?
+    private var index = 0
+    private var initialMessages: [Any] = ["Todays's Offers:", #imageLiteral(resourceName: "paytm"), "I am here to help you.", "Do you want to create a shopping list?", #imageLiteral(resourceName: "emptyCart")]
+    private var endIndex = 0
     
     var messages = [JSQMessage]()
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
@@ -182,6 +186,7 @@ class ChatViewController: JSQMessagesViewController {
         let wishList = WishList(prodName: productName, category: category, image: selectedImage)
         
         StoreModel.shared.shoppingList[departmanet]!.append(wishList)
+        addImageMedia(image: #imageLiteral(resourceName: "addCart"))
         addMessage(withId: senderId, name: displayName, text: "\(productName) added to your shopping list.")
     }
 }
@@ -192,11 +197,24 @@ extension ChatViewController {
     
     func populateWithWelcomeMessage() {
         addMessage(withId: senderId, name: senderDisplayName, text: "Hi I am Walmart-Bot: Wal-E.")
-        addMessage(withId: senderId, name: senderDisplayName, text: "Todays's Offers:")
-        addImageMedia(image: #imageLiteral(resourceName: "hdfc-offer"))
-        addImageMedia(image: #imageLiteral(resourceName: "paytm"))
-        addMessage(withId: senderId, name: senderDisplayName, text: "I am here to help you.")
-        addMessage(withId: senderId, name: senderDisplayName, text: "Do you have wish list to purchase?")
+        endIndex = initialMessages.count
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ChatViewController.showInitialiseMessage), userInfo: nil, repeats: true)
+    }
+    
+    @objc func showInitialiseMessage() {
+        if index == endIndex {
+            SpeechManager.shared.speak(text: "Do you want to create a shopping list?")
+            timer?.invalidate()
+            timer = nil
+        } else {
+            let message = initialMessages[index]
+            if let message = message as? String {
+                addMessage(withId: senderId, name: senderDisplayName, text: message)
+            } else if let image = message as? UIImage {
+                addImageMedia(image: image)
+            }
+            index += 1
+        }
     }
     
     func performQuery(senderId:String,name:String,text:String) {
@@ -212,6 +230,8 @@ extension ChatViewController {
             case "input.navigation": strongSelf.handleNavigation(response: response)
             case "input.userOffer": strongSelf.userOfferHandler(response: response)
             case "input.startShopping": strongSelf.handleShoppingList(response: response)
+            case "input.showUserWishList": strongSelf.handleShowWishList()
+            case "input.clearUserWishList": strongSelf.removeWishList()
             default: strongSelf.defaultHandling(response: response)
             }
             
@@ -219,6 +239,30 @@ extension ChatViewController {
                 print(error?.localizedDescription)
         })
         ApiAI.shared().enqueue(request)
+    }
+    
+    private func removeWishList() {
+        addImageMedia(image: #imageLiteral(resourceName: "clearCart"))
+        addMessage(withId: senderIdentifier, name: senderDisplayName, text: "Your shopping list is empty now.")
+        StoreModel.shared.shoppingList = [
+            .fruits: [],
+            .groceries: [],
+            .shoes: [],
+            .mobiles: [],
+            .laptops: [],
+            .fashion: []
+        ]
+    }
+    
+    private func handleShowWishList() {
+        guard !StoreModel.shared.shoppingList.isEmpty else { return }
+        addImageMedia(image: #imageLiteral(resourceName: "fullList"))
+        for (_, list) in StoreModel.shared.shoppingList {
+            for each in list {
+                addMessage(withId: senderIdentifier, name: senderDisplayName, text: each.prodName)
+                addImageMedia(image: each.image)
+            }
+        }
     }
     
     private func handleShoppingList(response: AIResponse) {
