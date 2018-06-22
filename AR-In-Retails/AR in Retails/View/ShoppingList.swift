@@ -8,10 +8,16 @@
 
 import Foundation
 
+protocol ShoppingListProtocol: class {
+    func didSelectProduct(indexPath: IndexPath)
+}
+
 class ShoppingList: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     private let nibName = "ShoppingList"
     var images: [UIImage] = []
+    
+    weak var delegate: ShoppingListProtocol?
     
     @IBOutlet weak var collectionView: UICollectionView! {
         didSet {
@@ -64,7 +70,7 @@ class ShoppingList: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        delegate?.didSelectProduct(indexPath: indexPath)
     }
 }
 

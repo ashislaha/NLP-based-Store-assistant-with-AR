@@ -77,13 +77,18 @@ class ARViewController: UIViewController, ARSCNViewDelegate, ARViewDelegate {
     
     private func addShoppingList() {
         guard !StoreModel.shared.shoppingList.isEmpty else { return }
-        var images: [UIImage] = []
-        for each in StoreModel.shared.shoppingList {
-            images.append(each.image)
-        }
-        shoppingList.images = images
         
+        var totalImages: [UIImage] = []
+        let departments: [ProductDepartment] = [.fruits, .groceries, .shoes, .mobiles, .laptops, .fashion]
+        for each in departments {
+            let images = StoreModel.shared.shoppingList[each]!.map{ $0.image }
+            totalImages.append(contentsOf: images)
+        }
+
+        shoppingList.images = totalImages
         sceneView.addSubview(shoppingList)
+        shoppingList.delegate = self
+        
         NSLayoutConstraint.activate([
             shoppingList.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
             shoppingList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
@@ -169,6 +174,22 @@ extension ARViewController: UserPositionUpdateProtocol {
     
     func userDidEnterBeaconsRegion(attachmentValue: String) {
         print(attachmentValue)
+    }
+}
+
+extension ARViewController: ShoppingListProtocol {
+    func didSelectProduct(indexPath: IndexPath) {
+        
+        let alert = UIAlertController(title: "Pick up Confirmation", message: "Did you pick up the product?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { [weak self] (action) in
+            // remove the product from shopping images and store dictionary
+            self?.shoppingList.images.remove(at: indexPath.item)
+            self?.shoppingList.collectionView.reloadData()
+        }
+        let noAction = UIAlertAction(title: "No", style: .default, handler: nil)
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        present(alert, animated: true, completion: nil)
     }
 }
 

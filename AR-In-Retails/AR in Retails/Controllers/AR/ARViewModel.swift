@@ -10,16 +10,6 @@ import Foundation
 import SceneKit
 import ARKit
 
-
-enum ProductDepartment: String {
-    case fruits
-    case groceries
-    case shoes
-    case fashion 
-    case laptops
-    case mobiles
-}
-
 struct RoutePath {
     let source: CGPoint
     let destination: CGPoint

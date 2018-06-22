@@ -178,9 +178,10 @@ class ChatViewController: JSQMessagesViewController {
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
         
         guard let test = self.messages[indexPath.row].media, let photoItem = test as? JSQPhotoMediaItem,
-            let selectedImage = photoItem.image, !productName.isEmpty,  !category.isEmpty else { return }
+            let selectedImage = photoItem.image, !productName.isEmpty,!category.isEmpty, let departmanet = ProductDepartment(rawValue: category.lowercased()) else { return }
         let wishList = WishList(prodName: productName, category: category, image: selectedImage)
-        StoreModel.shared.shoppingList.append(wishList)
+        
+        StoreModel.shared.shoppingList[departmanet]!.append(wishList)
         addMessage(withId: senderId, name: displayName, text: "\(productName) added to your shopping list.")
     }
 }

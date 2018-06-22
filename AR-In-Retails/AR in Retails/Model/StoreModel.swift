@@ -15,6 +15,16 @@ struct WishList{
     let image: UIImage
 }
 
+
+enum ProductDepartment: String {
+    case fruits
+    case groceries
+    case shoes
+    case fashion
+    case laptops
+    case mobiles
+}
+
 class StoreModel {
     
     static let shared = StoreModel()
@@ -32,7 +42,14 @@ class StoreModel {
         "aura-block-a": [(12.936806, 77.690747), (12.936803, 77.691079), (12.936042, 77.691032), (12.936002, 77.690855)]
     ]
     
-    var shoppingList: [WishList] = []
+    var shoppingList: [ProductDepartment: [WishList]] = [
+        .fruits: [],
+        .groceries: [],
+        .shoes: [],
+        .mobiles: [],
+        .laptops: [],
+        .fashion: []
+    ]
     
     let productToNodeInt: [ProductDepartment :[Int]] = [
         .fruits: [0,2],
