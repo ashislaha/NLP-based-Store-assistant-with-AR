@@ -72,8 +72,8 @@ User will get 2 options: (1). Assistant (2). AR view
 
 (3). User can see the offers of other department also in AR while navigating through the path.
 
-![ar-1](https://user-images.githubusercontent.com/10649284/41900176-b9b40a10-794b-11e8-85ae-3658b6ff10ed.png)
-![ar-2](https://user-images.githubusercontent.com/10649284/41900179-b9f94bf2-794b-11e8-8a23-e6ddf988df1d.png)
+![ar-1](https://user-images.githubusercontent.com/10649284/41900768-0ce4130a-794d-11e8-84b5-4e231c0e5e9d.png)
+![ar-2](https://user-images.githubusercontent.com/10649284/41900773-0f2ca79e-794d-11e8-9fbe-ee4ccef0a258.png)
 
 (3). User will get a collection view of items in AR view. Once user will get the item, he/she can update the shopping list by tapping on that.
 
