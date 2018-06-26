@@ -23,7 +23,7 @@ App will decide whether user is inside the store or not using google maps and us
 
 (5). If user is inside the store, it will open the store map else it will open the Walmart assistant
 
-![googlemap](https://user-images.githubusercontent.com/10649284/41900149-a6e5441c-794b-11e8-9977-69f647c8f174.png)
+![googlemap](https://user-images.githubusercontent.com/10649284/41901064-a901db46-794d-11e8-9c7a-982fe41d1a40.png)
 
 ## Part 2: Store Map:
 
@@ -33,21 +33,21 @@ We are using <b>Estimote beacons</b> to identify the user location inside store.
 
 User will get 2 options: (1). Assistant (2). AR view
 
-![store-map-navigate](https://user-images.githubusercontent.com/10649284/41899228-8cf5d9c4-7949-11e8-9b88-8cb9b13edb7a.PNG)
+![store-map-navigate](https://user-images.githubusercontent.com/10649284/41901066-a93b932c-794d-11e8-869f-1ec0129e48c7.PNG)
 
 ## Part 3: NLP (Natural language processing) based assistant: 
 
 (1). We are using DialogFlow for assistant where user can get offers of the day at the very begining.
 
-![assistant-1](https://user-images.githubusercontent.com/10649284/41899222-8a332d7c-7949-11e8-9c65-8c67f34c046c.PNG)
+![assistant-1](https://user-images.githubusercontent.com/10649284/41901056-a7a01d44-794d-11e8-9aa3-eb0dd59427ef.PNG)
 
 (2). User will add product to the shopping list with the help of assistant. Dialogflow send the information to our back-end which is hosted to heroku, it called the walmartlabs developer open api to fetch the products list.
 
-![assistant-2-search](https://user-images.githubusercontent.com/10649284/41899224-8a92f482-7949-11e8-890c-287d27519a60.PNG)
+![assistant-2-search](https://user-images.githubusercontent.com/10649284/41901057-a7dfada6-794d-11e8-9afa-930010196f5c.PNG)
 
  If user choose any of the product, it will be added to the shopping list.
  
- ![assistant-3-add](https://user-images.githubusercontent.com/10649284/41899225-8af82802-7949-11e8-83fc-5c2b4c55f8b7.PNG)
+![assistant-3-add](https://user-images.githubusercontent.com/10649284/41901059-a8191578-794d-11e8-8850-b10a9885c63c.PNG)
  
 (3). User can ask to the assistant to show the shopping list:
 
@@ -56,13 +56,13 @@ User will get 2 options: (1). Assistant (2). AR view
 
 (3). User can remove the shopping list any time with the help of assistant.
 
-![assistant-5-delete](https://user-images.githubusercontent.com/10649284/41899227-8c9fd45c-7949-11e8-9f7c-0344f0d72c5c.PNG)
+![assistant-5-delete](https://user-images.githubusercontent.com/10649284/41901062-a88ccf40-794d-11e8-8c32-8d19833980a7.PNG)
 
 (4). you can start shopping, the Augmented Reality view will help the user to navigate throught the products
 
 (5). user can also get the offers based on his past history purchase list. We are using the mock data in server and recommending the user about product busket level offers.
 
-![assistant-6-offer](https://user-images.githubusercontent.com/10649284/41900184-bd17e8ca-794b-11e8-9926-642efce81225.png)
+![assistant-6-offer](https://user-images.githubusercontent.com/10649284/41901063-a8c2b6a0-794d-11e8-8749-905843f789df.png)
 
 ### Part 4: Open AR (Augmented Reality) view:
 
@@ -77,7 +77,7 @@ User will get 2 options: (1). Assistant (2). AR view
 
 (3). User will get a collection view of items in AR view. Once user will get the item, he/she can update the shopping list by tapping on that.
 
-![ar-3](https://user-images.githubusercontent.com/10649284/41900180-ba416c8e-794b-11e8-81f3-5d9a5f1ca1da.png)
+![ar-3](https://user-images.githubusercontent.com/10649284/41900986-85f39180-794d-11e8-8285-ef0a72062eb6.png)
 
 (4). User will get notified through notification when he/she is close to a particular products department.
 
