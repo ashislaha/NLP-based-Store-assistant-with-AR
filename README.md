@@ -2,11 +2,14 @@
 
 Let's create a generic template how AR(Augmented Reality) and NLP(Natural Language Processing) can be applied to Retail market to leverage the maximum benefits to customer like Offers, finding items in your shopping list, creating the shopping list using NLP based system, getting offers from assistant, showing the navigation path in AR etc.
 
-Components used here: 
+Main Components used here: 
 
 (1). Google dialogflow: Fullfilled by our own back-end hosted in heroku with clearDB mySql database.
+
 (2). iOS mobile app having AR. 
+
 (3). Estimote beacons: To give the indoor positioning of the user inside the store.
+
 (4). Google map: it helps to identify the user location whether he/she is inside the store or not.
 
 
