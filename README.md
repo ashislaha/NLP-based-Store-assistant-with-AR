@@ -61,7 +61,9 @@ User will get 2 options: (1). Assistant (2). AR view
  
 (3). User can ask to the assistant to show the shopping list:
 
-![assistant-4-list](https://user-images.githubusercontent.com/10649284/41899226-8bb5ce02-7949-11e8-885a-cd7476f723da.PNG)
+![assistant-4-list](https://user-images.githubusercontent.com/10649284/41902086-32a4b556-7950-11e8-8dc3-55058cbeef1e.PNG)
+![img_0265](https://user-images.githubusercontent.com/10649284/41902012-ff58fcb6-794f-11e8-93c1-b0ff7fc8533d.PNG)
+![img_0266](https://user-images.githubusercontent.com/10649284/41902013-ff9e88ee-794f-11e8-82c1-d075098a00b4.PNG)
 
 
 (3). User can remove the shopping list any time with the help of assistant.
