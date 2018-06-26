@@ -95,4 +95,9 @@ A beacon has identifier, UUID, majorValue and minorValue. It emits signal. App w
           print(beacons)
         }
     }
+    
+  # architecuture of the entire project:
+  
+ <img width="500" alt="screen shot 2018-06-18 at 11 53 15 am" src="https://user-images.githubusercontent.com/10649284/41897746-c7e952c6-7945-11e8-917b-ac349c232997.png">
+
 
