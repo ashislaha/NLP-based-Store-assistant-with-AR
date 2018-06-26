@@ -12,7 +12,7 @@ Main Components used here:
 
 (4). Google map: it helps to identify the user location whether he/she is inside the store or not.
 
-(5). Dialogflow interacts with our own back-end which is hosted in https://explore-world.herokuapp.com/. 
+(5). Dialogflow interacts with our own back-end which is hosted in https://explore-world.herokuapp.com/. Here is the project description how to create the server locally and hosted to heroku (https://github.com/ashislaha/Let-s-learn-server-side-coding).
 
 
 # Architecture of the entire project:
