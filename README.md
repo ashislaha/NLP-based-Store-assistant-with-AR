@@ -13,7 +13,7 @@ Main Components used here:
 (4). Google map: it helps to identify the user location whether he/she is inside the store or not.
 
 
-# architecuture of the entire project:
+# Architecture of the entire project:
   
 <img width="500" alt="screen shot 2018-06-18 at 11 53 15 am" src="https://user-images.githubusercontent.com/10649284/41897746-c7e952c6-7945-11e8-917b-ac349c232997.png">
 
