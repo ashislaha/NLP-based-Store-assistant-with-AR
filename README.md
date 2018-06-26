@@ -4,13 +4,15 @@ Let's create a generic template how AR(Augmented Reality) and NLP(Natural Langua
 
 Main Components used here: 
 
-(1). Google dialogflow: Fullfilled by our own back-end hosted in heroku with clearDB mySql database.
+(1). Google dialogflow: Fulfilled by our own back-end hosted in heroku with clearDB mySql database.
 
 (2). iOS mobile app having AR. 
 
 (3). Estimote beacons: To give the indoor positioning of the user inside the store.
 
 (4). Google map: it helps to identify the user location whether he/she is inside the store or not.
+
+(5). Dialogflow interacts with our own back-end which is hosted in https://explore-world.herokuapp.com/. 
 
 
 # Architecture of the entire project:
