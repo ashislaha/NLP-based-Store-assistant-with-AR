@@ -19,8 +19,8 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
   	puts("this is my first 🚀 lane")
-  	# increment_build_number(build_number: latest_testflight_build_number + 1,xcodeproj: "AR in Retails.xcodeproj")
-   #  build_app(workspace: "AR in Retails.xcworkspace", scheme: "AR in Retails")
-   #  upload_to_testflight
+  	increment_build_number(build_number: latest_testflight_build_number + 1,xcodeproj: "AR in Retails.xcodeproj")
+    build_app(workspace: "AR in Retails.xcworkspace", scheme: "AR in Retails")
+    upload_to_testflight
   end
 end
