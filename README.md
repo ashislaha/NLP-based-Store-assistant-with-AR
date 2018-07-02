@@ -1,4 +1,4 @@
-# Retail Assistant with AR and NLP:
+# Wal-E: Retail Assistant with AR and NLP:
 
 Let's create a generic template how AR(Augmented Reality) and NLP(Natural Language Processing) can be applied to Retail market to leverage the maximum benefits to customer like Offers, finding items in your shopping list, creating the shopping list using NLP based system, getting offers from assistant, showing the navigation path in AR etc.
 
