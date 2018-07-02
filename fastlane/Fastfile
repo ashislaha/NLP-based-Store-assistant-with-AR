@@ -17,8 +17,20 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
+  
+
+  # install cocoapods freshly
+  def install_pods
+    cocoapods(
+      clean: true,
+      podfile: "Podfile",
+      try_repo_update_on_error: true
+    )
+  end
+
   lane :beta do
   	puts("this is my first 🚀 lane")
+  	install_pods()
   	increment_build_number(build_number: latest_testflight_build_number + 1,xcodeproj: "AR in Retails.xcodeproj")
     build_app(workspace: "AR in Retails.xcworkspace", scheme: "AR in Retails")
     upload_to_testflight
