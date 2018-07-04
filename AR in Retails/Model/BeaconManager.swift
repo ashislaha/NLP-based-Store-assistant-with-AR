@@ -16,12 +16,12 @@ struct BeaconConstants {
     static let locationName = "Walmart Store"
     static let storeOrientation: Double = 270 // with respect to true north
     static let storeWidth: CGFloat = 10
-    static let storeHeight: CGFloat = 10
+    static let storeHeight: CGFloat = 5
     
     // beacons
     struct Purple1 {
         static let identifier = "466aa0756095522195038c737d29e61f"
-        static let position = CGPoint(x: 0, y: 10)
+        static let position = CGPoint(x: 0, y: 5)
         static let attachmentValue = "purple1"
     }
     
@@ -33,7 +33,7 @@ struct BeaconConstants {
     
     struct Pink1 {
         static let identifier = "bc9acba5091010f1af1c2673386a8d1c"
-        static let position = CGPoint(x: 10, y: 10)
+        static let position = CGPoint(x: 10, y: 5)
         static let attachmentValue = "pink1"
     }
     
@@ -82,6 +82,7 @@ class BeaconManager: NSObject {
         // indoor location manager
         locationManager.delegate = self
         ESTConfig.setupAppID(BeaconConstants.appId, andAppToken: BeaconConstants.appToken)
+        locationManager.mode = .light
         
         if let beaconLocation = beaconsSetup() {
             location = beaconLocation

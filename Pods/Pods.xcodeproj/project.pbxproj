@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		20E6DA0B242551E502EE0ADA5343E985 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */; };
+		5B21E9A19E6D76C1775F2D58938B8D59 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		99D63E703D858E60894D9FC801DEA1F3 /* Pods-AR in Retails-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 81E8633DC262FF83D779760E061FF27E /* Pods-AR in Retails-dummy.m */; };
 		DA58DF27FECE5E9715D05543C5D76867 /* Pods-AR in Retails-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D313403EA1BDDA17A2E2411BDA3D8482 /* Pods-AR in Retails-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
@@ -16,9 +16,9 @@
 		11C8D5648A0C636419014622F8BF1417 /* Pods-AR in Retails-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-AR in Retails-acknowledgements.plist"; sourceTree = "<group>"; };
 		219215674A93C95281995BB933E64A8F /* Pods-AR in Retails-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AR in Retails-frameworks.sh"; sourceTree = "<group>"; };
 		5547C868A3CBD3094C693589065A8BCF /* Pods-AR in Retails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AR in Retails.debug.xcconfig"; sourceTree = "<group>"; };
-		5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5CD3FA5F13B6FD1E34409D046D9C0491 /* Pods-AR in Retails-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-AR in Retails-acknowledgements.markdown"; sourceTree = "<group>"; };
 		5F7294F5855545C6E443535DEDADFC42 /* Pods-AR in Retails-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-AR in Retails-resources.sh"; sourceTree = "<group>"; };
+		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		81BF0D4177B786A669E5C8585B456ADA /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81E8633DC262FF83D779760E061FF27E /* Pods-AR in Retails-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AR in Retails-dummy.m"; sourceTree = "<group>"; };
 		822E5510C71BA9AEC3A7FC0B377C6215 /* Pods-AR in Retails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-AR in Retails.release.xcconfig"; sourceTree = "<group>"; };
@@ -33,7 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				20E6DA0B242551E502EE0ADA5343E985 /* Foundation.framework in Frameworks */,
+				5B21E9A19E6D76C1775F2D58938B8D59 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,14 +46,6 @@
 				84133B0C0BA827DAC71B015EC57C54B5 /* Pods-AR in Retails */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		5E0D919E635D23B70123790B8308F8EF /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				5A16F4CFC63FAC439D7A04994F579A03 /* Foundation.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -95,9 +87,17 @@
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5E0D919E635D23B70123790B8308F8EF /* iOS */,
+				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
