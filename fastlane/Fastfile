@@ -34,5 +34,12 @@ platform :ios do
   	increment_build_number(build_number: latest_testflight_build_number + 1,xcodeproj: "AR in Retails.xcodeproj")
     build_app(workspace: "AR in Retails.xcworkspace", scheme: "AR in Retails")
     upload_to_testflight
+    slack(message: "Successfully distributed a new beta build", slack_url: "https://walmart.slack.com/messages/CAQS2PL1X/details/")
+  end
+
+  desc "Create ipa"
+  lane :build do
+    increment_build_number
+    gym
   end
 end
