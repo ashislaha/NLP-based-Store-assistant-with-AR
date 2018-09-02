@@ -59,9 +59,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         userNotificationCenter.requestAuthorization(options: options) { (isGranted, error) in
             if !isGranted {
                 print("something wrong in local notification permission")
-            }
-            DispatchQueue.main.async {
-                UIApplication.shared.registerForRemoteNotifications()
+            } else {
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
             }
         }
     }
@@ -72,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return String(format: "%02.2hhx", $0)
         }
         let token = deviceTokens.joined()
-        print("device token ",token)
+        print("\n\ndevice token ",token, "\n\n")
     }
     
     // failed to fetch remote notificaion
