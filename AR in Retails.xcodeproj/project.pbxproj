@@ -19,6 +19,8 @@
 		AD6D60C220DBDADC006B4EF6 /* ShoppingList.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD6D60C120DBDADC006B4EF6 /* ShoppingList.xib */; };
 		AD6D60C420DBDDAA006B4EF6 /* ShoppingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D60C320DBDDAA006B4EF6 /* ShoppingList.swift */; };
 		AD6D60C620DBE287006B4EF6 /* ShoppingListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D60C520DBE287006B4EF6 /* ShoppingListCell.swift */; };
+		AD6D7D30213C2AAA00EDBFDB /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6D7D2F213C2AAA00EDBFDB /* NotificationService.swift */; };
+		AD6D7D34213C2AAA00EDBFDB /* NotificationService.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AD6D7D2D213C2AAA00EDBFDB /* NotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AD800A7B20D28901006CFD78 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD800A7A20D28901006CFD78 /* HomeViewController.swift */; };
 		AD955AF4207B07C100355522 /* StoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD955AF3207B07C100355522 /* StoreViewController.swift */; };
 		ADB9092120786EAC0052C417 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB9092020786EAC0052C417 /* AppDelegate.swift */; };
@@ -31,6 +33,30 @@
 		ADCD342320D65CE800262CC9 /* ProceedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCD342220D65CE800262CC9 /* ProceedView.xib */; };
 		ADCD342520D65D9D00262CC9 /* ProceedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCD342420D65D9D00262CC9 /* ProceedView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD6D7D32213C2AAA00EDBFDB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADB9091520786EAB0052C417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD6D7D2C213C2AAA00EDBFDB;
+			remoteInfo = NotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AD6D7D38213C2AAA00EDBFDB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AD6D7D34213C2AAA00EDBFDB /* NotificationService.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		612BA20120C7AB7200E240DE /* BFS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BFS.swift; sourceTree = "<group>"; };
@@ -46,6 +72,9 @@
 		AD6D60C320DBDDAA006B4EF6 /* ShoppingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingList.swift; sourceTree = "<group>"; };
 		AD6D60C520DBE287006B4EF6 /* ShoppingListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingListCell.swift; sourceTree = "<group>"; };
 		AD6D7D28213BC29000EDBFDB /* AR in Retails.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AR in Retails.entitlements"; sourceTree = "<group>"; };
+		AD6D7D2D213C2AAA00EDBFDB /* NotificationService.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD6D7D2F213C2AAA00EDBFDB /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		AD6D7D31213C2AAA00EDBFDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD800A7A20D28901006CFD78 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		AD955AF3207B07C100355522 /* StoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreViewController.swift; sourceTree = "<group>"; };
 		AD955AF5207B0F3900355522 /* ObjcBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcBridge.h; sourceTree = "<group>"; };
@@ -65,6 +94,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		AD6D7D2A213C2AAA00EDBFDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADB9091A20786EAC0052C417 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,10 +166,20 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		AD6D7D2E213C2AAA00EDBFDB /* NotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				AD6D7D2F213C2AAA00EDBFDB /* NotificationService.swift */,
+				AD6D7D31213C2AAA00EDBFDB /* Info.plist */,
+			);
+			path = NotificationService;
+			sourceTree = "<group>";
+		};
 		ADB9091420786EAB0052C417 = {
 			isa = PBXGroup;
 			children = (
 				ADB9091F20786EAC0052C417 /* AR in Retails */,
+				AD6D7D2E213C2AAA00EDBFDB /* NotificationService */,
 				ADB9091E20786EAC0052C417 /* Products */,
 				B380357B092A6636FDA7197F /* Pods */,
 				6DA28FA7930155676F0F929F /* Frameworks */,
@@ -144,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				ADB9091D20786EAC0052C417 /* AR in Retails.app */,
+				AD6D7D2D213C2AAA00EDBFDB /* NotificationService.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -210,6 +257,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AD6D7D2C213C2AAA00EDBFDB /* NotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD6D7D37213C2AAA00EDBFDB /* Build configuration list for PBXNativeTarget "NotificationService" */;
+			buildPhases = (
+				AD6D7D29213C2AAA00EDBFDB /* Sources */,
+				AD6D7D2A213C2AAA00EDBFDB /* Frameworks */,
+				AD6D7D2B213C2AAA00EDBFDB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NotificationService;
+			productName = NotificationService;
+			productReference = AD6D7D2D213C2AAA00EDBFDB /* NotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		ADB9091C20786EAC0052C417 /* AR in Retails */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = ADB9092F20786EAC0052C417 /* Build configuration list for PBXNativeTarget "AR in Retails" */;
@@ -218,10 +282,12 @@
 				ADB9091920786EAC0052C417 /* Sources */,
 				ADB9091A20786EAC0052C417 /* Frameworks */,
 				ADB9091B20786EAC0052C417 /* Resources */,
+				AD6D7D38213C2AAA00EDBFDB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AD6D7D33213C2AAA00EDBFDB /* PBXTargetDependency */,
 			);
 			name = "AR in Retails";
 			productName = "AR in Retails";
@@ -234,10 +300,14 @@
 		ADB9091520786EAB0052C417 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 0940;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Ashis Laha";
 				TargetAttributes = {
+					AD6D7D2C213C2AAA00EDBFDB = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+					};
 					ADB9091C20786EAC0052C417 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -263,11 +333,19 @@
 			projectRoot = "";
 			targets = (
 				ADB9091C20786EAC0052C417 /* AR in Retails */,
+				AD6D7D2C213C2AAA00EDBFDB /* NotificationService */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		AD6D7D2B213C2AAA00EDBFDB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADB9091B20786EAC0052C417 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,6 +383,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		AD6D7D29213C2AAA00EDBFDB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD6D7D30213C2AAA00EDBFDB /* NotificationService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		ADB9091920786EAC0052C417 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -330,6 +416,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		AD6D7D33213C2AAA00EDBFDB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD6D7D2C213C2AAA00EDBFDB /* NotificationService */;
+			targetProxy = AD6D7D32213C2AAA00EDBFDB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		ADB9092420786EAC0052C417 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -350,6 +444,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		AD6D7D35213C2AAA00EDBFDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3Z9URG96M;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ashislaha.AR-in-Retails.NotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD6D7D36213C2AAA00EDBFDB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = W3Z9URG96M;
+				INFOPLIST_FILE = NotificationService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ashislaha.AR-in-Retails.NotificationService";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		ADB9092D20786EAC0052C417 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -461,6 +595,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D8F411E4BBD531AC59FB6459 /* Pods-AR in Retails.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "AR in Retails/AR in Retails.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -482,6 +617,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC7F674B92A63A15B2D26ADD /* Pods-AR in Retails.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "AR in Retails/AR in Retails.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -502,6 +638,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		AD6D7D37213C2AAA00EDBFDB /* Build configuration list for PBXNativeTarget "NotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD6D7D35213C2AAA00EDBFDB /* Debug */,
+				AD6D7D36213C2AAA00EDBFDB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		ADB9091820786EAB0052C417 /* Build configuration list for PBXProject "AR in Retails" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
