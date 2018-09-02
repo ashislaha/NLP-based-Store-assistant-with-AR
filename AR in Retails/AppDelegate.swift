@@ -10,9 +10,10 @@ import UIKit
 import ApiAI
 import IQKeyboardManagerSwift
 import GoogleMaps
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
     var beaconManager: BeaconManager?
@@ -35,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.shared.enable = true
         UIApplication.shared.statusBarStyle = .lightContent
+        
+        // register notifications
+        registerNotifications()
         return true
     }
     
@@ -46,6 +50,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locationManager.distanceFilter = 1.0 // update to the user when location changes more than 1 meter
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
     }
+    
+    // MARK: push notifications handling
+    private func registerNotifications() {
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { (grant, error) in
+            guard grant else { return }
+            DispatchQueue.main.async {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
+    }
+    
+    // fetch the device token
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let deviceTokens = deviceToken.map {
+            return String(format: "%02.2hhx", $0)
+        }
+        let token = deviceTokens.joined()
+        print("device token ",token)
+    }
+    
+    // failed to fetch remote notificaion
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to fetch device tokens", error.localizedDescription)
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        print("receive remote notification", userInfo)
+    }
+    
+    
+    
+    // MARK: application life cycle
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -68,7 +106,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

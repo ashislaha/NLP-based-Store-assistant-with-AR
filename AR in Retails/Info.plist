@@ -15,7 +15,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
+	<string>1.3</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Item 0</key>
@@ -31,6 +31,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>App is using bluetooth to get information from beacons to update its position.</string>
 	<key>NSCalendarsUsageDescription</key>
 	<string>$(PRODUCT_NAME) calendar events</string>
 	<key>NSCameraUsageDescription</key>
@@ -42,13 +44,17 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>$(PRODUCT_NAME) location use</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Your microphone will be used to record your speech when you press the &quot;Start Recording&quot; button.</string>
+	<string>Your microphone will be used to record your speech when you press the "Start Recording" button.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires to access your photo library to show image on profile and send via chat</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>$(PRODUCT_NAME) reminder use</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Speech recognition will be used to determine which words you speak into this device&apos;s microphone.</string>
+	<string>Speech recognition will be used to determine which words you speak into this device's microphone.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -68,7 +74,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>App is using bluetooth to get information from beacons to update its position.</string>
 </dict>
 </plist>
