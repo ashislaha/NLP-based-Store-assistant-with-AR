@@ -21,11 +21,14 @@ class NotificationViewController: UIViewController, UNNotificationContentExtensi
     
     func didReceive(_ notification: UNNotification) {
         self.label?.text = notification.request.content.body
-        if let imageUrl = notification.request.content.attachments.first?.url {
-            print("imageUrl: ",imageUrl)
-            guard let data = try? Data(contentsOf: imageUrl) else { return }
-            imageView.image = UIImage(data: data)
+        
+        let attachments = notification.request.content.attachments
+        for attachment in attachments {
+            if attachment.identifier == "picture" {
+                print("imageUrl: ", attachment.url)
+                guard let data = try? Data(contentsOf: attachment.url) else { return }
+                imageView.image = UIImage(data: data)
+            }
         }
     }
-
 }

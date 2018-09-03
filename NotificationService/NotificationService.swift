@@ -8,6 +8,10 @@
 
 import UserNotifications
 
+struct NotificationServiceConstants {
+    static let picture = "picture"
+}
+
 class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -58,7 +62,7 @@ class NotificationService: UNNotificationServiceExtension {
             
             // 5. Try adding getting the attachment and pass it to the completion handler
             do {
-                let attachment = try UNNotificationAttachment(identifier: "picture", url: urlPath, options: nil)
+                let attachment = try UNNotificationAttachment(identifier: NotificationServiceConstants.picture, url: urlPath, options: nil)
                 completionHandler(attachment)
             }
             catch {
